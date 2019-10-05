@@ -2,6 +2,11 @@
 package admin;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowListener;
+import javax.swing.event.PopupMenuListener;
 
 public class AdminPanel extends javax.swing.JPanel {
 
@@ -9,6 +14,8 @@ public class AdminPanel extends javax.swing.JPanel {
      * Creates new form OwnerPanel
      */
     public AdminPanel() {
+        
+        
         initComponents();
     }
 
@@ -63,14 +70,19 @@ public class AdminPanel extends javax.swing.JPanel {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         oldIdTF = new javax.swing.JLabel();
+        popupmenu = new javax.swing.JPopupMenu();
+        viewAdminMenuItem = new javax.swing.JMenuItem();
+        editAdminMenuItem = new javax.swing.JMenuItem();
+        addAdminMenuItem = new javax.swing.JMenuItem();
+        deleteAdminMenuItem = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         searchTF = new javax.swing.JTextField();
         addAdminBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         adminTable = new javax.swing.JTable();
-        searchBtn = new javax.swing.JButton();
         editAdminBtn = new javax.swing.JButton();
         deleteAdminBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         addAdminDialog.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -105,11 +117,6 @@ public class AdminPanel extends javax.swing.JPanel {
 
         resetAdminBtn.setBackground(new java.awt.Color(51, 255, 255));
         resetAdminBtn.setText("Reset");
-        resetAdminBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetAdminBtnActionPerformed(evt);
-            }
-        });
 
         positionCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Head", "Staff" }));
         positionCB.setBorder(null);
@@ -252,11 +259,6 @@ public class AdminPanel extends javax.swing.JPanel {
 
         resetAdminBtn1.setBackground(new java.awt.Color(51, 255, 255));
         resetAdminBtn1.setText("Reset");
-        resetAdminBtn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetAdminBtn1ActionPerformed(evt);
-            }
-        });
 
         positionCB1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Head", "Staff" }));
         positionCB1.setBorder(null);
@@ -378,6 +380,18 @@ public class AdminPanel extends javax.swing.JPanel {
             .addComponent(addAdminPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        viewAdminMenuItem.setText("View Admin");
+        popupmenu.add(viewAdminMenuItem);
+
+        editAdminMenuItem.setText("Edit Admin");
+        popupmenu.add(editAdminMenuItem);
+
+        addAdminMenuItem.setText("Add Admin");
+        popupmenu.add(addAdminMenuItem);
+
+        deleteAdminMenuItem.setText("Delete Admin");
+        popupmenu.add(deleteAdminMenuItem);
+
         jPanel1.setBackground(new java.awt.Color(69, 73, 84));
 
         addAdminBtn.setBackground(new java.awt.Color(51, 255, 255));
@@ -398,14 +412,14 @@ public class AdminPanel extends javax.swing.JPanel {
         adminTable.setGridColor(new java.awt.Color(0, 102, 102));
         jScrollPane1.setViewportView(adminTable);
 
-        searchBtn.setBackground(new java.awt.Color(51, 255, 255));
-        searchBtn.setText("Search");
-
         editAdminBtn.setBackground(new java.awt.Color(51, 255, 255));
         editAdminBtn.setText("Edit Admin");
 
         deleteAdminBtn.setBackground(new java.awt.Color(51, 255, 255));
         deleteAdminBtn.setText("Delete Admin");
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Search");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -414,36 +428,32 @@ public class AdminPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 76, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(addAdminBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(editAdminBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(deleteAdminBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
+                        .addComponent(addAdminBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editAdminBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteAdminBtn)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(searchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchTF))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(addAdminBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editAdminBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteAdminBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+                    .addComponent(editAdminBtn)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addComponent(deleteAdminBtn)
+                        .addComponent(addAdminBtn)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -458,65 +468,50 @@ public class AdminPanel extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void resetAdminBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetAdminBtnActionPerformed
-        unTF.setText("");
-        fNameTF.setText("");
-        mNameTF.setText("");
-        lNameTF.setText("");
-        departmentCB.setSelectedIndex(0);
-        positionCB.setSelectedIndex(0);
-        jPasswordField1.setText("");
-        jPasswordField2.setText("");
-    }//GEN-LAST:event_resetAdminBtnActionPerformed
-
-    private void resetAdminBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetAdminBtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_resetAdminBtn1ActionPerformed
-
-    public void searchAdminListener(ActionListener e)
+   
+    public void allListener(ActionListener add,
+            ActionListener save, ActionListener edit, ActionListener update,
+            ActionListener delete, ActionListener reset, WindowListener show,
+            KeyListener searchNow, PopupMenuListener pop, MouseListener tablePop,
+            ActionListener menu1, ActionListener menu2, ActionListener menu3, 
+            ActionListener menu4)
     {
-        searchBtn.addActionListener(e);
+        addAdminBtn.addActionListener(add);
+        saveAdminBtn.addActionListener(save);
+        editAdminBtn.addActionListener(edit);
+        updateAdminBtn.addActionListener(update);
+        deleteAdminBtn.addActionListener(delete);
+        resetAdminBtn.addActionListener(reset);
+        resetAdminBtn1.addActionListener(reset);
+        addAdminDialog.addWindowListener(show);
+        editAdminDialog.addWindowListener(show);
+        searchTF.addKeyListener(searchNow);
+        popupmenu.addPopupMenuListener(pop);
+        adminTable.addMouseListener(tablePop);
+        viewAdminMenuItem.addActionListener(menu1);
+        editAdminMenuItem.addActionListener(menu2);
+        addAdminMenuItem.addActionListener(menu3);
+        deleteAdminMenuItem.addActionListener(menu4);
     }
     
-    public void addAdminListener(ActionListener e)
-    {
-        addAdminBtn.addActionListener(e);
-    }
-     
-    public void saveAdminListener(ActionListener e)
-    {
-        saveAdminBtn.addActionListener(e);
-    }
-    
-    public void editAdminListener(ActionListener e)
-    {
-        editAdminBtn.addActionListener(e);
-    }
-    
-    public void updateAdminListener(ActionListener e)
-    {
-        updateAdminBtn.addActionListener(e);
-    }
-        
-    public void deleteAdminListener(ActionListener e)
-    {
-        deleteAdminBtn.addActionListener(e);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton addAdminBtn;
     public javax.swing.JDialog addAdminDialog;
+    public javax.swing.JMenuItem addAdminMenuItem;
     private javax.swing.JPanel addAdminPanel;
     private javax.swing.JPanel addAdminPanel1;
     public javax.swing.JTable adminTable;
     public javax.swing.JButton deleteAdminBtn;
+    public javax.swing.JMenuItem deleteAdminMenuItem;
     public javax.swing.JComboBox<String> departmentCB;
     public javax.swing.JComboBox<String> departmentCB1;
     public javax.swing.JButton editAdminBtn;
     public javax.swing.JDialog editAdminDialog;
+    public javax.swing.JMenuItem editAdminMenuItem;
     public javax.swing.JTextField fNameTF;
     public javax.swing.JTextField fNameTF1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -545,16 +540,17 @@ public class AdminPanel extends javax.swing.JPanel {
     public javax.swing.JTextField mNameTF;
     public javax.swing.JTextField mNameTF1;
     public javax.swing.JLabel oldIdTF;
+    public javax.swing.JPopupMenu popupmenu;
     public javax.swing.JComboBox<String> positionCB;
     public javax.swing.JComboBox<String> positionCB1;
     public javax.swing.JButton resetAdminBtn;
     public javax.swing.JButton resetAdminBtn1;
     public javax.swing.JButton saveAdminBtn;
-    public javax.swing.JButton searchBtn;
     public javax.swing.JTextField searchTF;
     public javax.swing.JTextField unTF;
     public javax.swing.JTextField unTF1;
     public javax.swing.JButton updateAdminBtn;
+    public javax.swing.JMenuItem viewAdminMenuItem;
     // End of variables declaration//GEN-END:variables
 
 }

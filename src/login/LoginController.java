@@ -53,14 +53,15 @@ public class LoginController
 
     public void loginNow() 
     {
-        String[] name = new String[3];
+        String[] name = new String[4];
         name = LoginModel.loginAdmin(lf.unTF.getText(), lf.pwPF.getText());
-        if(name[0] != null && name[1] != null && name[2] != null)
+        if(name[0] != null && name[1] != null && name[2] != null && name[3] != null)
         {
             MainFrame mf = new MainFrame();
             Timer t = new Timer(mf);
             t.setTime();
             mf.fnameLbl.setText(name[2]);
+            mf.adminIDTF.setText(name[3]);
             mf.setExtendedState(JFrame.MAXIMIZED_BOTH); 
             mf.setVisible(true);
             lf.setVisible(false);

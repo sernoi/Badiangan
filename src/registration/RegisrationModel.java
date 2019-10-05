@@ -1,4 +1,4 @@
-package beneficiary;
+package registration;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import db.DB;
@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class BeneModel 
+public class RegisrationModel 
 {
     public static ResultSet getAllBene()
     {
@@ -20,50 +20,37 @@ public class BeneModel
         try {
             conn = DB.getConnection();
             String sql = "SELECT bene_id as 'Beneficiary ID',"
-                    + "fname as 'First Name', mname as 'Middle Name', "
+                    + "fname as 'First Name', mname as 'Middle Name', fk_brgy_id_beneficiary as 'Brgy', "
                     + "lname as 'Last Name', sex as 'Sex', dob as 'Date of Birth', "
-                    + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) as 'Brgy', "
-                    + "code as 'Code', fourps as '4Ps', ip as 'Indigent', hea as 'Highest Educ Att', "
-                    + "ethnicity as 'Ethnicity', net_income as 'Net Income', occ as 'Occupation', "
-                    + "health_condition as 'Health Condition', house_status as 'House Status',"
-                    + "house_condition as 'House Condition', contact_num as 'Contact #' "
+                    + "occ as Occupation, code as 'Code', fourps as '4Ps', ip as 'Indigent',"
+                    + "ethnicity as 'Ethnicity', net_income as 'Net Income', "
+                    + "house_status as 'House Status', house_condition as 'House Condition',"
+                    + "health_condition as 'Health Condition', loc_long as 'Location Long',"
+                    + "loc_lat as 'Location Lat' "
                     + "from beneficiary";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisrationModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
             return null;
         }
         return rs;
     }
     
-    public static ResultSet searchBene(String str)
+    public static ResultSet searchAdmin(String str)
     {
         ResultSet rs = null;
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "SELECT bene_id as 'Beneficiary ID', "
-                    + "fname as 'First Name', mname as 'Middle Name', "
-                    + "lname as 'Last Name', sex as 'Sex', dob as 'Date of Birth', "
-                    + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) as 'Brgy', "
-                    + "code as 'Code', fourps as '4Ps', ip as 'Indigent', hea as 'Highest Educ Att', "
-                    + "ethnicity as 'Ethnicity', net_income as 'Net Income', occ as 'Occupation', "
-                    + "health_condition as 'Health Condition', house_status as 'House Status', "
-                    + "house_condition as 'House Condition', contact_num as 'Contact #' "
-                    + "from beneficiary where "
-                    
-                    + "bene_id LIKE '%" + str + "%' or fname LIKE '%" + str + "%' or "
-                    + "mname LIKE '%" + str + "%' or lname LIKE '%" + str + "%' or "
-                    + "sex LIKE '%" + str + "%' or dob LIKE '%" + str + "%' or "
-                    + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) LIKE '%" + str + "%' or "
-                    + "code LIKE '%" + str + "%' or fourps LIKE '%" + str + "%' or "
-                    + "ip LIKE '%" + str + "%' or hea LIKE '%" + str + "%' or "
-                    + "ethnicity LIKE '%" + str + "%' or net_income LIKE '%" + str + "%' or "
-                    + "occ LIKE '%" + str + "%' or health_condition LIKE '%" + str + "%' or "
-                    + "house_status LIKE '%" + str + "%' or house_condition LIKE '%" + str + "%' or "
-                    + "contact_num LIKE '%" + str + "%'";
+            String sql = "SELECT admin_id as 'Admin ID',username as 'Username', fname as 'First Name', "
+                         + "mname as 'Middle Name', lname as 'Last Name', department as 'Department',"
+                         + "position as 'Position' from admin where "
+                         + "admin_id LIKE '%" + str + "%' or fname LIKE '%" + str + "%' or "
+                         + "mname LIKE '%" + str + "%' or lname LIKE '%" + str + "%' or "
+                         + "department LIKE '%" + str + "%' or username LIKE '%" + str + "%' or "
+                         + "position LIKE '%" + str + "%'";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
         } catch (SQLException ex) {
@@ -74,41 +61,32 @@ public class BeneModel
         return rs;
     }
     
-    public static void saveBene(int beneId, String fName, String mName,
-            String lName, String sex, String dob, int brgy, String code,
-            String fourPs, String indigency, String hea, String ethnicity,
-            double netIncome, String occ, String healthCond, String houseStat,
-            String houseCond, String contactNum, double locLong, double locLat)
+    public static void saveBene(String fName, String mName, String lName,
+                    String sex, String dob, String code, String fourPs,
+                    String indigency, String ethnicity, String occ,
+                    String houseStat, String houseCond)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Insert into beneficiary values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "Insert into beneficiary values (?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, beneId);
-            stmt.setString(2, fName);
-            stmt.setString(3, mName);
-            stmt.setString(4, lName);
-            stmt.setString(5, sex);
-            stmt.setString(6, dob);
-            stmt.setInt(7, brgy);
-            stmt.setString(8, code);
-            stmt.setString(9, fourPs);
-            stmt.setString(10, indigency);
-            stmt.setString(11, hea);
-            stmt.setString(12, ethnicity);
-            stmt.setDouble(13, netIncome);
-            stmt.setString(14, occ);
-            stmt.setString(15, healthCond);
-            stmt.setString(16, houseStat);
-            stmt.setString(17, houseCond);
-            stmt.setString(18, contactNum);
-            stmt.setDouble(19, locLong);
-            stmt.setDouble(20, locLat);
+            stmt.setString(1, fName);
+            stmt.setString(2, mName);
+            stmt.setString(3, lName);
+            stmt.setString(4, sex);
+            stmt.setString(5, dob);
+            stmt.setString(6, code);
+            stmt.setString(7, fourPs);
+            stmt.setString(8, indigency);
+            stmt.setString(9, ethnicity);
+            stmt.setString(10, occ);
+            stmt.setString(11, houseStat);
+            stmt.setString(12, houseCond);
             stmt.execute();
             JOptionPane.showMessageDialog(null,"Beneficiary Added!");
         }catch (SQLException ex) {
-            Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisrationModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Please check inputs" + ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
         finally
@@ -118,20 +96,20 @@ public class BeneModel
             } catch (SQLException ex) 
             {
                 JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
-                Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RegisrationModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
-    public static void updateAdmin(String beneID, String username, String password, 
+    public static void updateAdmin(String adminID, String username, String password, 
             String fname, String mname, String lname, String department, String position)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Update beneficiary set username = ? , password = sha1(?) , "
+            String sql = "Update admin set username = ? , password = sha1(?) , "
                     + "fname = ? , mname = ? , lname = ?, department = ?, "
-                    + "position = ? where bene_id = '"+beneID+"'";
+                    + "position = ? where admin_id = '"+adminID+"'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             stmt.setString(2, password);
@@ -147,7 +125,7 @@ public class BeneModel
             JOptionPane.showMessageDialog(null, "Username already taken", "Error", JOptionPane.ERROR_MESSAGE);
         } 
         catch (SQLException ex) {
-            Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisrationModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
         }
         finally
@@ -157,22 +135,22 @@ public class BeneModel
             } catch (SQLException ex) 
             {
                 JOptionPane.showMessageDialog(null, "Cannot close connection of DB!");
-                Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RegisrationModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
-    public static void deleteBene(String beneId)
+    public static void deleteAdmin(String adminID)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Delete from beneficiary where bene_id = '"+beneId+"'";
+            String sql = "Delete from admin where admin_id = '"+adminID+"'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.execute();
             //JOptionPane.showMessageDialog(null,"Subscriber Deleted!");
         } catch (SQLException ex) {
-            Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisrationModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
         }
         finally
@@ -182,7 +160,7 @@ public class BeneModel
             } catch (SQLException ex) 
             {
                 JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
-                Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RegisrationModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

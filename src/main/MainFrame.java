@@ -12,6 +12,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() 
     {
         initComponents();
+        //setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/agfa_icon.jpg")));
     }
 
     /**
@@ -30,16 +31,24 @@ public class MainFrame extends javax.swing.JFrame {
         realTimeLabel = new javax.swing.JLabel();
         fnameLbl = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        adminIDTF = new javax.swing.JLabel();
         mainPanel = new javax.swing.JPanel();
         MenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        registrationMenu = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        accountMenu = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        manageMenu = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        reportMenu = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,12 +73,22 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Logged in:");
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Admin ID:");
+
+        adminIDTF.setForeground(new java.awt.Color(255, 255, 255));
+        adminIDTF.setText("0");
+
         javax.swing.GroupLayout DateTimePanelLayout = new javax.swing.GroupLayout(DateTimePanel);
         DateTimePanel.setLayout(DateTimePanelLayout);
         DateTimePanelLayout.setHorizontalGroup(
             DateTimePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DateTimePanelLayout.createSequentialGroup()
-                .addContainerGap(134, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(adminIDTF, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fnameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -93,7 +112,10 @@ public class MainFrame extends javax.swing.JFrame {
             .addComponent(dateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DateTimePanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2))
+                .addGroup(DateTimePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(adminIDTF)))
         );
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -103,7 +125,7 @@ public class MainFrame extends javax.swing.JFrame {
         fileMenu.setText("File");
 
         jMenuItem1.setForeground(new java.awt.Color(0, 0, 0));
-        jMenuItem1.setText("Registration");
+        jMenuItem1.setText("Map");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -122,8 +144,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         MenuBar.add(fileMenu);
 
-        registrationMenu.setForeground(new java.awt.Color(0, 0, 0));
-        registrationMenu.setText("Manage");
+        jMenu1.setText("Transaction");
+
+        jMenuItem10.setText("Farm");
+        jMenu1.add(jMenuItem10);
+
+        MenuBar.add(jMenu1);
+
+        accountMenu.setForeground(new java.awt.Color(0, 0, 0));
+        accountMenu.setText("Account");
 
         jMenuItem4.setForeground(new java.awt.Color(0, 0, 0));
         jMenuItem4.setText("Beneficiary");
@@ -132,16 +161,7 @@ public class MainFrame extends javax.swing.JFrame {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        registrationMenu.add(jMenuItem4);
-
-        jMenuItem7.setForeground(new java.awt.Color(0, 0, 0));
-        jMenuItem7.setText("Vehicle");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
-        registrationMenu.add(jMenuItem7);
+        accountMenu.add(jMenuItem4);
 
         jMenuItem5.setForeground(new java.awt.Color(0, 0, 0));
         jMenuItem5.setText("Admin");
@@ -150,22 +170,41 @@ public class MainFrame extends javax.swing.JFrame {
                 jMenuItem5ActionPerformed(evt);
             }
         });
-        registrationMenu.add(jMenuItem5);
+        accountMenu.add(jMenuItem5);
 
-        MenuBar.add(registrationMenu);
+        MenuBar.add(accountMenu);
 
-        jMenu1.setBackground(new java.awt.Color(0, 0, 0));
-        jMenu1.setText("Report");
+        manageMenu.setForeground(new java.awt.Color(0, 0, 0));
+        manageMenu.setText("Manage");
 
+        jMenuItem8.setText("Farm");
+        manageMenu.add(jMenuItem8);
+
+        jMenuItem7.setText("Crops");
+        manageMenu.add(jMenuItem7);
+
+        jMenuItem9.setText("Livestock");
+        manageMenu.add(jMenuItem9);
+
+        jMenuItem6.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem6.setText("Brgy");
+        manageMenu.add(jMenuItem6);
+
+        MenuBar.add(manageMenu);
+
+        reportMenu.setForeground(new java.awt.Color(0, 0, 0));
+        reportMenu.setText("Report");
+
+        jMenuItem2.setForeground(new java.awt.Color(0, 0, 0));
         jMenuItem2.setText("Registration");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        reportMenu.add(jMenuItem2);
 
-        MenuBar.add(jMenu1);
+        MenuBar.add(reportMenu);
 
         setJMenuBar(MenuBar);
 
@@ -181,7 +220,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(DateTimePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
         );
 
         pack();
@@ -211,38 +250,36 @@ public class MainFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
     
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DateTimePanel;
     private javax.swing.JMenuBar MenuBar;
+    private javax.swing.JMenu accountMenu;
+    public javax.swing.JLabel adminIDTF;
     public javax.swing.JLabel dateLabel;
     private javax.swing.JMenu fileMenu;
     public javax.swing.JLabel fnameLbl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel mainPanel;
+    public javax.swing.JMenu manageMenu;
     public javax.swing.JLabel realTimeLabel;
-    public javax.swing.JMenu registrationMenu;
+    private javax.swing.JMenu reportMenu;
     private javax.swing.JLabel timeLabel;
     // End of variables declaration//GEN-END:variables
 }
