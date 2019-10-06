@@ -1,5 +1,7 @@
-package beneficiary;
+package crop;
 
+import fmember.*;
+import beneficiary.*;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import db.DB;
 import java.sql.Connection;
@@ -11,41 +13,40 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class BeneModel 
+public class CropModel 
 {
-    public static ResultSet getAllBene()
+    public static ResultSet getAllFMember()
     {
         ResultSet rs = null;
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "SELECT bene_id as '#',"
+            String sql = "SELECT bene_id as 'Beneficiary ID',"
                     + "fname as 'First Name', mname as 'Middle Name', "
                     + "lname as 'Last Name', sex as 'Sex', dob as 'Date of Birth', "
                     + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) as 'Brgy', "
                     + "code as 'Code', fourps as '4Ps', ip as 'Indigent', hea as 'Highest Educ Att', "
                     + "ethnicity as 'Ethnicity', net_income as 'Net Income', occ as 'Occupation', "
                     + "health_condition as 'Health Condition', house_status as 'House Status',"
-                    + "house_condition as 'House Condition', contact_num as 'Contact #',"
-                    + "loc_long as 'Longitude', loc_lat as 'Latitude' "
+                    + "house_condition as 'House Condition', contact_num as 'Contact #' "
                     + "from beneficiary";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
             return null;
         }
         return rs;
     }
     
-    public static ResultSet searchBene(String str)
+    public static ResultSet searchFMember(String str)
     {
         ResultSet rs = null;
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "SELECT bene_id as '#', "
+            String sql = "SELECT bene_id as 'Beneficiary ID', "
                     + "fname as 'First Name', mname as 'Middle Name', "
                     + "lname as 'Last Name', sex as 'Sex', dob as 'Date of Birth', "
                     + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) as 'Brgy', "
@@ -75,42 +76,24 @@ public class BeneModel
         return rs;
     }
     
-    public static void saveBene(int beneId, String fName, String mName,
-            String lName, String sex, String dob, String brgy, String code,
-            String fourPs, String indigency, String hea, String ethnicity,
-            double netIncome, String occ, String healthCond, String houseStat,
-            String houseCond, String contactNum, double locLong, double locLat)
+    public static void saveCrop(int beneId, String crop, String area,
+            String variety, String classification, String exp, String remarks)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Insert into beneficiary values (?,?,?,?,?,?,"
-                    + "(Select brgy_id from brgy where name = '"+brgy+"'),"
-                    + "?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "Insert into crop values (0,?,?,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, beneId);
-            stmt.setString(2, fName);
-            stmt.setString(3, mName);
-            stmt.setString(4, lName);
-            stmt.setString(5, sex);
-            stmt.setString(6, dob);
-            stmt.setString(7, code);
-            stmt.setString(8, fourPs);
-            stmt.setString(9, indigency);
-            stmt.setString(10, hea);
-            stmt.setString(11, ethnicity);
-            stmt.setDouble(12, netIncome);
-            stmt.setString(13, occ);
-            stmt.setString(14, healthCond);
-            stmt.setString(15, houseStat);
-            stmt.setString(16, houseCond);
-            stmt.setString(17, contactNum);
-            stmt.setDouble(18, locLong);
-            stmt.setDouble(19, locLat);
+            stmt.setString(2, crop);
+            stmt.setString(3, area);
+            stmt.setString(4, variety);
+            stmt.setString(5, classification);
+            stmt.setString(6, exp);
+            stmt.setString(7, remarks);
             stmt.execute();
-            JOptionPane.showMessageDialog(null,"Beneficiary Added!");
         }catch (SQLException ex) {
-            Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Please check inputs" + ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
         finally
@@ -120,12 +103,12 @@ public class BeneModel
             } catch (SQLException ex) 
             {
                 JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
-                Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
-    public static void updateAdmin(String beneID, String username, String password, 
+    public static void updateFMember(String beneID, String username, String password, 
             String fname, String mname, String lname, String department, String position)
     {
         Connection conn = null;
@@ -149,7 +132,7 @@ public class BeneModel
             JOptionPane.showMessageDialog(null, "Username already taken", "Error", JOptionPane.ERROR_MESSAGE);
         } 
         catch (SQLException ex) {
-            Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
         }
         finally
@@ -159,12 +142,12 @@ public class BeneModel
             } catch (SQLException ex) 
             {
                 JOptionPane.showMessageDialog(null, "Cannot close connection of DB!");
-                Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
-    public static void deleteBene(String beneId)
+    public static void deleteFMember(String beneId)
     {
         Connection conn = null;
         try {
@@ -174,7 +157,7 @@ public class BeneModel
             stmt.execute();
             //JOptionPane.showMessageDialog(null,"Subscriber Deleted!");
         } catch (SQLException ex) {
-            Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
         }
         finally
@@ -184,7 +167,7 @@ public class BeneModel
             } catch (SQLException ex) 
             {
                 JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
-                Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

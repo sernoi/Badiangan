@@ -1,7 +1,11 @@
 package beneficiary;
+import crop.CropModel;
+import fmember.FMemberModel;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -12,9 +16,12 @@ import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonModel;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
@@ -40,6 +47,8 @@ public class BeneController
   
         this.bp.allListener(
                 //Bene Classes
+                new BenePopUpMenu(), new BenePopUpMenu(), new ViewBeneClass(), 
+                new EditBeneClass(), new OpenAddBeneClass(), new DeleteBeneClass(),
                 new OpenAddBeneClass(), new SaveBeneClass(),
                 new EditBeneClass(), new UpdateBeneClass(), new DeleteBeneClass(),
                 new SearchBeneClass(), new SearchBeneClass(),
@@ -58,8 +67,18 @@ public class BeneController
                 new OkAddCropClass(), new CloseAddCropDialogClass(),
                 new CloseAddCropDialogClass(),
                 new OkEditCropClass(), new CloseEditCropDialogClass(),
-                new CloseEditCropDialogClass()
-        
+                new CloseEditCropDialogClass(),
+                
+                //Livestock Classes
+                new LivestockPopUpMenu(), new LivestockPopUpMenu(), new ViewLSClass(), 
+                new EditLSClass(), new OpenAddLSClass(), new DeleteLSClass(),
+                new OkAddLSClass(), new CloseAddLSDialogClass(),
+                new CloseAddLSDialogClass(),
+                new OkEditLSClass(), new CloseEditLSDialogClass(),
+                new CloseEditLSDialogClass(),
+                
+                //farmer Class
+                new FarmerCBClass()
         );
         
         // TODO ubra add member dialog 
@@ -70,6 +89,34 @@ public class BeneController
         
     }
     
+    class FarmerCBClass implements ItemListener
+    {
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if(bp.farmerCB.isSelected())
+            {
+                bp.occTF.setEnabled(false);
+                bp.occTF.setText("Farmer");
+                
+                bp.cropTable.setFillsViewportHeight(true);
+                bp.livestockTable.setFillsViewportHeight(true);
+            }
+            else
+            {
+                bp.occTF.setEnabled(true);
+                bp.occTF.setText("");
+                
+                bp.cropTable.setFillsViewportHeight(false);
+                bp.livestockTable.setFillsViewportHeight(false);
+                
+                DefaultTableModel cropTable = (DefaultTableModel) bp.cropTable.getModel();
+                cropTable.setRowCount(0);
+                
+                DefaultTableModel livestockTable = (DefaultTableModel) bp.livestockTable.getModel();
+                livestockTable.setRowCount(0);
+            }
+        }
+    }
     
     class OkAddMemberClass implements ActionListener
     {
@@ -79,7 +126,7 @@ public class BeneController
             model.addRow(new Object[]{
                 bp.membersTable.getRowCount() + 1, bp.fnameAddMemberTF.getText(),
                 bp.mnameAddMemberTF.getText(), bp.lnameAddMemberTF.getText(),
-                bp.relAddMemberCB.getSelectedItem().toString(), bp.ageAddMemberTF.getText(),
+                bp.relAddMemberCB.getSelectedItem().toString(), bp.ageAddMemberSpin.getValue().toString(),
                 bp.maleAddMemberRB.isSelected() ? "Male" : "Female",
                 bp.heaAddMemberCB.getSelectedItem().toString(), bp.occAddMemberTF.getText(),
                 bp.remarksAddMemberTA.getText()});
@@ -97,7 +144,8 @@ public class BeneController
             model.insertRow(Integer.parseInt(bp.numEditMemberTF.getText()) - 1, new Object[]{
                 bp.numEditMemberTF.getText(), bp.fnameEditMemberTF.getText(),
                 bp.mnameEditMemberTF.getText(), bp.lnameEditMemberTF.getText(),
-                bp.relEditMemberCB.getSelectedItem().toString(), bp.ageEditMemberTF.getText(),
+                bp.relEditMemberCB.getSelectedItem().toString(), 
+                bp.ageEditMemberSpin.getValue().toString(),
                 bp.maleEditMemberRB.isSelected() ? "Male" : "Female",
                 bp.heaEditMemberCB.getSelectedItem().toString(), bp.occEditMemberTF.getText(),
                 bp.remarksEditMemberTA.getText()});
@@ -123,6 +171,23 @@ public class BeneController
         }
     }
     
+    class OkEditLSClass implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            DefaultTableModel model = (DefaultTableModel) bp.livestockTable.getModel();
+            model.removeRow(Integer.parseInt(bp.numberEditLSLbl.getText()) - 1);
+            model.insertRow(Integer.parseInt(bp.numberEditLSLbl.getText()) - 1, new Object[]{
+                bp.numberEditLSLbl.getText(), bp.livestockEditLSTF.getText(),
+                bp.classificationEditLSTF.getText(), bp.headsEditLSTF.getText(),
+                bp.ageEditLSSpin.getValue().toString(),
+                ((JTextField)bp.expDisposalAddLSDC.getDateEditor().getUiComponent()).getText(),
+                bp.remarksEditLSTA.getText()});
+            clearEditLSFields();
+            bp.editLSDialog.dispose();
+        }
+    }
+    
     class OkAddCropClass implements ActionListener
     {
         @Override
@@ -139,6 +204,21 @@ public class BeneController
         }
     }
     
+    class OkAddLSClass implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            DefaultTableModel model = (DefaultTableModel) bp.livestockTable.getModel();
+            model.addRow(new Object[]{
+                bp.livestockTable.getRowCount() + 1, bp.livestockAddLSTF.getText(),
+                bp.classificationAddLSTF.getText(), bp.headsAddLSTF.getText(),
+                bp.ageAddLSSpin.getValue().toString(), 
+                ((JTextField)bp.expDisposalAddLSDC.getDateEditor().getUiComponent()).getText(),
+                bp.remarksAddLSTA.getText()});
+            clearAddLSFields();
+            bp.addLSDialog.dispose();
+        }
+    }
     
     class CropPopUpMenu extends MouseAdapter implements  PopupMenuListener
     {
@@ -190,6 +270,105 @@ public class BeneController
         
     }
     
+    class BenePopUpMenu extends MouseAdapter implements  PopupMenuListener
+    {
+        
+        @Override
+        public void mouseReleased(MouseEvent e) 
+        {      
+            int r = bp.beneTable.rowAtPoint(e.getPoint());
+            if (r >= 0 && r < bp.beneTable.getRowCount()) {
+                bp.beneTable.setRowSelectionInterval(r, r);
+            } else {
+                bp.beneTable.clearSelection();
+            }
+
+            int rowindex = bp.beneTable.getSelectedRow();
+            if (rowindex < 0){
+                JPopupMenu popup = new JPopupMenu();
+                popup.show(bp, e.getX(), e.getY());
+                bp.beneTable.setComponentPopupMenu(bp.benePopMenu);
+                //return;
+            }
+            if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
+                JPopupMenu popup = new JPopupMenu();
+                popup.show(bp, e.getX(), e.getY());
+                bp.beneTable.setComponentPopupMenu(bp.benePopMenu);
+            }
+        }
+        
+        @Override
+        public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+            SwingUtilities.invokeLater(() -> {
+                int rowAtPoint = bp.beneTable.rowAtPoint(SwingUtilities.
+                        convertPoint(bp.benePopMenu, new Point(0, 0), bp.beneTable));
+                if (rowAtPoint > -1) {
+                    bp.beneTable.setRowSelectionInterval(rowAtPoint, rowAtPoint);
+                }
+            });
+        }
+
+        @Override
+        public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+            
+        }
+
+        @Override
+        public void popupMenuCanceled(PopupMenuEvent e) {
+            
+        }
+        
+    }
+    
+    class LivestockPopUpMenu extends MouseAdapter implements  PopupMenuListener
+    {
+        
+        @Override
+        public void mouseReleased(MouseEvent e) 
+        {      
+            int r = bp.livestockTable.rowAtPoint(e.getPoint());
+            if (r >= 0 && r < bp.livestockTable.getRowCount()) {
+                bp.livestockTable.setRowSelectionInterval(r, r);
+            } else {
+                bp.livestockTable.clearSelection();
+            }
+
+            int rowindex = bp.livestockTable.getSelectedRow();
+            if (rowindex < 0){
+                JPopupMenu popup = new JPopupMenu();
+                popup.show(bp.addBeneDialog, e.getX(), e.getY());
+                bp.livestockTable.setComponentPopupMenu(bp.livestockPopMenu);
+                //return;
+            }
+            if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
+                JPopupMenu popup = new JPopupMenu();
+                popup.show(bp.addBeneDialog, e.getX(), e.getY());
+                bp.livestockTable.setComponentPopupMenu(bp.livestockPopMenu);
+            }
+        }
+        
+        @Override
+        public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+            SwingUtilities.invokeLater(() -> {
+                int rowAtPoint = bp.livestockTable.rowAtPoint(SwingUtilities.
+                        convertPoint(bp.livestockPopMenu, new Point(0, 0), bp.livestockTable));
+                if (rowAtPoint > -1) {
+                    bp.livestockTable.setRowSelectionInterval(rowAtPoint, rowAtPoint);
+                }
+            });
+        }
+
+        @Override
+        public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+            
+        }
+
+        @Override
+        public void popupMenuCanceled(PopupMenuEvent e) {
+            
+        }
+        
+    }
     
     class MemberPopUpMenu extends MouseAdapter implements  PopupMenuListener
     {
@@ -271,10 +450,12 @@ public class BeneController
 
         @Override
         public void keyPressed(KeyEvent e){
+            searchNow();
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
+            searchNow();
         }
     }
     
@@ -307,6 +488,45 @@ public class BeneController
         }
     }
     
+    class ViewBeneClass implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int dataRow = bp.beneTable.getSelectedRow();
+            if(dataRow >= 0)
+            {
+                JOptionPane.showMessageDialog(bp,    
+                "#: " + (bp.beneTable.getValueAt(dataRow,0).toString()) + "\n" +
+                "First Name: " + (bp.beneTable.getValueAt(dataRow,1).toString()) + "\n" +
+                "Middle Name: " + (bp.beneTable.getValueAt(dataRow,2).toString()) + "\n" +
+                "Last Name: " + (bp.beneTable.getValueAt(dataRow,3).toString()) + "\n" +
+                "Sex: " + (bp.beneTable.getValueAt(dataRow,4).toString()) + "\n" +
+                "Birth Date: " + (bp.beneTable.getValueAt(dataRow,5).toString()) + "\n" +
+                "Brgy: " + (bp.beneTable.getValueAt(dataRow,6).toString()) + "\n" +
+                "Code: " + (bp.beneTable.getValueAt(dataRow,7).toString()) + "\n" +
+                "4Ps: " + (bp.beneTable.getValueAt(dataRow,8).toString()) + "\n" +        
+                "Indigent: " + (bp.beneTable.getValueAt(dataRow,9).toString()) + "\n" +  
+                "Highest Educ Att: " + (bp.beneTable.getValueAt(dataRow,10).toString()) + "\n" +
+                "Ethnicity: " + (bp.beneTable.getValueAt(dataRow,11).toString()) + "\n" +
+                "Net Income: " + (bp.beneTable.getValueAt(dataRow,12).toString()) + "\n" +
+                "Occupation: " + (bp.beneTable.getValueAt(dataRow,13).toString()) + "\n" +
+                "Health Condition: " + (bp.beneTable.getValueAt(dataRow,14).toString()) + "\n" +
+                "House Status: " + (bp.beneTable.getValueAt(dataRow,15).toString()) + "\n" +
+                "House Condition: " + (bp.beneTable.getValueAt(dataRow,16).toString()) + "\n" +
+                "Contact Number: " + (bp.beneTable.getValueAt(dataRow,17).toString()) + "\n" +
+                "Longitude: " + (bp.beneTable.getValueAt(dataRow,18).toString()) + "\n" +
+                "Latitude: " + (bp.beneTable.getValueAt(dataRow,19).toString()),
+                "Beneficiary Info", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(bp, 
+                        "Please select a beneficiary to view.", "No Item Selected",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }
+    
     class ViewCropClass implements ActionListener
     {
         @Override
@@ -333,6 +553,32 @@ public class BeneController
         }
     }
     
+    class ViewLSClass implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int dataRow = bp.livestockTable.getSelectedRow();
+            if(dataRow >= 0)
+            {
+                JOptionPane.showMessageDialog(bp.addBeneDialog,    
+                "#: " + (bp.livestockTable.getValueAt(dataRow,0).toString()) + "\n" +
+                "Livestock Raised: " + (bp.livestockTable.getValueAt(dataRow,1).toString()) + "\n" +
+                "Classification: " + (bp.livestockTable.getValueAt(dataRow,2).toString()) + "\n" +
+                "Number of Heads: " + (bp.livestockTable.getValueAt(dataRow,3).toString()) + "\n" +
+                "Age in Months: " + (bp.livestockTable.getValueAt(dataRow,4).toString()) + "\n" +
+                "Exp Date of Disposal: " + (bp.livestockTable.getValueAt(dataRow,5).toString()) + "\n" +
+                "Remarks: " + (bp.livestockTable.getValueAt(dataRow,6).toString()),
+                "Livestock Info", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(bp.addBeneDialog, 
+                        "Please select a livestock to view.", "No Item Selected",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }
+    
     /**
      * opens the addAdminDialog to add new Beneficiary
      */
@@ -348,7 +594,7 @@ public class BeneController
             bp.addBeneDialog.setTitle("Add Beneficiary");
             bp.addBeneDialog.setModal(true);
             bp.addBeneDialog.pack();
-            bp.addBeneDialog.setLocationRelativeTo(bp);
+            bp.addBeneDialog.setLocationRelativeTo(null);
             bp.addBeneDialog.setVisible(true);
         }
     }
@@ -368,13 +614,14 @@ public class BeneController
                     bp.lNameTF.getText(), //lname
                     bp.sexMaleRB.isSelected() ? "Male" : "Female", //sex
                     ((JTextField)bp.dobDC.getDateEditor().getUiComponent()).getText(), //dob
-                    Integer.parseInt(brgyStr.substring(0,brgyStr.indexOf(" "))), //brgy
+                    brgyStr,
+                    //Integer.parseInt(brgyStr.substring(0,brgyStr.indexOf(" "))), //brgy
                     bp.codeCB.getSelectedItem().toString(), //code
                     bp.fourpsYesRB.isSelected() ? "Yes" : "No", //fourps
                     bp.indigentYesRB.isSelected() ? "Yes" : "No", //indigent
                     bp.heaCB.getSelectedItem().toString(), //hea
                     bp.ethnicityTF.getText(), //ehtnicity
-                    Double.parseDouble(bp.netIncomeTF.getText()), //income
+                    Double.parseDouble(bp.netIncomeSpin.getValue().toString()), //income
                     bp.occTF.getText(), //occ
                     bp.healthCondCB.getSelectedItem().toString(), //healthCond
                     bp.houseStatCB.getSelectedItem().toString(), //houseStat
@@ -382,6 +629,10 @@ public class BeneController
                     bp.contactNumTF.getText(),
                     Double.parseDouble(locStr.substring(0,locStr.indexOf(","))), //loc_long
                     Double.parseDouble(locStr.substring(locStr.indexOf(",") + 1, locStr.length()))); //loc_lat
+            
+            saveFMembertoDB();
+            saveCropstoDB();
+            saveLStoDB();
             displayAllBene();
         }
     }
@@ -391,7 +642,53 @@ public class BeneController
         @Override
         public void actionPerformed(ActionEvent e) 
         {
+            int dataRow = bp.beneTable.getSelectedRow();
+            if(dataRow >= 0)
+            {
+                bp.beneIdLbl1.setText(bp.beneTable.getValueAt(dataRow,0).toString());
+                bp.fNameTF1.setText(bp.beneTable.getValueAt(dataRow,1).toString()); //fname
+                bp.mNameTF1.setText(bp.beneTable.getValueAt(dataRow,2).toString()); //mname
+                bp.lNameTF1.setText(bp.beneTable.getValueAt(dataRow,3).toString()); //lname
+                bp.sexMaleRB1.setSelected(true);
+                
+                try {
+                    Date date;
+                    date = new SimpleDateFormat("yyyy-MM-dd").parse(bp.beneTable.getValueAt(dataRow,5).toString());
+                    bp.dobDC1.setDate(date); //dob
+                } catch (ParseException ex) {
+                    Logger.getLogger(BeneController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                bp.brgyCB1.setModel(new DefaultComboBoxModel(BrgyModel.getBrgy().toArray()));
+                bp.brgyCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,6).toString());
+                bp.codeCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,7).toString());//code
+                bp.fourpsYesRB1.setSelected(true);
+                bp.indigentYesRB1.setSelected(true);
+                bp.heaCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,10).toString()); //hea
+                bp.ethnicityTF1.setText(bp.beneTable.getValueAt(dataRow,11).toString());//ehtnicity
+                bp.netIncomeSpin1.setValue(Double.parseDouble(bp.beneTable.getValueAt(dataRow,12).toString())); //income
+                bp.occTF1.setText(bp.beneTable.getValueAt(dataRow,13).toString()); //occ
+                bp.healthCondCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,14).toString()); //healthCond
+                bp.houseStatCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,15).toString());//houseStat
+                bp.houseCondCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,16).toString());//houseCond
+                bp.contactNumTF1.setText(bp.beneTable.getValueAt(dataRow,17).toString());
+                bp.longLatLbl1.setText(
+                        bp.beneTable.getValueAt(dataRow,18).toString() + "," + 
+                        bp.beneTable.getValueAt(dataRow,19).toString()       
+                );
 
+                bp.editBeneDialog.setTitle("Edit Beneficiary");
+                bp.editBeneDialog.setModal(true);
+                bp.editBeneDialog.pack();
+                bp.editBeneDialog.setLocationRelativeTo(null);
+                bp.editBeneDialog.setVisible(true);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(bp, 
+                        "Please select a beneficiary to edit.", "No Item Selected",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
     
@@ -408,7 +705,7 @@ public class BeneController
                 bp.mnameEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,2).toString());
                 bp.lnameEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,3).toString());
                 bp.relEditMemberCB.setSelectedItem(bp.membersTable.getValueAt(dataRow,4).toString());
-                bp.ageEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,5).toString());
+                bp.ageEditMemberSpin.setValue(Integer.valueOf(bp.membersTable.getValueAt(dataRow,5).toString()));
                 bp.maleEditMemberRB.setSelected(true);
                 bp.heaEditMemberCB.setSelectedItem(bp.membersTable.getValueAt(dataRow,7).toString());
                 bp.occEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,8).toString());
@@ -457,6 +754,35 @@ public class BeneController
         }
     }
    
+    class EditLSClass implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            int dataRow = bp.livestockTable.getSelectedRow();
+            if(dataRow >= 0)
+            {
+                bp.numberEditLSLbl.setText(bp.livestockTable.getValueAt(dataRow,0).toString());
+                bp.livestockEditLSTF.setText(bp.livestockTable.getValueAt(dataRow,1).toString());
+                bp.classificationEditLSTF.setText(bp.livestockTable.getValueAt(dataRow,2).toString());
+                bp.headsEditLSTF.setText(bp.livestockTable.getValueAt(dataRow,3).toString());
+                bp.ageEditLSSpin.setValue(Integer.parseInt(bp.livestockTable.getValueAt(dataRow,4).toString()));
+                bp.remarksEditLSTA.setText(bp.livestockTable.getValueAt(dataRow,6).toString());
+                bp.editLSDialog.setTitle("Edit Livestock");
+                bp.editLSDialog.setModal(true);
+                bp.editLSDialog.pack();
+                bp.editLSDialog.setLocationRelativeTo(bp.addBeneDialog);
+                bp.editLSDialog.setVisible(true);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(bp.addBeneDialog, 
+                        "Please select a livestock to edit.", "No Item Selected",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }
+    
     class UpdateBeneClass implements ActionListener
     {
         @Override
@@ -553,6 +879,37 @@ public class BeneController
         }
     }
     
+    class DeleteLSClass implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            int dataRow = bp.livestockTable.getSelectedRow();
+            if(dataRow >= 0)
+            {
+                String livestockID = bp.livestockTable.getValueAt(dataRow,0).toString();
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to "
+                                   + "Delete livestock: " + livestockID + "?","Warning",dialogButton);
+                if(dialogResult == JOptionPane.YES_OPTION)
+                {
+                    int row = bp.livestockTable.getSelectedRows()[0];
+                    DefaultTableModel model = (DefaultTableModel) bp.livestockTable.getModel();
+                    model.removeRow(row);
+                    for(int index = row ;index<model.getRowCount();index++){
+                        model.setValueAt(index+1, index, 0); //setValueAt(data,row,column)
+                    }
+                }  
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(bp.addBeneDialog, 
+                        "Please select a livestock to delete.", "No Item Selected",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }
+    
     class OpenAddMemberClass implements ActionListener
     {
         @Override
@@ -576,6 +933,19 @@ public class BeneController
             bp.addCropDialog.pack();
             bp.addCropDialog.setLocationRelativeTo(bp.addBeneDialog);
             bp.addCropDialog.setVisible(true);
+        }
+    }
+    
+    class OpenAddLSClass implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            bp.addLSDialog.setTitle("Add Livestock");
+            bp.addLSDialog.setModal(true);
+            bp.addLSDialog.pack();
+            bp.addLSDialog.setLocationRelativeTo(bp.addBeneDialog);
+            bp.addLSDialog.setVisible(true);
         }
     }
     
@@ -624,6 +994,21 @@ public class BeneController
         }
     }
     
+    class CloseEditLSDialogClass extends WindowAdapter implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            clearEditLSFields();
+            bp.editLSDialog.dispose();
+        }
+        
+        @Override 
+        public void windowClosing(WindowEvent e){
+            clearEditLSFields();
+            bp.editLSDialog.dispose();
+        }
+    }
+    
     class CloseAddCropDialogClass extends WindowAdapter implements ActionListener
     {
         @Override
@@ -636,6 +1021,21 @@ public class BeneController
         public void windowClosing(WindowEvent e){
             clearAddCropFields();
             bp.addCropDialog.dispose();
+        }
+    }
+    
+    class CloseAddLSDialogClass extends WindowAdapter implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            clearAddLSFields();
+            bp.addLSDialog.dispose();
+        }
+        
+        @Override 
+        public void windowClosing(WindowEvent e){
+            clearAddLSFields();
+            bp.addLSDialog.dispose();
         }
     }
     
@@ -660,6 +1060,7 @@ public class BeneController
     
     void initRGB()
     {
+        //for addBeneDialog
         bp.walkinRBG.add(bp.walkinYesRB);
         bp.walkinRBG.add(bp.walkinNoRB);
         bp.walkinYesRB.setSelected(true);
@@ -676,6 +1077,24 @@ public class BeneController
         bp.indigentRBG.add(bp.indigentNoRB);
         bp.indigentYesRB.setSelected(true);
         
+        //for editBeneDialog
+        bp.walkinRBG1.add(bp.walkinYesRB1);
+        bp.walkinRBG1.add(bp.walkinNoRB1);
+        bp.walkinYesRB1.setSelected(true);
+        
+        bp.sexRBGAddBene1.add(bp.sexMaleRB1);
+        bp.sexRBGAddBene1.add(bp.sexFemaleRB1);
+        bp.sexMaleRB1.setSelected(true);
+        
+        bp.fourpsRBG1.add(bp.fourpsYesRB1);
+        bp.fourpsRBG1.add(bp.fourpsNoRB1);
+        bp.fourpsYesRB1.setSelected(true);
+        
+        bp.indigentRBG1.add(bp.indigentYesRB1);
+        bp.indigentRBG1.add(bp.indigentNoRB1);
+        bp.indigentYesRB1.setSelected(true);
+        
+        //for fmemberdialogs
         bp.sexRBGAddMember.add(bp.maleAddMemberRB);
         bp.sexRBGAddMember.add(bp.femaleAddMemberRB);
         bp.maleAddMemberRB.setSelected(true);
@@ -694,6 +1113,14 @@ public class BeneController
             int years = period.getYears();
             bp.ageLbl.setText("" + years);
         });
+        
+        bp.dobDC1.getDateEditor().addPropertyChangeListener("date", (PropertyChangeEvent e) -> {
+            DateTime birthDate = new DateTime(((JTextField)bp.dobDC1.getDateEditor().getUiComponent()).getText());
+            DateTime now = new DateTime();
+            Period period = new Period(birthDate, now);
+            int years = period.getYears();
+            bp.ageLbl1.setText("" + years);
+        });
     }
     
     void clearAddMemberFields()
@@ -702,7 +1129,7 @@ public class BeneController
         bp.mnameAddMemberTF.setText("");
         bp.lnameAddMemberTF.setText("");
         bp.relAddMemberCB.setSelectedIndex(0);
-        bp.ageAddMemberTF.setText("");
+        bp.ageAddMemberSpin.setValue(0);
         bp.maleAddMemberRB.setSelected(true);
         bp.heaAddMemberCB.setSelectedIndex(0);
         bp.occAddMemberTF.setText("");
@@ -715,7 +1142,7 @@ public class BeneController
         bp.mnameEditMemberTF.setText("");
         bp.lnameEditMemberTF.setText("");
         bp.relEditMemberCB.setSelectedIndex(0);
-        bp.ageEditMemberTF.setText("");
+        bp.ageEditMemberSpin.setValue(0);
         bp.maleEditMemberRB.setSelected(true);
         bp.heaEditMemberCB.setSelectedIndex(0);
         bp.occEditMemberTF.setText("");
@@ -732,6 +1159,16 @@ public class BeneController
         bp.remarksAddCropTA.setText("");
     }
     
+    void clearAddLSFields()
+    {
+        bp.livestockAddLSTF.setText("");
+        bp.classificationAddLSTF.setText("");
+        bp.headsAddLSTF.setText("");
+        bp.ageAddLSSpin.setValue(0); 
+        bp.expDisposalAddLSDC.setDate(new Date());
+        bp.remarksAddLSTA.setText("");
+    }
+    
     void clearEditCropFields()
     {
         bp.cropEditCropTF.setText("");
@@ -740,5 +1177,78 @@ public class BeneController
         bp.classificationEditCropTF.setText(""); 
         bp.expHarvestEditCropDC.setDate(new Date());
         bp.remarksEditCropTA.setText("");
+    }
+    
+    void clearEditLSFields()
+    {
+        bp.livestockEditLSTF.setText("");
+        bp.classificationEditLSTF.setText("");
+        bp.headsEditLSTF.setText("");
+        bp.ageEditLSSpin.setValue(0); 
+        bp.expDisposalEditLSDC.setDate(new Date());
+        bp.remarksEditLSTA.setText("");
+    }
+    
+    void saveFMembertoDB()
+    {
+        int dataRow = bp.membersTable.getRowCount();
+        if(dataRow > 0)
+        {
+            for(int x = 0 ; x < bp.membersTable.getRowCount() ; x++)
+            {
+                FMemberModel.saveFMember(
+                    Integer.parseInt(bp.beneIdLbl.getText()),
+                    bp.membersTable.getValueAt(x,1).toString(),
+                    bp.membersTable.getValueAt(x,2).toString(),
+                    bp.membersTable.getValueAt(x,3).toString(),
+                    bp.membersTable.getValueAt(x,4).toString(),
+                    Integer.parseInt(bp.membersTable.getValueAt(x,5).toString()),
+                    bp.membersTable.getValueAt(x,6).toString(),
+                    bp.membersTable.getValueAt(x,7).toString(),
+                    bp.membersTable.getValueAt(x,8).toString(),
+                    bp.membersTable.getValueAt(x,9).toString()
+                );
+            }
+        }
+    }
+    
+    void saveCropstoDB()
+    {
+        int dataRow = bp.cropTable.getRowCount();
+        if(dataRow > 0)
+        {
+            for(int x = 0 ; x < bp.cropTable.getRowCount() ; x++)
+            {
+                CropModel.saveCrop(
+                    Integer.parseInt(bp.beneIdLbl.getText()),
+                    bp.cropTable.getValueAt(x,1).toString(),
+                    bp.cropTable.getValueAt(x,2).toString(),
+                    bp.cropTable.getValueAt(x,3).toString(),
+                    bp.cropTable.getValueAt(x,4).toString(),
+                    bp.cropTable.getValueAt(x,5).toString(),
+                    bp.cropTable.getValueAt(x,6).toString()
+                );
+            }
+        }
+    }
+    
+    void saveLStoDB()
+    {
+        int dataRow = bp.livestockTable.getRowCount();
+        if(dataRow > 0)
+        {
+            for(int x = 0 ; x < bp.livestockTable.getRowCount() ; x++)
+            {
+                CropModel.saveCrop(
+                    Integer.parseInt(bp.beneIdLbl.getText()),
+                    bp.livestockTable.getValueAt(x,1).toString(),
+                    bp.livestockTable.getValueAt(x,2).toString(),
+                    bp.livestockTable.getValueAt(x,3).toString(),
+                    bp.livestockTable.getValueAt(x,4).toString(),
+                    bp.livestockTable.getValueAt(x,5).toString(),
+                    bp.livestockTable.getValueAt(x,6).toString()
+                );
+            }
+        }
     }
 }

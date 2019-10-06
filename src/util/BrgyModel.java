@@ -20,7 +20,8 @@ public class BrgyModel
             rs = stmt.executeQuery(sql);
             while(rs.next()) 
             {
-                brgy.add(rs.getInt("brgy_id")+ " " + rs.getString("name"));
+                //brgy.add(rs.getInt("brgy_id")+ " " + rs.getString("name"));
+                brgy.add(rs.getString("name"));
             }
         } catch (SQLException err) 
         {
