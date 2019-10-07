@@ -12,9 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -81,12 +79,10 @@ public class BeneController
                 new FarmerCBClass()
         );
         
-        // TODO ubra add member dialog 
         
-        initRGB();
-        displayAllBene();
+        initRBG();
         JDateChooserInit();
-        
+        displayAllBene();
     }
     
     class FarmerCBClass implements ItemListener
@@ -435,6 +431,9 @@ public class BeneController
                     ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
                 }
             }
+            bp.beneTable.getColumnModel().getColumn(0).setMinWidth(0);
+            bp.beneTable.getColumnModel().getColumn(0).setMaxWidth(50);
+            bp.beneTable.getColumnModel().getColumn(0).setPreferredWidth(25);
         }
         
         @Override
@@ -1056,9 +1055,12 @@ public class BeneController
                 ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
             }
         }
+        bp.beneTable.getColumnModel().getColumn(0).setMinWidth(0);
+        bp.beneTable.getColumnModel().getColumn(0).setMaxWidth(50);
+        bp.beneTable.getColumnModel().getColumn(0).setPreferredWidth(25);
     }
     
-    void initRGB()
+    void initRBG()
     {
         //for addBeneDialog
         bp.walkinRBG.add(bp.walkinYesRB);
@@ -1196,7 +1198,7 @@ public class BeneController
         {
             for(int x = 0 ; x < bp.membersTable.getRowCount() ; x++)
             {
-                FMemberModel.saveFMember(
+                FMemberModel.saveFM(
                     Integer.parseInt(bp.beneIdLbl.getText()),
                     bp.membersTable.getValueAt(x,1).toString(),
                     bp.membersTable.getValueAt(x,2).toString(),

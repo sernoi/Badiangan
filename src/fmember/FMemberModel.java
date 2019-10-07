@@ -14,21 +14,20 @@ import javax.swing.JOptionPane;
 
 public class FMemberModel 
 {
-    public static ResultSet getAllFMember()
+    public static ResultSet getAllFM()
     {
         ResultSet rs = null;
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "SELECT bene_id as 'Beneficiary ID',"
-                    + "fname as 'First Name', mname as 'Middle Name', "
-                    + "lname as 'Last Name', sex as 'Sex', dob as 'Date of Birth', "
-                    + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) as 'Brgy', "
-                    + "code as 'Code', fourps as '4Ps', ip as 'Indigent', hea as 'Highest Educ Att', "
-                    + "ethnicity as 'Ethnicity', net_income as 'Net Income', occ as 'Occupation', "
-                    + "health_condition as 'Health Condition', house_status as 'House Status',"
-                    + "house_condition as 'House Condition', contact_num as 'Contact #' "
-                    + "from beneficiary";
+            String sql = "SELECT fmember.fmem_id as 'ID', CONCAT_WS(' ', beneficiary.fname, "
+                    + "beneficiary.mname, beneficiary.lname ) as 'Beneficiary', " 
+                    + "fmember.fname as 'First Name', fmember.mname as 'Middle Name', "
+                    + "fmember.lname as 'Last Name', fmember.rel_to_hod as 'Rel to HOD', "
+                    + "fmember.age as 'Age', fmember.educ as 'HIghest Educ Att', "
+                    + "fmember.occ_skills as 'Occ Skills', " 
+                    + "fmember.remarks as 'Remarks' from beneficiary , fmember where "
+                    + "fmember.fk_bene_id_member = beneficiary.bene_id";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
         } catch (SQLException ex) {
@@ -39,7 +38,7 @@ public class FMemberModel
         return rs;
     }
     
-    public static ResultSet searchFMember(String str)
+    public static ResultSet searchFM(String str)
     {
         ResultSet rs = null;
         Connection conn = null;
@@ -75,7 +74,7 @@ public class FMemberModel
         return rs;
     }
     
-    public static void saveFMember(int beneId, String fName, String mName,
+    public static void saveFM(int beneId, String fName, String mName,
             String lName, String rel, int age, String sex, String educ,
             String occ, String remarks)
     {
@@ -150,7 +149,7 @@ public class FMemberModel
         }
     }
     
-    public static void deleteFMember(String beneId)
+    public static void deleteFM(String beneId)
     {
         Connection conn = null;
         try {

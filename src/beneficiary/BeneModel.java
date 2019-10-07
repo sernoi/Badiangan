@@ -52,7 +52,8 @@ public class BeneModel
                     + "code as 'Code', fourps as '4Ps', ip as 'Indigent', hea as 'Highest Educ Att', "
                     + "ethnicity as 'Ethnicity', net_income as 'Net Income', occ as 'Occupation', "
                     + "health_condition as 'Health Condition', house_status as 'House Status', "
-                    + "house_condition as 'House Condition', contact_num as 'Contact #' "
+                    + "house_condition as 'House Condition', contact_num as 'Contact #', "
+                    + "loc_long as 'Longitude', loc_lat as 'Latitude' "
                     + "from beneficiary where "
                     
                     + "bene_id LIKE '%" + str + "%' or fname LIKE '%" + str + "%' or "
@@ -64,6 +65,7 @@ public class BeneModel
                     + "ethnicity LIKE '%" + str + "%' or net_income LIKE '%" + str + "%' or "
                     + "occ LIKE '%" + str + "%' or health_condition LIKE '%" + str + "%' or "
                     + "house_status LIKE '%" + str + "%' or house_condition LIKE '%" + str + "%' or "
+                    + "loc_long LIKE '%" + str + "%' or loc_lat LIKE '%" + str + "%' or "
                     + "contact_num LIKE '%" + str + "%'";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);

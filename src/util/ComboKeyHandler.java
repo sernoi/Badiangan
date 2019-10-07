@@ -38,12 +38,12 @@ public class ComboKeyHandler extends KeyAdapter {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "SELECT CONCAT_WS(' ', fname, mname, lname, Concat(' ','(Owner ID:',owner_id,')')) AS 'owners' FROM owner";
+            String sql = "SELECT CONCAT_WS(' ', Concat(' ','(ID:',bene_id,')'), fname, mname, lname ) AS 'bene' FROM beneficiary";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while(rs.next())
             {
-                list.add(rs.getString("owners"));
+                list.add(rs.getString("bene"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ComboKeyHandler.class.getName()).log(Level.SEVERE, null, ex);
