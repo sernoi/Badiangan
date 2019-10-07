@@ -45,7 +45,9 @@ public class FMemberController
                 new OpenAddFMDialog(), new DeleteFMClass(), 
                 
                 //Auto-generate Beneficiary in ComboBox
-                new ComboKeyHandler(fmp.addBeneFMCB)
+                new ComboKeyHandler(fmp.addBeneFMCB),
+                new ComboKeyHandler(fmp.editBeneFMCB)
+                
         );
         
         displayAllFM();
@@ -56,6 +58,7 @@ public class FMemberController
     {
         
     }
+    
     class ViewFMClass implements ActionListener
     {
         @Override
@@ -65,12 +68,16 @@ public class FMemberController
             {
                 JOptionPane.showMessageDialog(fmp,
                 "ID: " + (fmp.fmTable.getValueAt(dataRow,0).toString()) + "\n" +
-                "Username: " + (fmp.fmTable.getValueAt(dataRow,1).toString()) + "\n" +
+                "Beneficiary: " + (fmp.fmTable.getValueAt(dataRow,1).toString()) + "\n" +
                 "First Name: " + (fmp.fmTable.getValueAt(dataRow,2).toString()) + "\n" +
                 "Middle Name: " + (fmp.fmTable.getValueAt(dataRow,3).toString()) + "\n" +
                 "Last Name: " + (fmp.fmTable.getValueAt(dataRow,4).toString()) + "\n" +
-                "Department: " + (fmp.fmTable.getValueAt(dataRow,5).toString()) + "\n" +
-                "Position: " + (fmp.fmTable.getValueAt(dataRow,6).toString())  
+                "Rel to HOD: " + (fmp.fmTable.getValueAt(dataRow,5).toString()) + "\n" +
+                "Age: " + (fmp.fmTable.getValueAt(dataRow,6).toString()) + "\n" +   
+                "Sex: " + (fmp.fmTable.getValueAt(dataRow,7).toString()) + "\n" +
+                "Highest Ed Att: " + (fmp.fmTable.getValueAt(dataRow,8).toString()) + "\n" +
+                "Occ Skills: " + (fmp.fmTable.getValueAt(dataRow,9).toString()) + "\n" +
+                "Remarks: " + (fmp.fmTable.getValueAt(dataRow,10).toString())
                 , "Family Member Info", JOptionPane.INFORMATION_MESSAGE);
             }
             else
@@ -141,6 +148,9 @@ public class FMemberController
                     ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
                 }
             }
+            fmp.fmTable.getColumnModel().getColumn(0).setMinWidth(0);
+            fmp.fmTable.getColumnModel().getColumn(0).setMaxWidth(50);
+            fmp.fmTable.getColumnModel().getColumn(0).setPreferredWidth(25);
         }
 
         @Override
@@ -204,13 +214,16 @@ public class FMemberController
             int dataRow = fmp.fmTable.getSelectedRow();
             if(dataRow >= 0)
             {
-//                fmp.oldIdTF.setText(fmp.fmTable.getValueAt(dataRow,0).toString());
-//                fmp.unTF1.setText(fmp.fmTable.getValueAt(dataRow,1).toString());
-//                fmp.fNameTF1.setText(fmp.fmTable.getValueAt(dataRow,2).toString());
-//                fmp.mNameTF1.setText(fmp.fmTable.getValueAt(dataRow,3).toString());
-//                fmp.lNameTF1.setText(fmp.fmTable.getValueAt(dataRow,4).toString());
-//                fmp.departmentCB1.setSelectedItem(fmp.fmTable.getValueAt(dataRow,5).toString());
-//                fmp.positionCB1.setSelectedItem(fmp.fmTable.getValueAt(dataRow,6).toString());
+                fmp.idEditFMLbl.setText(fmp.fmTable.getValueAt(dataRow,0).toString());
+                fmp.fnameEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,2).toString());
+                fmp.mnameEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,3).toString());
+                fmp.lnameEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,4).toString());
+                fmp.relEditMemberCB.setSelectedItem(fmp.fmTable.getValueAt(dataRow,5).toString());
+                fmp.ageEditMemberSpin.setValue(Integer.parseInt(fmp.fmTable.getValueAt(dataRow,6).toString()));
+                fmp.maleEditMemberRB.setSelected(true);
+                fmp.heaEditMemberCB.setSelectedItem(fmp.fmTable.getValueAt(dataRow,8).toString());
+                fmp.occEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,9).toString());
+                fmp.remarksEditMemberTA.setText(fmp.fmTable.getValueAt(dataRow,10).toString());
                 fmp.editFMDialog.setTitle("Edit Family Member");
                 fmp.editFMDialog.setModal(true);
                 fmp.editFMDialog.pack();
@@ -228,7 +241,7 @@ public class FMemberController
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            
         }
     }
     
@@ -313,7 +326,7 @@ public class FMemberController
         fmp.remarksAddMemberTA.setText("");
         
         //clears all fields in editFMDialog
-        JTextField text1 = (JTextField) fmp.addBeneFMCB.getEditor().getEditorComponent();
+        JTextField text1 = (JTextField) fmp.editBeneFMCB.getEditor().getEditorComponent();
         text1.setText("");
         fmp.fnameEditMemberTF.setText("");
         fmp.mnameEditMemberTF.setText("");

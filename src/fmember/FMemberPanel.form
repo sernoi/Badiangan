@@ -75,17 +75,20 @@
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jScrollPane6" alignment="1" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jLabel43" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel47" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel48" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel49" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel50" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel51" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel52" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel53" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel54" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jLabel21" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jLabel43" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel47" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel48" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel49" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel50" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel51" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel52" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel53" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel54" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel21" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -95,7 +98,8 @@
                                       <Component id="occEditMemberTF" alignment="0" max="32767" attributes="0"/>
                                       <Component id="heaEditMemberCB" alignment="0" max="32767" attributes="0"/>
                                       <Component id="relEditMemberCB" alignment="0" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
+                                      <Component id="editBeneFMCB" alignment="0" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="maleEditMemberRB" min="-2" max="-2" attributes="0"/>
@@ -106,7 +110,7 @@
                                           </Group>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="editBeneFMCB" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="idEditFMLbl" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -125,10 +129,15 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="idEditFMLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="editBeneFMCB" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel43" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="fnameEditMemberTF" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -172,7 +181,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel53" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane6" max="32767" attributes="0"/>
+                          <Component id="jScrollPane6" pref="77" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="okEditFMBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -445,6 +454,25 @@
                     <Property name="horizontalAlignment" type="int" value="4"/>
                     <Property name="text" type="java.lang.String" value="Beneficiary:"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel2">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Family Member ID:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="idEditFMLbl">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -1018,7 +1046,7 @@
                       <Component id="editFMBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="424" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="393" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>

@@ -24,7 +24,7 @@ public class FMemberModel
                     + "beneficiary.mname, beneficiary.lname ) as 'Beneficiary', " 
                     + "fmember.fname as 'First Name', fmember.mname as 'Middle Name', "
                     + "fmember.lname as 'Last Name', fmember.rel_to_hod as 'Rel to HOD', "
-                    + "fmember.age as 'Age', fmember.educ as 'HIghest Educ Att', "
+                    + "fmember.age as 'Age', fmember.sex as 'Sex', fmember.educ as 'HIghest Educ Att', "
                     + "fmember.occ_skills as 'Occ Skills', " 
                     + "fmember.remarks as 'Remarks' from beneficiary , fmember where "
                     + "fmember.fk_bene_id_member = beneficiary.bene_id";

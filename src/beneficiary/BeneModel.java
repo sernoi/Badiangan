@@ -127,32 +127,51 @@ public class BeneModel
         }
     }
     
-    public static void updateAdmin(String beneID, String username, String password, 
-            String fname, String mname, String lname, String department, String position)
+    public static void updateBene(int beneId, String fName, String mName,
+            String lName, String sex, String dob, String brgy, String code,
+            String fourPs, String indigency, String hea, String ethnicity,
+            double netIncome, String occ, String healthCond, String houseStat,
+            String houseCond, String contactNum, double locLong, double locLat)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Update beneficiary set username = ? , password = sha1(?) , "
-                    + "fname = ? , mname = ? , lname = ?, department = ?, "
-                    + "position = ? where bene_id = '"+beneID+"'";
+            String sql = "Update admin set "
+                    + "fname = ?, mname = ?, lname = ?, "
+                    + "sex = ?, dob = ?, "
+                    + "(Select brgy_id from brgy where name = '"+brgy+"'), "
+                    + "code = ?, fourps = ?, indigency = ?, hea = ?, "
+                    + "ip = ?, net_income = ?, occ = ?, health_condition = ?, "
+                    + "house_status = ?, house_condition = ?, contact_num = ?, "
+                    + "loc_long = ?, loc_lang = ?"
+                    + " where bene_id = '"+beneId+"'";
+//            String sql = "Insert into beneficiary values (?,?,?,?,?,?,"
+//                    + "(Select brgy_id from brgy where name = '"+brgy+"'),"
+//                    + "?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-            stmt.setString(3, fname);
-            stmt.setString(4, mname);
-            stmt.setString(5, lname);
-            stmt.setString(6, department);
-            stmt.setString(7, position);
+            stmt.setString(2, fName);
+            stmt.setString(3, mName);
+            stmt.setString(4, lName);
+            stmt.setString(5, sex);
+            stmt.setString(6, dob);
+            stmt.setString(7, code);
+            stmt.setString(8, fourPs);
+            stmt.setString(9, indigency);
+            stmt.setString(10, hea);
+            stmt.setString(11, ethnicity);
+            stmt.setDouble(12, netIncome);
+            stmt.setString(13, occ);
+            stmt.setString(14, healthCond);
+            stmt.setString(15, houseStat);
+            stmt.setString(16, houseCond);
+            stmt.setString(17, contactNum);
+            stmt.setDouble(18, locLong);
+            stmt.setDouble(19, locLat);
             stmt.execute();
-            JOptionPane.showMessageDialog(null,"Admin Info Updated!");
-        } catch(MySQLIntegrityConstraintViolationException ex)
-        {
-            JOptionPane.showMessageDialog(null, "Username already taken", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
-        catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Beneficiary Updated!");
+        }catch (SQLException ex) {
             Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex);
+            JOptionPane.showMessageDialog(null, "Please check inputs" + ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
         finally
         {
@@ -160,7 +179,7 @@ public class BeneModel
                 conn.close();
             } catch (SQLException ex) 
             {
-                JOptionPane.showMessageDialog(null, "Cannot close connection of DB!");
+                JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
                 Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

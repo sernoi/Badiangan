@@ -47,8 +47,8 @@ public class BeneController
                 //Bene Classes
                 new BenePopUpMenu(), new BenePopUpMenu(), new ViewBeneClass(), 
                 new EditBeneClass(), new OpenAddBeneClass(), new DeleteBeneClass(),
-                new OpenAddBeneClass(), new SaveBeneClass(),
-                new EditBeneClass(), new UpdateBeneClass(), new DeleteBeneClass(),
+                new OpenAddBeneClass(), new SaveBeneClass(), new CloseAddBeneDialogClass(), 
+                new EditBeneClass(), new UpdateBeneClass(),new CloseEditBeneDialogClass(), new DeleteBeneClass(),
                 new SearchBeneClass(), new SearchBeneClass(),
                 
                 //Members Classes
@@ -786,6 +786,34 @@ public class BeneController
     {
         @Override
         public void actionPerformed(ActionEvent e) {
+            String brgyStr = bp.brgyCB.getSelectedItem().toString();
+            String locStr = bp.longLatLbl1.getText();
+            
+            BeneModel.updateBene(
+                    Integer.parseInt(bp.beneIdLbl1.getText()), //beneID
+                    bp.fNameTF1.getText(), //fname
+                    bp.mNameTF1.getText(), //mname
+                    bp.lNameTF1.getText(), //lname
+                    bp.sexMaleRB1.isSelected() ? "Male" : "Female", //sex
+                    ((JTextField)bp.dobDC1.getDateEditor().getUiComponent()).getText(), //dob
+                    brgyStr,
+                    //Integer.parseInt(brgyStr.substring(0,brgyStr.indexOf(" "))), //brgy
+                    bp.codeCB1.getSelectedItem().toString(), //code
+                    bp.fourpsYesRB1.isSelected() ? "Yes" : "No", //fourps
+                    bp.indigentYesRB1.isSelected() ? "Yes" : "No", //indigent
+                    bp.heaCB1.getSelectedItem().toString(), //hea
+                    bp.ethnicityTF1.getText(), //ehtnicity
+                    Double.parseDouble(bp.netIncomeSpin1.getValue().toString()), //income
+                    bp.occTF1.getText(), //occ
+                    bp.healthCondCB1.getSelectedItem().toString(), //healthCond
+                    bp.houseStatCB1.getSelectedItem().toString(), //houseStat
+                    bp.houseCondCB1.getSelectedItem().toString(), //houseCond
+                    bp.contactNumTF1.getText(),
+                    Double.parseDouble(locStr.substring(0,locStr.indexOf(","))), //loc_long
+                    Double.parseDouble(locStr.substring(locStr.indexOf(",") + 1, locStr.length()))); //loc_lat
+            
+            bp.editBeneDialog.dispose();
+            displayAllBene();
         }
     }
     
@@ -948,6 +976,36 @@ public class BeneController
         }
     }
     
+    class CloseEditBeneDialogClass extends WindowAdapter implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            clearEditBeneFields();
+            bp.editBeneDialog.dispose();
+        }
+        
+        @Override 
+        public void windowClosing(WindowEvent e){
+            clearEditBeneFields();
+            bp.editBeneDialog.dispose();
+        }
+    }
+    
+    class CloseAddBeneDialogClass extends WindowAdapter implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            clearAddBeneFields();
+            bp.addBeneDialog.dispose();
+        }
+        
+        @Override 
+        public void windowClosing(WindowEvent e){
+            clearAddBeneFields();
+            bp.addBeneDialog.dispose();
+        }
+    }
+    
     class CloseAddMemberDialogClass extends WindowAdapter implements ActionListener
     {
         @Override
@@ -1080,10 +1138,6 @@ public class BeneController
         bp.indigentYesRB.setSelected(true);
         
         //for editBeneDialog
-        bp.walkinRBG1.add(bp.walkinYesRB1);
-        bp.walkinRBG1.add(bp.walkinNoRB1);
-        bp.walkinYesRB1.setSelected(true);
-        
         bp.sexRBGAddBene1.add(bp.sexMaleRB1);
         bp.sexRBGAddBene1.add(bp.sexFemaleRB1);
         bp.sexMaleRB1.setSelected(true);
@@ -1123,6 +1177,53 @@ public class BeneController
             int years = period.getYears();
             bp.ageLbl1.setText("" + years);
         });
+    }
+    
+    void clearEditBeneFields()
+    {
+        bp.beneIdLbl1.setText("0"); //beneID
+        bp.fNameTF1.setText(""); //fname
+        bp.mNameTF1.setText("");//mname
+        bp.lNameTF1.setText(""); //lname
+        bp.sexMaleRB1.setSelected(true); //sex
+        bp.codeCB1.setSelectedIndex(0); //code
+        bp.fourpsYesRB1.setSelected(true);//fourps
+        bp.indigentYesRB1.setSelected(true); //indigent
+        bp.heaCB1.setSelectedIndex(0); //hea
+        bp.ethnicityTF1.setText(""); //ehtnicity
+        bp.netIncomeSpin1.setValue(0); //income
+        bp.occTF1.setText(""); //occ
+        bp.healthCondCB1.setSelectedIndex(0); //healthCond
+        bp.houseStatCB1.setSelectedIndex(0); //houseStat
+        bp.houseCondCB1.setSelectedIndex(0); //houseCond
+        bp.contactNumTF1.setText("");
+    }
+    
+    void clearAddBeneFields()
+    {
+        bp.beneIdLbl.setText("0"); //beneID
+        bp.fNameTF.setText(""); //fname
+        bp.mNameTF.setText("");//mname
+        bp.lNameTF.setText(""); //lname
+        bp.sexMaleRB.setSelected(true); //sex
+        bp.codeCB.setSelectedIndex(0); //code
+        bp.fourpsYesRB.setSelected(true);//fourps
+        bp.indigentYesRB.setSelected(true); //indigent
+        bp.heaCB.setSelectedIndex(0); //hea
+        bp.ethnicityTF.setText(""); //ehtnicity
+        bp.netIncomeSpin.setValue(0); //income
+        bp.occTF.setText(""); //occ
+        bp.farmerCB.setSelected(false);
+        bp.healthCondCB.setSelectedIndex(0); //healthCond
+        bp.houseStatCB.setSelectedIndex(0); //houseStat
+        bp.houseCondCB.setSelectedIndex(0); //houseCond
+        bp.contactNumTF.setText("");
+        DefaultTableModel model1 = (DefaultTableModel) bp.membersTable.getModel();
+        model1.setRowCount(0);
+        DefaultTableModel model2 = (DefaultTableModel) bp.cropTable.getModel();
+        model2.setRowCount(0);
+        DefaultTableModel model3 = (DefaultTableModel) bp.livestockTable.getModel();
+        model3.setRowCount(0);
     }
     
     void clearAddMemberFields()

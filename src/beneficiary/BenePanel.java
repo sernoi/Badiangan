@@ -141,9 +141,6 @@ public class BenePanel extends javax.swing.JPanel {
         jLabel17 = new javax.swing.JLabel();
         beneIdLbl1 = new javax.swing.JLabel();
         jLabel94 = new javax.swing.JLabel();
-        walkinNoRB1 = new javax.swing.JRadioButton();
-        walkinYesRB1 = new javax.swing.JRadioButton();
-        jLabel95 = new javax.swing.JLabel();
         netIncomeSpin1 = new javax.swing.JSpinner();
         updateBeneBtn = new javax.swing.JButton();
         cancelBeneBtn1 = new javax.swing.JButton();
@@ -1030,16 +1027,6 @@ public class BenePanel extends javax.swing.JPanel {
         jLabel94.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel94.setText("Beneficiary ID:");
 
-        walkinNoRB1.setForeground(new java.awt.Color(255, 255, 255));
-        walkinNoRB1.setText("No");
-
-        walkinYesRB1.setForeground(new java.awt.Color(255, 255, 255));
-        walkinYesRB1.setText("Yes");
-
-        jLabel95.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel95.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel95.setText("Walk-in:");
-
         netIncomeSpin1.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
@@ -1061,44 +1048,6 @@ public class BenePanel extends javax.swing.JPanel {
                         .addComponent(indigentYesRB1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(indigentNoRB1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
-                        .addComponent(jLabel95, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(walkinYesRB1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(walkinNoRB1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel94, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(beneIdLbl1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
-                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel88, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel83, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel17Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(fNameTF1))
-                            .addGroup(jPanel17Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel17Layout.createSequentialGroup()
-                                        .addComponent(dobDC1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel14)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ageLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel17Layout.createSequentialGroup()
-                                        .addComponent(sexMaleRB1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(sexFemaleRB1)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(lNameTF1)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ethnicityTF1))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1146,7 +1095,38 @@ public class BenePanel extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
                                 .addComponent(netIncomeSpin1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(occTF1, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(occTF1, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel88, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel83, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel94, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel17Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel17Layout.createSequentialGroup()
+                                        .addComponent(dobDC1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel14)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ageLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel17Layout.createSequentialGroup()
+                                        .addComponent(sexMaleRB1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(sexFemaleRB1)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(lNameTF1)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ethnicityTF1))
+                            .addGroup(jPanel17Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(beneIdLbl1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(fNameTF1))))))
                 .addContainerGap())
         );
         jPanel17Layout.setVerticalGroup(
@@ -1154,9 +1134,6 @@ public class BenePanel extends javax.swing.JPanel {
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel95, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(walkinYesRB1)
-                    .addComponent(walkinNoRB1)
                     .addComponent(jLabel94, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(beneIdLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2389,9 +2366,9 @@ public class BenePanel extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -2416,8 +2393,8 @@ public class BenePanel extends javax.swing.JPanel {
                     .addComponent(deleteBeneBtn)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                .addGap(15, 15, 15))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -2436,9 +2413,9 @@ public class BenePanel extends javax.swing.JPanel {
             //Bene Args
             PopupMenuListener pop0, MouseListener tablePop0, ActionListener menu1bene,
             ActionListener menu2bene, ActionListener menu3bene, ActionListener menu4bene,
-            ActionListener add, ActionListener save, ActionListener edit,
-            ActionListener update, ActionListener delete, 
-            ActionListener search1, KeyListener search2, 
+            ActionListener add, ActionListener save, ActionListener cancel0a, 
+            ActionListener edit, ActionListener update, ActionListener cancel0b,
+            ActionListener delete, ActionListener search1, KeyListener search2, 
            
             //Member Args
             PopupMenuListener pop1, MouseListener tablePop1, ActionListener menu1a,
@@ -2471,7 +2448,10 @@ public class BenePanel extends javax.swing.JPanel {
         deleteBeneMenuItem.addActionListener(menu4bene);
         addBeneBtn.addActionListener(add);
         saveBeneBtn.addActionListener(save);
+        cancelBeneBtn.addActionListener(cancel0a);
         editBeneBtn.addActionListener(edit);
+        updateBeneBtn.addActionListener(update);
+        cancelBeneBtn1.addActionListener(cancel0b);
         deleteBeneBtn.addActionListener(delete);
         searchTF.addKeyListener(search2);
         
@@ -2710,7 +2690,6 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JLabel jLabel92;
     public javax.swing.JLabel jLabel93;
     public javax.swing.JLabel jLabel94;
-    public javax.swing.JLabel jLabel95;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -2798,11 +2777,9 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JMenuItem viewLSMenuItem;
     public javax.swing.JMenuItem viewMemberMenuItem;
     public javax.swing.JRadioButton walkinNoRB;
-    public javax.swing.JRadioButton walkinNoRB1;
     public javax.swing.ButtonGroup walkinRBG;
     public javax.swing.ButtonGroup walkinRBG1;
     public javax.swing.JRadioButton walkinYesRB;
-    public javax.swing.JRadioButton walkinYesRB1;
     // End of variables declaration//GEN-END:variables
 
 }
