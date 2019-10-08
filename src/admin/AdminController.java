@@ -11,7 +11,6 @@ import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -37,23 +36,101 @@ public class AdminController
         displayAllAdmin();
         
     }
-    
-    class ViewAdminClass implements ActionListener
+    /**
+     * Clears the fields in the jDialog
+     * Invoked by reset button and close operation
+     */
+    void clearFields()
+    {
+        //clears all fields in addAdminDialog
+        ap.unTF.setText("");
+        ap.fNameTF.setText("");
+        ap.mNameTF.setText("");
+        ap.lNameTF.setText("");
+        ap.departmentCB.setSelectedIndex(0);
+        ap.positionCB.setSelectedIndex(0);
+        ap.jPasswordField1.setText("");
+        ap.jPasswordField2.setText("");
+        
+        //clears all fields in editAdminDialog
+        ap.unTF1.setText("");
+        ap.fNameTF1.setText("");
+        ap.mNameTF1.setText("");
+        ap.lNameTF1.setText("");
+        ap.departmentCB1.setSelectedIndex(0);
+        ap.positionCB1.setSelectedIndex(0);
+        ap.jPasswordField3.setText("");
+        ap.jPasswordField4.setText("");
+    }
+    /**
+     * Gets all the rows in admin table, put in the table of AdminPanel
+     */
+    void displayAllAdmin()
+    {
+        //this is to load all the schedules in the database upon selecting the Event Scheduler in the menu bar
+        ResultSet rs = AdminModel.getAllAdmins();
+        ap.adminTable.setModel(DbUtils.resultSetToTableModel(rs));
+        // this is to disable editing in the jtable
+        for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class))
+        {
+            TableCellEditor ce = ap.adminTable.getDefaultEditor(c);
+            if (ce instanceof DefaultCellEditor)
+            {
+                ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
+            }
+        }
+    }
+    class CloseDialogClass extends WindowAdapter
     {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void windowClosing(WindowEvent e){
+            clearFields();
+        }
+    }
+    class DeleteAdminClass implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
             int dataRow = ap.adminTable.getSelectedRow();
             if(dataRow >= 0)
             {
-                JOptionPane.showMessageDialog(ap,
-                "Admin ID: " + (ap.adminTable.getValueAt(dataRow,0).toString()) + "\n" +
-                "Username: " + (ap.adminTable.getValueAt(dataRow,1).toString()) + "\n" +
-                "First Name: " + (ap.adminTable.getValueAt(dataRow,2).toString()) + "\n" +
-                "Middle Name: " + (ap.adminTable.getValueAt(dataRow,3).toString()) + "\n" +
-                "Last Name: " + (ap.adminTable.getValueAt(dataRow,4).toString()) + "\n" +
-                "Department: " + (ap.adminTable.getValueAt(dataRow,5).toString()) + "\n" +
-                "Position: " + (ap.adminTable.getValueAt(dataRow,6).toString())  
-                , "Admin Info", JOptionPane.INFORMATION_MESSAGE);
+                String adminID = ap.adminTable.getValueAt(dataRow,0).toString();
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog (ap, "Would You Like to "
+                        + "Delete Admin: " + adminID + "?","Warning",dialogButton);
+                if(dialogResult == JOptionPane.YES_OPTION)
+                {
+                    AdminModel.deleteAdmin(adminID);
+                    displayAllAdmin();
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(ap, "Please select admin to delete.");
+            }
+        }
+    }
+    class EditAdminClass implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            int dataRow = ap.adminTable.getSelectedRow();
+            if(dataRow >= 0)
+            {
+                ap.oldIdTF.setText(ap.adminTable.getValueAt(dataRow,0).toString());
+                ap.unTF1.setText(ap.adminTable.getValueAt(dataRow,1).toString());
+                ap.fNameTF1.setText(ap.adminTable.getValueAt(dataRow,2).toString());
+                ap.mNameTF1.setText(ap.adminTable.getValueAt(dataRow,3).toString());
+                ap.lNameTF1.setText(ap.adminTable.getValueAt(dataRow,4).toString());
+                ap.departmentCB1.setSelectedItem(ap.adminTable.getValueAt(dataRow,5).toString());
+                ap.positionCB1.setSelectedItem(ap.adminTable.getValueAt(dataRow,6).toString());
+                ap.editAdminDialog.setTitle("Edit Admin");
+                ap.editAdminDialog.setModal(true);
+                ap.editAdminDialog.pack();
+                ap.editAdminDialog.setLocationRelativeTo(ap);
+                ap.editAdminDialog.setVisible(true);
             }
             else
             {
@@ -108,38 +185,6 @@ public class AdminController
         
     }
     
-    class SearchAdminClass implements KeyListener
-    {
-        void searchNow()
-        {
-            ResultSet rs = AdminModel.searchAdmin(ap.searchTF.getText());
-            ap.adminTable.setModel(DbUtils.resultSetToTableModel(rs));
-            // this is to disable editing in the jtable
-            for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class)) 
-            {
-                TableCellEditor ce = ap.adminTable.getDefaultEditor(c);
-                if (ce instanceof DefaultCellEditor) 
-                {
-                    ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
-                }
-            }
-        }
-
-        @Override
-        public void keyTyped(KeyEvent e) {
-            searchNow();
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e){
-            searchNow();
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            searchNow();
-        }
-    }
     
     /**
      * opens the addAdminDialog to add new admin
@@ -154,6 +199,13 @@ public class AdminController
             ap.addAdminDialog.pack();
             ap.addAdminDialog.setLocationRelativeTo(ap);
             ap.addAdminDialog.setVisible(true);
+        }
+    }
+    class ResetFieldsClass implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            clearFields();
         }
     }
     
@@ -179,32 +231,36 @@ public class AdminController
             }
         }
     }
-    
-    class EditAdminClass implements ActionListener
+    class SearchAdminClass implements KeyListener
     {
-        @Override
-        public void actionPerformed(ActionEvent e) 
+        void searchNow() 
         {
-            int dataRow = ap.adminTable.getSelectedRow();
-            if(dataRow >= 0)
+            ResultSet rs = AdminModel.searchAdmin(ap.searchTF.getText());
+            ap.adminTable.setModel(DbUtils.resultSetToTableModel(rs));
+            // this is to disable editing in the jtable
+            for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class))
             {
-                ap.oldIdTF.setText(ap.adminTable.getValueAt(dataRow,0).toString());
-                ap.unTF1.setText(ap.adminTable.getValueAt(dataRow,1).toString());
-                ap.fNameTF1.setText(ap.adminTable.getValueAt(dataRow,2).toString());
-                ap.mNameTF1.setText(ap.adminTable.getValueAt(dataRow,3).toString());
-                ap.lNameTF1.setText(ap.adminTable.getValueAt(dataRow,4).toString());
-                ap.departmentCB1.setSelectedItem(ap.adminTable.getValueAt(dataRow,5).toString());
-                ap.positionCB1.setSelectedItem(ap.adminTable.getValueAt(dataRow,6).toString());
-                ap.editAdminDialog.setTitle("Edit Admin");
-                ap.editAdminDialog.setModal(true);
-                ap.editAdminDialog.pack();
-                ap.editAdminDialog.setLocationRelativeTo(ap);
-                ap.editAdminDialog.setVisible(true);
+                TableCellEditor ce = ap.adminTable.getDefaultEditor(c);
+                if (ce instanceof DefaultCellEditor)
+                {
+                    ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
+                }
             }
-            else
-            {
-                JOptionPane.showMessageDialog(ap, "Please select admin to edit.");
-            }
+        }
+        
+        @Override
+        public void keyTyped(KeyEvent e) {
+            searchNow();
+        }
+        
+        @Override
+        public void keyPressed(KeyEvent e){
+            searchNow();
+        }
+        
+        @Override
+        public void keyReleased(KeyEvent e) {
+            searchNow();
         }
     }
     
@@ -226,91 +282,28 @@ public class AdminController
             }
         }
     }
-    
-    class DeleteAdminClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) 
-        {
-            int dataRow = ap.adminTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                String adminID = ap.adminTable.getValueAt(dataRow,0).toString();
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog (ap, "Would You Like to "
-                                   + "Delete Admin: " + adminID + "?","Warning",dialogButton);
-                if(dialogResult == JOptionPane.YES_OPTION)
-                {
-                    AdminModel.deleteAdmin(adminID);
-                    displayAllAdmin();
-                }  
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(ap, "Please select admin to delete.");
-            }
-        }
-    }
-    
-    class CloseDialogClass extends WindowAdapter
-    {
-        @Override 
-            public void windowClosing(WindowEvent e){
-            clearFields();
-        }
-    }
-    
-    class ResetFieldsClass implements ActionListener
+    class ViewAdminClass implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            clearFields();
-        }
-    }
-    
-    /**
-     * Gets all the rows in admin table, put in the table of AdminPanel
-     */
-    void displayAllAdmin()
-    {
-        //this is to load all the schedules in the database upon selecting the Event Scheduler in the menu bar
-        ResultSet rs = AdminModel.getAllAdmins();
-        ap.adminTable.setModel(DbUtils.resultSetToTableModel(rs));
-        // this is to disable editing in the jtable
-        for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class)) 
-        {
-            TableCellEditor ce = ap.adminTable.getDefaultEditor(c);
-            if (ce instanceof DefaultCellEditor) 
+            int dataRow = ap.adminTable.getSelectedRow();
+            if(dataRow >= 0)
             {
-                ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
+                JOptionPane.showMessageDialog(ap,
+                        "Admin ID: " + (ap.adminTable.getValueAt(dataRow,0).toString()) + "\n" +
+                                "Username: " + (ap.adminTable.getValueAt(dataRow,1).toString()) + "\n" +
+                                        "First Name: " + (ap.adminTable.getValueAt(dataRow,2).toString()) + "\n" +
+                                                "Middle Name: " + (ap.adminTable.getValueAt(dataRow,3).toString()) + "\n" +
+                                                        "Last Name: " + (ap.adminTable.getValueAt(dataRow,4).toString()) + "\n" +
+                                                                "Department: " + (ap.adminTable.getValueAt(dataRow,5).toString()) + "\n" +
+                                                                        "Position: " + (ap.adminTable.getValueAt(dataRow,6).toString())
+                        , "Admin Info", JOptionPane.INFORMATION_MESSAGE);  
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(ap, "Please select admin to edit.");
             }
         }
     }
     
-    /**
-     * Clears the fields in the jDialog
-     * Invoked by reset button and close operation
-     */
-    void clearFields()
-    {
-        //clears all fields in addAdminDialog
-        ap.unTF.setText("");
-        ap.fNameTF.setText("");
-        ap.mNameTF.setText("");
-        ap.lNameTF.setText("");
-        ap.departmentCB.setSelectedIndex(0);
-        ap.positionCB.setSelectedIndex(0);
-        ap.jPasswordField1.setText("");
-        ap.jPasswordField2.setText("");
-        
-        //clears all fields in editAdminDialog
-        ap.unTF1.setText("");
-        ap.fNameTF1.setText("");
-        ap.mNameTF1.setText("");
-        ap.lNameTF1.setText("");
-        ap.departmentCB1.setSelectedIndex(0);
-        ap.positionCB1.setSelectedIndex(0);
-        ap.jPasswordField3.setText("");
-        ap.jPasswordField4.setText("");
-    }
 }

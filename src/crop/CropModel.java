@@ -15,6 +15,30 @@ import javax.swing.JOptionPane;
 
 public class CropModel 
 {
+    public static void deleteFMember(String beneId)
+    {
+        Connection conn = null;
+        try {
+            conn = DB.getConnection();
+            String sql = "Delete from beneficiary where bene_id = '"+beneId+"'";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.execute();
+            //JOptionPane.showMessageDialog(null,"Subscriber Deleted!");
+        } catch (SQLException ex) {
+            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        finally
+        {
+            try {
+                conn.close();
+            } catch (SQLException ex)
+            {
+                JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
+                Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     public static ResultSet getAllFMember()
     {
         ResultSet rs = null;
@@ -39,7 +63,63 @@ public class CropModel
         }
         return rs;
     }
+    /**
+     * Gets the latest bene_id from the beneficiary table to be
+     * saved in the registration table
+     * @return bene_id
+     */
+    public static int getIdOfLatestBene()
+    {
+        int bene_id = 0;
+        Connection conn = DB.getConnection();
+        ResultSet rs;
+        String sql = "Select * from beneficiary ORDER BY bene_id DESC LIMIT 1";
+        try
+        {
+            Statement stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            if (rs.next())
+            {
+                bene_id = rs.getInt("bene_id");
+            }
+        }catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return bene_id;
+    }
     
+    public static void saveCrop(int beneId, String crop, String area,
+            String variety, String classification, String exp, String remarks)
+    {
+        Connection conn = null;
+        try {
+            conn = DB.getConnection();
+            String sql = "Insert into crop values (0,?,?,?,?,?,?,?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, beneId);
+            stmt.setString(2, crop);
+            stmt.setString(3, area);
+            stmt.setString(4, variety);
+            stmt.setString(5, classification);
+            stmt.setString(6, exp);
+            stmt.setString(7, remarks);
+            stmt.execute();
+        }catch (SQLException ex) {
+            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Please check inputs" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        finally
+        {
+            try {
+                conn.close();
+            } catch (SQLException ex) 
+            {
+                JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
+                Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     public static ResultSet searchFMember(String str)
     {
         ResultSet rs = null;
@@ -74,38 +154,6 @@ public class CropModel
             return null;
         }
         return rs;
-    }
-    
-    public static void saveCrop(int beneId, String crop, String area,
-            String variety, String classification, String exp, String remarks)
-    {
-        Connection conn = null;
-        try {
-            conn = DB.getConnection();
-            String sql = "Insert into crop values (0,?,?,?,?,?,?,?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, beneId);
-            stmt.setString(2, crop);
-            stmt.setString(3, area);
-            stmt.setString(4, variety);
-            stmt.setString(5, classification);
-            stmt.setString(6, exp);
-            stmt.setString(7, remarks);
-            stmt.execute();
-        }catch (SQLException ex) {
-            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Please check inputs" + ex, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        finally
-        {
-            try {
-                conn.close();
-            } catch (SQLException ex) 
-            {
-                JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
-                Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
     
     public static void updateFMember(String beneID, String username, String password, 
@@ -147,54 +195,4 @@ public class CropModel
         }
     }
     
-    public static void deleteFMember(String beneId)
-    {
-        Connection conn = null;
-        try {
-            conn = DB.getConnection();
-            String sql = "Delete from beneficiary where bene_id = '"+beneId+"'";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.execute();
-            //JOptionPane.showMessageDialog(null,"Subscriber Deleted!");
-        } catch (SQLException ex) {
-            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex);
-        }
-        finally
-        {
-            try {
-                conn.close();
-            } catch (SQLException ex) 
-            {
-                JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
-                Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
-    /**
-     * Gets the latest bene_id from the beneficiary table to be 
-     * saved in the registration table
-     * @return bene_id
-     */
-    public static int getIdOfLatestBene()
-    {
-        int bene_id = 0;
-        Connection conn = DB.getConnection();
-        ResultSet rs;
-        String sql = "Select * from beneficiary ORDER BY bene_id DESC LIMIT 1";
-            try
-            {
-                Statement stmt = conn.createStatement();
-                rs = stmt.executeQuery(sql);
-                if (rs.next()) 
-                {
-                    bene_id = rs.getInt("bene_id");
-                }
-            }catch(SQLException e)
-            {
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }
-        return bene_id;
-    }
 }
