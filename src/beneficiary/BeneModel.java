@@ -121,7 +121,6 @@ public class BeneModel
             stmt.setDouble(18, locLong);
             stmt.setDouble(19, locLat);
             stmt.execute();
-            JOptionPane.showMessageDialog(null,"Beneficiary Added!");
         }catch (SQLException ex) {
             Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Please check inputs" + ex, "Error", JOptionPane.ERROR_MESSAGE);

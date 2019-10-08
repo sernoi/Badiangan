@@ -32,6 +32,33 @@ public class FMemberPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        addFMDialog = new javax.swing.JDialog();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel37 = new javax.swing.JLabel();
+        fnameAddMemberTF = new javax.swing.JTextField();
+        mnameAddMemberTF = new javax.swing.JTextField();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        lnameAddMemberTF = new javax.swing.JTextField();
+        relAddMemberCB = new javax.swing.JComboBox<>();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        occAddMemberTF = new javax.swing.JTextField();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        remarksAddMemberTA = new javax.swing.JTextArea();
+        heaAddMemberCB = new javax.swing.JComboBox<>();
+        jLabel46 = new javax.swing.JLabel();
+        okAddFMBtn = new javax.swing.JButton();
+        cancelAddFMBtn = new javax.swing.JButton();
+        maleAddMemberRB = new javax.swing.JRadioButton();
+        femaleAddMemberRB = new javax.swing.JRadioButton();
+        ageAddMemberSpin = new javax.swing.JSpinner();
+        addBeneFMCB = new javax.swing.JComboBox<>();
+        jLabel20 = new javax.swing.JLabel();
         editFMDialog = new javax.swing.JDialog();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -61,39 +88,13 @@ public class FMemberPanel extends javax.swing.JPanel {
         jLabel21 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         idEditFMLbl = new javax.swing.JLabel();
-        addFMDialog = new javax.swing.JDialog();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel37 = new javax.swing.JLabel();
-        fnameAddMemberTF = new javax.swing.JTextField();
-        mnameAddMemberTF = new javax.swing.JTextField();
-        jLabel38 = new javax.swing.JLabel();
-        jLabel39 = new javax.swing.JLabel();
-        lnameAddMemberTF = new javax.swing.JTextField();
-        relAddMemberCB = new javax.swing.JComboBox<>();
-        jLabel40 = new javax.swing.JLabel();
-        jLabel41 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
-        occAddMemberTF = new javax.swing.JTextField();
-        jLabel44 = new javax.swing.JLabel();
-        jLabel45 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        remarksAddMemberTA = new javax.swing.JTextArea();
-        heaAddMemberCB = new javax.swing.JComboBox<>();
-        jLabel46 = new javax.swing.JLabel();
-        okAddFMBtn = new javax.swing.JButton();
-        cancelAddFMBtn = new javax.swing.JButton();
-        maleAddMemberRB = new javax.swing.JRadioButton();
-        femaleAddMemberRB = new javax.swing.JRadioButton();
-        ageAddMemberSpin = new javax.swing.JSpinner();
-        addBeneFMCB = new javax.swing.JComboBox<>();
-        jLabel20 = new javax.swing.JLabel();
         fmPopUpMenu = new javax.swing.JPopupMenu();
         viewFMMenuItem = new javax.swing.JMenuItem();
         editFMMenuItem = new javax.swing.JMenuItem();
         addFMMenuItem = new javax.swing.JMenuItem();
         deleteFMMenuItem = new javax.swing.JMenuItem();
         sexAddFMRB = new javax.swing.ButtonGroup();
+        sexEditFMRB = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         searchTF = new javax.swing.JTextField();
         addFMBtn = new javax.swing.JButton();
@@ -102,6 +103,205 @@ public class FMemberPanel extends javax.swing.JPanel {
         editFMBtn = new javax.swing.JButton();
         deleteFMBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+
+        addFMDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addFMDialog.setTitle("Add Family Member");
+        addFMDialog.setResizable(false);
+
+        jPanel4.setBackground(new java.awt.Color(69, 73, 84));
+
+        jPanel5.setBackground(new java.awt.Color(69, 73, 84));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Family Member's Info", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+
+        jLabel37.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel37.setText("First Name:");
+
+        jLabel38.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel38.setText("Middle Name:");
+
+        jLabel39.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel39.setText("Last Name:");
+
+        relAddMemberCB.setForeground(new java.awt.Color(255, 255, 255));
+        relAddMemberCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aunt", "Brother", "Brother-in-law", "Cousin", "Daughter", "Daughter-in-law", "Father", "Father-in-law", "Granddaughter", "Grandfather", "Grandmother", "Grandson", "Husband", "Mother", "Mother-in-law", "Nephew", "Niece", "Sister", "Sister-in-law", "Son", "Son-in-law", "Uncle", "Wife" }));
+
+        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel40.setText("Relationship to HOD:");
+
+        jLabel41.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel41.setText("Age:");
+
+        jLabel42.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel42.setText("Sex:");
+
+        jLabel44.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel44.setText("Occupational Skills:");
+
+        jLabel45.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel45.setText("Remarks");
+
+        remarksAddMemberTA.setColumns(20);
+        remarksAddMemberTA.setRows(5);
+        jScrollPane5.setViewportView(remarksAddMemberTA);
+
+        heaAddMemberCB.setForeground(new java.awt.Color(255, 255, 255));
+        heaAddMemberCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elementary", "High School", "Vocational", "College", "Masters", "Doctoral", "None" }));
+
+        jLabel46.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel46.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel46.setText("Highest Educ Att:");
+
+        okAddFMBtn.setBackground(new java.awt.Color(51, 255, 255));
+        okAddFMBtn.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        okAddFMBtn.setText("OK");
+
+        cancelAddFMBtn.setBackground(new java.awt.Color(51, 255, 255));
+        cancelAddFMBtn.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cancelAddFMBtn.setText("Cancel");
+
+        maleAddMemberRB.setForeground(new java.awt.Color(255, 255, 255));
+        maleAddMemberRB.setText("Male");
+
+        femaleAddMemberRB.setForeground(new java.awt.Color(255, 255, 255));
+        femaleAddMemberRB.setText("Female");
+
+        ageAddMemberSpin.setModel(new javax.swing.SpinnerNumberModel());
+
+        addBeneFMCB.setToolTipText("Beneficiary Name");
+
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel20.setText("Beneficiary:");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane5)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel44, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel45, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel46, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fnameAddMemberTF)
+                            .addComponent(mnameAddMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                            .addComponent(lnameAddMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                            .addComponent(occAddMemberTF)
+                            .addComponent(heaAddMemberCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(relAddMemberCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(maleAddMemberRB)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(femaleAddMemberRB))
+                                    .addComponent(ageAddMemberSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(addBeneFMCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(159, 159, 159)
+                .addComponent(okAddFMBtn)
+                .addGap(18, 18, 18)
+                .addComponent(cancelAddFMBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(addBeneFMCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel37)
+                    .addComponent(fnameAddMemberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel38)
+                    .addComponent(mnameAddMemberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel39)
+                    .addComponent(lnameAddMemberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(relAddMemberCB)
+                    .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ageAddMemberSpin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maleAddMemberRB)
+                    .addComponent(femaleAddMemberRB))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(heaAddMemberCB)
+                    .addComponent(jLabel46, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(occAddMemberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(okAddFMBtn)
+                    .addComponent(cancelAddFMBtn))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout addFMDialogLayout = new javax.swing.GroupLayout(addFMDialog.getContentPane());
+        addFMDialog.getContentPane().setLayout(addFMDialogLayout);
+        addFMDialogLayout.setHorizontalGroup(
+            addFMDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        addFMDialogLayout.setVerticalGroup(
+            addFMDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         editFMDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editFMDialog.setTitle("Add Family Member");
@@ -315,205 +515,6 @@ public class FMemberPanel extends javax.swing.JPanel {
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        addFMDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addFMDialog.setTitle("Add Family Member");
-        addFMDialog.setResizable(false);
-
-        jPanel4.setBackground(new java.awt.Color(69, 73, 84));
-
-        jPanel5.setBackground(new java.awt.Color(69, 73, 84));
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Family Member's Info", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
-
-        jLabel37.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel37.setText("First Name:");
-
-        jLabel38.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel38.setText("Middle Name:");
-
-        jLabel39.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel39.setText("Last Name:");
-
-        relAddMemberCB.setForeground(new java.awt.Color(255, 255, 255));
-        relAddMemberCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aunt", "Brother", "Brother-in-law", "Cousin", "Daughter", "Daughter-in-law", "Father", "Father-in-law", "Granddaughter", "Grandfather", "Grandmother", "Grandson", "Husband", "Mother", "Mother-in-law", "Nephew", "Niece", "Sister", "Sister-in-law", "Son", "Son-in-law", "Uncle", "Wife" }));
-
-        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel40.setText("Relationship to HOD:");
-
-        jLabel41.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel41.setText("Age:");
-
-        jLabel42.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel42.setText("Sex:");
-
-        jLabel44.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel44.setText("Occupational Skills:");
-
-        jLabel45.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel45.setText("Remarks");
-
-        remarksAddMemberTA.setColumns(20);
-        remarksAddMemberTA.setRows(5);
-        jScrollPane5.setViewportView(remarksAddMemberTA);
-
-        heaAddMemberCB.setForeground(new java.awt.Color(255, 255, 255));
-        heaAddMemberCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elementary", "High School", "Vocational", "College", "Masters", "Doctoral", "None" }));
-
-        jLabel46.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel46.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel46.setText("Highest Educ Att:");
-
-        okAddFMBtn.setBackground(new java.awt.Color(51, 255, 255));
-        okAddFMBtn.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        okAddFMBtn.setText("OK");
-
-        cancelAddFMBtn.setBackground(new java.awt.Color(51, 255, 255));
-        cancelAddFMBtn.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cancelAddFMBtn.setText("Cancel");
-
-        maleAddMemberRB.setForeground(new java.awt.Color(255, 255, 255));
-        maleAddMemberRB.setText("Male");
-
-        femaleAddMemberRB.setForeground(new java.awt.Color(255, 255, 255));
-        femaleAddMemberRB.setText("Female");
-
-        ageAddMemberSpin.setModel(new javax.swing.SpinnerNumberModel());
-
-        addBeneFMCB.setToolTipText("Beneficiary Name");
-
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel20.setText("Beneficiary:");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane5)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel44, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel45, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel46, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fnameAddMemberTF)
-                            .addComponent(mnameAddMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                            .addComponent(lnameAddMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                            .addComponent(occAddMemberTF)
-                            .addComponent(heaAddMemberCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(relAddMemberCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addComponent(maleAddMemberRB)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(femaleAddMemberRB))
-                                    .addComponent(ageAddMemberSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(addBeneFMCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(okAddFMBtn)
-                .addGap(18, 18, 18)
-                .addComponent(cancelAddFMBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(addBeneFMCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel37)
-                    .addComponent(fnameAddMemberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel38)
-                    .addComponent(mnameAddMemberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel39)
-                    .addComponent(lnameAddMemberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(relAddMemberCB)
-                    .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ageAddMemberSpin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(maleAddMemberRB)
-                    .addComponent(femaleAddMemberRB))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(heaAddMemberCB)
-                    .addComponent(jLabel46, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(occAddMemberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(okAddFMBtn)
-                    .addComponent(cancelAddFMBtn))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout addFMDialogLayout = new javax.swing.GroupLayout(addFMDialog.getContentPane());
-        addFMDialog.getContentPane().setLayout(addFMDialogLayout);
-        addFMDialogLayout.setHorizontalGroup(
-            addFMDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        addFMDialogLayout.setVerticalGroup(
-            addFMDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
         viewFMMenuItem.setText("View Family Member");
         fmPopUpMenu.add(viewFMMenuItem);
 
@@ -610,7 +611,7 @@ public class FMemberPanel extends javax.swing.JPanel {
     public void allListener(
             ActionListener add, ActionListener save, ActionListener edit, ActionListener update,
             ActionListener delete, ActionListener reset, WindowListener show,
-            KeyListener searchNow, PopupMenuListener pop, MouseListener tablePop,
+            PopupMenuListener pop, MouseListener tablePop,
             ActionListener menu1, ActionListener menu2, ActionListener menu3, 
             ActionListener menu4,
             
@@ -628,7 +629,6 @@ public class FMemberPanel extends javax.swing.JPanel {
         cancelEditFMBtn.addActionListener(reset);
         addFMDialog.addWindowListener(show);
         editFMDialog.addWindowListener(show);
-        searchTF.addKeyListener(searchNow);
         fmPopUpMenu.addPopupMenuListener(pop);
         fmTable.addMouseListener(tablePop);
         viewFMMenuItem.addActionListener(menu1);
@@ -720,6 +720,7 @@ public class FMemberPanel extends javax.swing.JPanel {
     public javax.swing.JTextArea remarksEditMemberTA;
     public javax.swing.JTextField searchTF;
     public javax.swing.ButtonGroup sexAddFMRB;
+    public javax.swing.ButtonGroup sexEditFMRB;
     public javax.swing.JMenuItem viewFMMenuItem;
     // End of variables declaration//GEN-END:variables
 

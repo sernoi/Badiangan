@@ -4,9 +4,12 @@ import admin.AdminController;
 import admin.AdminPanel;
 import beneficiary.BeneController;
 import beneficiary.BenePanel;
+import crop.CropController;
+import crop.CropPanel;
 import fmember.FMemberController;
 import fmember.FMemberPanel;
 import java.awt.CardLayout;
+import util.SearchModel;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -175,6 +178,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuItem11.setForeground(new java.awt.Color(0, 0, 0));
         jMenuItem11.setText("Crops/Trees");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem11);
 
         jMenuItem12.setForeground(new java.awt.Color(0, 0, 0));
@@ -299,8 +307,16 @@ public class MainFrame extends javax.swing.JFrame {
         new FMemberController(fmp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(fmp,"FMemberPanel");
-        cl.show(mainPanel, "FMemberPanel");   
+        cl.show(mainPanel, "FMemberPanel");  
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        CropPanel cp = new CropPanel();
+        new CropController(cp);
+        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+        mainPanel.add(cp,"CropPanel");
+        cl.show(mainPanel, "CropPanel");   
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DateTimePanel;

@@ -38,42 +38,6 @@ public class FMemberModel
         return rs;
     }
     
-    public static ResultSet searchFM(String str)
-    {
-        ResultSet rs = null;
-        Connection conn = null;
-        try {
-            conn = DB.getConnection();
-            String sql = "SELECT bene_id as 'Beneficiary ID', "
-                    + "fname as 'First Name', mname as 'Middle Name', "
-                    + "lname as 'Last Name', sex as 'Sex', dob as 'Date of Birth', "
-                    + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) as 'Brgy', "
-                    + "code as 'Code', fourps as '4Ps', ip as 'Indigent', hea as 'Highest Educ Att', "
-                    + "ethnicity as 'Ethnicity', net_income as 'Net Income', occ as 'Occupation', "
-                    + "health_condition as 'Health Condition', house_status as 'House Status', "
-                    + "house_condition as 'House Condition', contact_num as 'Contact #' "
-                    + "from beneficiary where "
-                    
-                    + "bene_id LIKE '%" + str + "%' or fname LIKE '%" + str + "%' or "
-                    + "mname LIKE '%" + str + "%' or lname LIKE '%" + str + "%' or "
-                    + "sex LIKE '%" + str + "%' or dob LIKE '%" + str + "%' or "
-                    + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) LIKE '%" + str + "%' or "
-                    + "code LIKE '%" + str + "%' or fourps LIKE '%" + str + "%' or "
-                    + "ip LIKE '%" + str + "%' or hea LIKE '%" + str + "%' or "
-                    + "ethnicity LIKE '%" + str + "%' or net_income LIKE '%" + str + "%' or "
-                    + "occ LIKE '%" + str + "%' or health_condition LIKE '%" + str + "%' or "
-                    + "house_status LIKE '%" + str + "%' or house_condition LIKE '%" + str + "%' or "
-                    + "contact_num LIKE '%" + str + "%'";
-            Statement stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
-        } catch (SQLException ex) {
-            //Logger.getLogger(AddSubscriberModel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex);
-            return null;
-        }
-        return rs;
-    }
-    
     public static void saveFM(int beneId, String fName, String mName,
             String lName, String rel, int age, String sex, String educ,
             String occ, String remarks)
@@ -110,25 +74,29 @@ public class FMemberModel
         }
     }
     
-    public static void updateFMember(String beneID, String username, String password, 
-            String fname, String mname, String lname, String department, String position)
+    public static void updateFM(int id, int bene_id, String fname, 
+            String mname, String lname, String rel, int age, String sex,
+            String educ, String occ, String remarks)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Update beneficiary set username = ? , password = sha1(?) , "
-                    + "fname = ? , mname = ? , lname = ?, department = ?, "
-                    + "position = ? where bene_id = '"+beneID+"'";
+            String sql = "Update fmember set fk_bene_id_member = ?, "
+                    + "fname = ? , mname = ? , lname = ?, rel_to_hod = ?, "
+                    + "age = ? , sex = ? , educ = ?, occ_skills = ?, "
+                    + "remarks = ? where fmem_id = '"+id+"'";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-            stmt.setString(3, fname);
-            stmt.setString(4, mname);
-            stmt.setString(5, lname);
-            stmt.setString(6, department);
-            stmt.setString(7, position);
+            stmt.setInt(1, bene_id);
+            stmt.setString(2, fname);
+            stmt.setString(3, mname);
+            stmt.setString(4, lname);
+            stmt.setString(5, rel);
+            stmt.setInt(6, age);
+            stmt.setString(7, sex);
+            stmt.setString(8, educ);
+            stmt.setString(9, occ);
+            stmt.setString(10, remarks);
             stmt.execute();
-            JOptionPane.showMessageDialog(null,"Admin Info Updated!");
         } catch(MySQLIntegrityConstraintViolationException ex)
         {
             JOptionPane.showMessageDialog(null, "Username already taken", "Error", JOptionPane.ERROR_MESSAGE);
@@ -172,31 +140,5 @@ public class FMemberModel
                 Logger.getLogger(FMemberModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-    
-    /**
-     * Gets the latest bene_id from the beneficiary table to be 
-     * saved in the registration table
-     * @return bene_id
-     */
-    public static int getIdOfLatestBene()
-    {
-        int bene_id = 0;
-        Connection conn = DB.getConnection();
-        ResultSet rs;
-        String sql = "Select * from beneficiary ORDER BY bene_id DESC LIMIT 1";
-            try
-            {
-                Statement stmt = conn.createStatement();
-                rs = stmt.executeQuery(sql);
-                if (rs.next()) 
-                {
-                    bene_id = rs.getInt("bene_id");
-                }
-            }catch(SQLException e)
-            {
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }
-        return bene_id;
     }
 }

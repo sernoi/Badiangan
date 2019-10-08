@@ -17,6 +17,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -26,6 +27,7 @@ import javax.swing.event.PopupMenuListener;
 import javax.swing.table.TableCellEditor;
 import net.proteanit.sql.DbUtils;
 import util.ComboKeyHandler;
+import util.SearchModel;
 
 public class FMemberController
 {
@@ -38,7 +40,7 @@ public class FMemberController
                 //Button Classes
                 new OpenAddFMDialog(), new SaveFMClass(), new EditFMClass(),
                 new UpdateFMClass(), new DeleteFMClass(), new CloseDialogClass(), 
-                new CloseDialogClass(), new SearchFMClass(), new MyPopUpMenu(),
+                new CloseDialogClass(), new MyPopUpMenu(),
                 
                 //PopUpMenu Classes
                 new MyPopUpMenu(), new ViewFMClass(), new EditFMClass(), 
@@ -133,41 +135,41 @@ public class FMemberController
         
     }
     
-    class SearchFMClass implements KeyListener
-    {
-        void searchNow()
-        {
-            ResultSet rs = FMemberModel.searchFM(fmp.searchTF.getText());
-            fmp.fmTable.setModel(DbUtils.resultSetToTableModel(rs));
-            // this is to disable editing in the jtable
-            for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class)) 
-            {
-                TableCellEditor ce = fmp.fmTable.getDefaultEditor(c);
-                if (ce instanceof DefaultCellEditor) 
-                {
-                    ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
-                }
-            }
-            fmp.fmTable.getColumnModel().getColumn(0).setMinWidth(0);
-            fmp.fmTable.getColumnModel().getColumn(0).setMaxWidth(50);
-            fmp.fmTable.getColumnModel().getColumn(0).setPreferredWidth(25);
-        }
-
-        @Override
-        public void keyTyped(KeyEvent e) {
-            searchNow();
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e){
-            searchNow();
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            searchNow();
-        }
-    }
+//    class SearchFMClass implements KeyListener
+//    {
+//        void searchNow()
+//        {
+//            ResultSet rs = FMemberModel.searchFM(fmp.searchTF.getText());
+//            fmp.fmTable.setModel(DbUtils.resultSetToTableModel(rs));
+//            // this is to disable editing in the jtable
+//            for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class)) 
+//            {
+//                TableCellEditor ce = fmp.fmTable.getDefaultEditor(c);
+//                if (ce instanceof DefaultCellEditor) 
+//                {
+//                    ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
+//                }
+//            }
+//            fmp.fmTable.getColumnModel().getColumn(0).setMinWidth(0);
+//            fmp.fmTable.getColumnModel().getColumn(0).setMaxWidth(50);
+//            fmp.fmTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+//        }
+//
+//        @Override
+//        public void keyTyped(KeyEvent e) {
+//            searchNow();
+//        }
+//
+//        @Override
+//        public void keyPressed(KeyEvent e){
+//            searchNow();
+//        }
+//
+//        @Override
+//        public void keyReleased(KeyEvent e) {
+//            searchNow();
+//        }
+//    }
     
     class OpenAddFMDialog implements ActionListener
     {
@@ -241,7 +243,23 @@ public class FMemberController
     {
         @Override
         public void actionPerformed(ActionEvent e) {
+            JTextField text = (JTextField) fmp.editBeneFMCB.getEditor().getEditorComponent();
+            String str = text.getText();
+            FMemberModel.updateFM(
+                    Integer.parseInt(fmp.idEditFMLbl.getText()),
+                    Integer.parseInt(str.substring(str.indexOf(":") + 1,str.indexOf(")"))),
+                    fmp.fnameEditMemberTF.getText(),
+                    fmp.mnameEditMemberTF.getText(), 
+                    fmp.lnameEditMemberTF.getText(), 
+                    fmp.relEditMemberCB.getSelectedItem().toString(), 
+                    Integer.parseInt(fmp.ageEditMemberSpin.getValue().toString()), 
+                    fmp.maleEditMemberRB.isSelected() ? "Male" : "Female",
+                    fmp.heaEditMemberCB.getSelectedItem().toString(),
+                    fmp.occEditMemberTF.getText(), 
+                    fmp.remarksEditMemberTA.getText());
             
+            fmp.editFMDialog.dispose();
+            displayAllFM();
         }
     }
     
@@ -304,6 +322,7 @@ public class FMemberController
         fmp.fmTable.getColumnModel().getColumn(0).setMinWidth(0);
         fmp.fmTable.getColumnModel().getColumn(0).setMaxWidth(50);
         fmp.fmTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+        new SearchModel(fmp, fmp.fmTable, fmp.searchTF, rs);
     }
     
     /**
@@ -344,6 +363,10 @@ public class FMemberController
         fmp.sexAddFMRB.add(fmp.maleAddMemberRB);
         fmp.sexAddFMRB.add(fmp.femaleAddMemberRB);
         fmp.maleAddMemberRB.setSelected(true);
+        
+        fmp.sexEditFMRB.add(fmp.maleEditMemberRB);
+        fmp.sexEditFMRB.add(fmp.femaleEditMemberRB);
+        fmp.maleEditMemberRB.setSelected(true);
     }
     
 }

@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ButtonModel;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -78,29 +77,10 @@ public class BeneController
                 //farmer Class
                 new FarmerCBClass()
         );
-        
-        
+
         initRBG();
-        JDateChooserInit();
+        jDateChooserInit();
         displayAllBene();
-    }
-    void JDateChooserInit()
-    {
-        bp.dobDC.getDateEditor().addPropertyChangeListener("date", (PropertyChangeEvent e) -> {
-            DateTime birthDate = new DateTime(((JTextField)bp.dobDC.getDateEditor().getUiComponent()).getText());
-            DateTime now = new DateTime();
-            Period period = new Period(birthDate, now);
-            int years = period.getYears();
-            bp.ageLbl.setText("" + years);
-        });
-        
-        bp.dobDC1.getDateEditor().addPropertyChangeListener("date", (PropertyChangeEvent e) -> {
-            DateTime birthDate = new DateTime(((JTextField)bp.dobDC1.getDateEditor().getUiComponent()).getText());
-            DateTime now = new DateTime();
-            Period period = new Period(birthDate, now);
-            int years = period.getYears();
-            bp.ageLbl1.setText("" + years);
-        });
     }
     void clearAddBeneFields()
     {
@@ -207,9 +187,6 @@ public class BeneController
         bp.occEditMemberTF.setText("");
         bp.remarksEditMemberTA.setText("");
     }
-    /**
-     * Gets all the rows in beneficiary table, put in the table of BenePanel
-     */
     void displayAllBene()
     {
         //this is to load all the schedules in the database upon selecting the Event Scheduler in the menu bar
@@ -225,8 +202,8 @@ public class BeneController
             }
         }
         bp.beneTable.getColumnModel().getColumn(0).setMinWidth(0);
-        bp.beneTable.getColumnModel().getColumn(0).setMaxWidth(50);
-        bp.beneTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+        bp.beneTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        bp.beneTable.getColumnModel().getColumn(0).setPreferredWidth(50);
     }
     void initRBG()
     {
@@ -268,6 +245,24 @@ public class BeneController
         bp.sexRBGEditMember.add(bp.maleEditMemberRB);
         bp.sexRBGEditMember.add(bp.femaleEditMemberRB);
         bp.maleEditMemberRB.setSelected(true);
+    }
+    void jDateChooserInit()
+    {
+        bp.dobDC.getDateEditor().addPropertyChangeListener("date", (PropertyChangeEvent e) -> {
+            DateTime birthDate = new DateTime(((JTextField)bp.dobDC.getDateEditor().getUiComponent()).getText());
+            DateTime now = new DateTime();
+            Period period = new Period(birthDate, now);
+            int years = period.getYears();
+            bp.ageLbl.setText("" + years);
+        });
+        
+        bp.dobDC1.getDateEditor().addPropertyChangeListener("date", (PropertyChangeEvent e) -> {
+            DateTime birthDate = new DateTime(((JTextField)bp.dobDC1.getDateEditor().getUiComponent()).getText());
+            DateTime now = new DateTime();
+            Period period = new Period(birthDate, now);
+            int years = period.getYears();
+            bp.ageLbl1.setText("" + years);
+        });
     }
     void saveCropstoDB()
     {
@@ -383,7 +378,7 @@ public class BeneController
         @Override
         public void actionPerformed(ActionEvent e) {
             clearAddBeneFields();
-            bp.addBeneDialog.dispose();
+           bp.addBeneDialog.dispose();
         }
         
         @Override
@@ -1033,6 +1028,10 @@ public class BeneController
             bp.addBeneDialog.pack();
             bp.addBeneDialog.setLocationRelativeTo(null);
             bp.addBeneDialog.setVisible(true);
+            clearAddBeneFields();
+            clearAddMemberFields();
+            clearAddCropFields();
+            clearAddLSFields();
         }
     }
     class OpenAddCropClass implements ActionListener
@@ -1076,36 +1075,50 @@ public class BeneController
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            String brgyStr = bp.brgyCB.getSelectedItem().toString();
-            String locStr = bp.longLatLbl.getText();
-            
-            BeneModel.saveBene(
-                    Integer.parseInt(bp.beneIdLbl.getText()), //beneID
-                    bp.fNameTF.getText(), //fname
-                    bp.mNameTF.getText(), //mname
-                    bp.lNameTF.getText(), //lname
-                    bp.sexMaleRB.isSelected() ? "Male" : "Female", //sex
-                    ((JTextField)bp.dobDC.getDateEditor().getUiComponent()).getText(), //dob
-                    brgyStr,
-                    //Integer.parseInt(brgyStr.substring(0,brgyStr.indexOf(" "))), //brgy
-                    bp.codeCB.getSelectedItem().toString(), //code
-                    bp.fourpsYesRB.isSelected() ? "Yes" : "No", //fourps
-                    bp.indigentYesRB.isSelected() ? "Yes" : "No", //indigent
-                    bp.heaCB.getSelectedItem().toString(), //hea
-                    bp.ethnicityTF.getText(), //ehtnicity
-                    Double.parseDouble(bp.netIncomeSpin.getValue().toString()), //income
-                    bp.occTF.getText(), //occ
-                    bp.healthCondCB.getSelectedItem().toString(), //healthCond
-                    bp.houseStatCB.getSelectedItem().toString(), //houseStat
-                    bp.houseCondCB.getSelectedItem().toString(), //houseCond
-                    bp.contactNumTF.getText(),
-                    Double.parseDouble(locStr.substring(0,locStr.indexOf(","))), //loc_long
-                    Double.parseDouble(locStr.substring(locStr.indexOf(",") + 1, locStr.length()))); //loc_lat
-            
-            saveFMembertoDB();
-            saveCropstoDB();
-            saveLStoDB();
-            displayAllBene();
+            try
+            {           
+                if(bp.fNameTF.getText().trim().isEmpty() || bp.lNameTF.getText().trim().isEmpty()) 
+                {
+                    throw new IllegalArgumentException("Fields cannot be empty");
+                }
+                else
+                {
+                    String brgyStr = bp.brgyCB.getSelectedItem().toString();
+                    String locStr = bp.longLatLbl.getText();
+
+                    BeneModel.saveBene(
+                            Integer.parseInt(bp.beneIdLbl.getText()), //beneID
+                            bp.fNameTF.getText(), //fname
+                            bp.mNameTF.getText(), //mname
+                            bp.lNameTF.getText(), //lname
+                            bp.sexMaleRB.isSelected() ? "Male" : "Female", //sex
+                            ((JTextField)bp.dobDC.getDateEditor().getUiComponent()).getText(), //dob
+                            brgyStr,
+                            //Integer.parseInt(brgyStr.substring(0,brgyStr.indexOf(" "))), //brgy
+                            bp.codeCB.getSelectedItem().toString(), //code
+                            bp.fourpsYesRB.isSelected() ? "Yes" : "No", //fourps
+                            bp.indigentYesRB.isSelected() ? "Yes" : "No", //indigent
+                            bp.heaCB.getSelectedItem().toString(), //hea
+                            bp.ethnicityTF.getText(), //ehtnicity
+                            Double.parseDouble(bp.netIncomeSpin.getValue().toString()), //income
+                            bp.occTF.getText(), //occ
+                            bp.healthCondCB.getSelectedItem().toString(), //healthCond
+                            bp.houseStatCB.getSelectedItem().toString(), //houseStat
+                            bp.houseCondCB.getSelectedItem().toString(), //houseCond
+                            bp.contactNumTF.getText(),
+                            Double.parseDouble(locStr.substring(0,locStr.indexOf(","))), //loc_long
+                            Double.parseDouble(locStr.substring(locStr.indexOf(",") + 1, locStr.length()))); //loc_lat
+
+                    saveFMembertoDB();
+                    saveCropstoDB();
+                    saveLStoDB();
+                    bp.addBeneDialog.dispose();
+                    displayAllBene();
+                }
+            } catch(IllegalArgumentException ex) 
+            {
+                JOptionPane.showMessageDialog(null, "First name and Last Name cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
     class SearchBeneClass implements ActionListener, KeyListener
@@ -1124,8 +1137,8 @@ public class BeneController
                 }
             }
             bp.beneTable.getColumnModel().getColumn(0).setMinWidth(0);
-            bp.beneTable.getColumnModel().getColumn(0).setMaxWidth(50);
-            bp.beneTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+            bp.beneTable.getColumnModel().getColumn(0).setMaxWidth(100);
+            bp.beneTable.getColumnModel().getColumn(0).setPreferredWidth(50);
         }
         
         @Override
@@ -1299,5 +1312,4 @@ public class BeneController
             }
         }
     }
-    
 }
