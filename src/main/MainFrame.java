@@ -9,6 +9,8 @@ import crop.CropPanel;
 import fmember.FMemberController;
 import fmember.FMemberPanel;
 import java.awt.CardLayout;
+import livestock.LSController;
+import livestock.LSPanel;
 import util.SearchModel;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -187,6 +189,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuItem12.setForeground(new java.awt.Color(0, 0, 0));
         jMenuItem12.setText("Livestocks");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem12);
 
         MenuBar.add(jMenu1);
@@ -317,6 +324,14 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.add(cp,"CropPanel");
         cl.show(mainPanel, "CropPanel");   
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        LSPanel lsp = new LSPanel();
+        new LSController(lsp);
+        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+        mainPanel.add(lsp,"LSPanel");
+        cl.show(mainPanel, "LSPanel");  
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DateTimePanel;
