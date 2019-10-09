@@ -3820,11 +3820,11 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="livestockAddLSTF" alignment="0" max="32767" attributes="0"/>
                                       <Component id="classificationAddLSTF" alignment="0" pref="285" max="32767" attributes="0"/>
-                                      <Component id="headsAddLSTF" alignment="0" pref="285" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="expDisposalAddLSDC" min="-2" pref="194" max="-2" attributes="0"/>
-                                              <Component id="ageAddLSSpin" min="-2" pref="100" max="-2" attributes="0"/>
+                                              <Component id="ageAddLSSpin" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                              <Component id="headsAddLSSpin" min="-2" pref="100" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
@@ -3849,9 +3849,9 @@
                               <Component id="jLabel68" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="headsAddLSTF" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel69" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel69" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="headsAddLSSpin" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -3866,7 +3866,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel72" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane9" pref="158" max="32767" attributes="0"/>
+                          <Component id="jScrollPane9" pref="156" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="okAddLSBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -3914,11 +3914,6 @@
                     <Property name="horizontalAlignment" type="int" value="4"/>
                     <Property name="text" type="java.lang.String" value="Number of Heads:"/>
                   </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="headsAddLSTF">
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="okAddLSBtn">
                   <Properties>
@@ -3998,7 +3993,17 @@
                 <Component class="javax.swing.JSpinner" name="ageAddLSSpin">
                   <Properties>
                     <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                      <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="1.0" type="number"/>
+                      <SpinnerModel initial="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JSpinner" name="headsAddLSSpin">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                      <SpinnerModel initial="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -4112,12 +4117,14 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="livestockEditLSTF" alignment="0" max="32767" attributes="0"/>
                                       <Component id="classificationEditLSTF" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="headsEditLSTF" alignment="0" max="32767" attributes="0"/>
                                       <Component id="numberEditLSLbl" alignment="0" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="expDisposalEditLSDC" min="-2" pref="194" max="-2" attributes="0"/>
-                                              <Component id="ageEditLSSpin" min="-2" pref="100" max="-2" attributes="0"/>
+                                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="headsEditLSSpin" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="ageEditLSSpin" alignment="0" pref="100" max="32767" attributes="0"/>
+                                              </Group>
                                           </Group>
                                           <EmptySpace min="0" pref="91" max="32767" attributes="0"/>
                                       </Group>
@@ -4147,9 +4154,9 @@
                               <Component id="jLabel74" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="headsEditLSTF" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel75" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel75" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="headsEditLSSpin" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -4164,7 +4171,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel78" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane10" pref="128" max="32767" attributes="0"/>
+                          <Component id="jScrollPane10" pref="126" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="okEditLSBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -4212,11 +4219,6 @@
                     <Property name="horizontalAlignment" type="int" value="4"/>
                     <Property name="text" type="java.lang.String" value="Number of Heads:"/>
                   </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="headsEditLSTF">
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="okEditLSBtn">
                   <Properties>
@@ -4317,6 +4319,16 @@
                   <Properties>
                     <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
                       <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="1.0" type="number"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JSpinner" name="headsEditLSSpin">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                      <SpinnerModel initial="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                     </Property>
                   </Properties>
                   <AuxValues>

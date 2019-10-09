@@ -1,7 +1,4 @@
 package livestock;
-import crop.*;
-
-import beneficiary.BeneController;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +21,7 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.TableCellEditor;
 import net.proteanit.sql.DbUtils;
+import util.Alter;
 import util.ComboKeyHandler;
 import util.SearchModel;
 
@@ -53,8 +51,8 @@ public class LSController
         text.setText("");
         lsp.lsTF.setText("");
         lsp.classificationTF.setText("");
-        lsp.headsTF.setText("");
-        lsp.ageTF.setText("");
+        lsp.headsSpin.setValue(0);
+        lsp.ageSpin.setValue(0);
         lsp.remarksTA.setText("");
     }
     void deleteLS()
@@ -103,8 +101,8 @@ public class LSController
             lsp.idLbl.setText(lsp.table.getValueAt(dataRow,0).toString());
             lsp.lsTF1.setText(lsp.table.getValueAt(dataRow,2).toString());
             lsp.classificationTF1.setText(lsp.table.getValueAt(dataRow,3).toString());
-            lsp.headsTF1.setText(lsp.table.getValueAt(dataRow,4).toString());
-            lsp.ageTF1.setText(lsp.table.getValueAt(dataRow,5).toString());
+            lsp.headsSpin1.setValue(Alter.toInt(lsp.table.getValueAt(dataRow,4).toString()));
+            lsp.ageSpin1.setValue(Alter.toInt(lsp.table.getValueAt(dataRow,5).toString()));
             
             try 
             {
@@ -135,8 +133,8 @@ public class LSController
                 Integer.parseInt(str.substring(str.indexOf(":") + 1,str.indexOf(")"))),
                 lsp.lsTF.getText(),
                 lsp.classificationTF.getText(),
-                Integer.parseInt(lsp.headsTF.getText()),
-                Integer.parseInt(lsp.ageTF.getText()),
+                Alter.getVal(lsp.headsSpin),
+                Alter.getVal(lsp.ageSpin),
                 ((JTextField)lsp.expDC.getDateEditor().getUiComponent()).getText(),
                 lsp.remarksTA.getText());
         lsp.addDialog.dispose();
@@ -172,8 +170,8 @@ public class LSController
                 Integer.parseInt(str.substring(str.indexOf(":") + 1,str.indexOf(")"))),
                 lsp.lsTF1.getText(),
                 lsp.classificationTF1.getText(),
-                Integer.parseInt(lsp.headsTF1.getText()),
-                Integer.parseInt(lsp.ageTF1.getText()),
+                Integer.parseInt(lsp.headsSpin1.getValue().toString()),
+                Integer.parseInt(lsp.ageSpin1.getValue().toString()),
                 ((JTextField)lsp.expDC1.getDateEditor().getUiComponent()).getText(),
                 lsp.remarksTA1.getText());
         lsp.editDialog.dispose();

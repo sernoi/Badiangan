@@ -31,16 +31,18 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
+import livestock.LSModel;
 import net.proteanit.sql.DbUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import util.Alter;
 import util.BrgyModel;
 public class BeneController 
 {
     BenePanel bp;
-    public BeneController(BenePanel ap)
+    public BeneController(BenePanel bp)
     {
-        this.bp = ap;
+        this.bp = bp;
   
         this.bp.allListener(
                 //Bene Classes
@@ -121,7 +123,7 @@ public class BeneController
     {
         bp.livestockAddLSTF.setText("");
         bp.classificationAddLSTF.setText("");
-        bp.headsAddLSTF.setText("");
+        bp.headsAddLSSpin.setValue(0);
         bp.ageAddLSSpin.setValue(0);
         bp.expDisposalAddLSDC.setDate(new Date());
         bp.remarksAddLSTA.setText("");
@@ -170,7 +172,7 @@ public class BeneController
     {
         bp.livestockEditLSTF.setText("");
         bp.classificationEditLSTF.setText("");
-        bp.headsEditLSTF.setText("");
+        bp.headsEditLSSpin.setValue(0);
         bp.ageEditLSSpin.setValue(0);
         bp.expDisposalEditLSDC.setDate(new Date());
         bp.remarksEditLSTA.setText("");
@@ -312,14 +314,14 @@ public class BeneController
         {
             for(int x = 0 ; x < bp.livestockTable.getRowCount() ; x++)
             {
-                CropModel.saveCrop(
-                        Integer.parseInt(bp.beneIdLbl.getText()),
-                        bp.livestockTable.getValueAt(x,1).toString(),
-                        bp.livestockTable.getValueAt(x,2).toString(),
-                        bp.livestockTable.getValueAt(x,3).toString(),
-                        bp.livestockTable.getValueAt(x,4).toString(),
-                        bp.livestockTable.getValueAt(x,5).toString(),
-                        bp.livestockTable.getValueAt(x,6).toString()
+                LSModel.saveLS(
+                        Integer.parseInt(bp.beneIdLbl.getText()), //bene
+                        bp.livestockTable.getValueAt(x,1).toString(), //ls
+                        bp.livestockTable.getValueAt(x,2).toString(), //cl
+                        Integer.parseInt(bp.livestockTable.getValueAt(x,3).toString()), //heads
+                        Integer.parseInt(bp.livestockTable.getValueAt(x,4).toString()), //age
+                        bp.livestockTable.getValueAt(x,5).toString(), //exp
+                        bp.livestockTable.getValueAt(x,6).toString() //rem
                 );
             }
         }
@@ -721,7 +723,7 @@ public class BeneController
                 bp.editCropDialog.setTitle("Edit Crop/Tree");
                 bp.editCropDialog.setModal(true);
                 bp.editCropDialog.pack();
-                bp.editCropDialog.setLocationRelativeTo(bp.addBeneDialog);
+                bp.editCropDialog.setLocationRelativeTo(null);
                 bp.editCropDialog.setVisible(true);
             }
             else
@@ -743,13 +745,13 @@ public class BeneController
                 bp.numberEditLSLbl.setText(bp.livestockTable.getValueAt(dataRow,0).toString());
                 bp.livestockEditLSTF.setText(bp.livestockTable.getValueAt(dataRow,1).toString());
                 bp.classificationEditLSTF.setText(bp.livestockTable.getValueAt(dataRow,2).toString());
-                bp.headsEditLSTF.setText(bp.livestockTable.getValueAt(dataRow,3).toString());
+                bp.headsEditLSSpin.setValue(bp.livestockTable.getValueAt(dataRow,3).toString());
                 bp.ageEditLSSpin.setValue(Integer.parseInt(bp.livestockTable.getValueAt(dataRow,4).toString()));
                 bp.remarksEditLSTA.setText(bp.livestockTable.getValueAt(dataRow,6).toString());
                 bp.editLSDialog.setTitle("Edit Livestock");
                 bp.editLSDialog.setModal(true);
                 bp.editLSDialog.pack();
-                bp.editLSDialog.setLocationRelativeTo(bp.addBeneDialog);
+                bp.editLSDialog.setLocationRelativeTo(null);
                 bp.editLSDialog.setVisible(true);
             }
             else
@@ -781,7 +783,7 @@ public class BeneController
                 bp.editMemberDialog.setTitle("Edit Family Member");
                 bp.editMemberDialog.setModal(true);
                 bp.editMemberDialog.pack();
-                bp.editMemberDialog.setLocationRelativeTo(bp.addBeneDialog);
+                bp.editMemberDialog.setLocationRelativeTo(null);
                 bp.editMemberDialog.setVisible(true);
             }
             else
@@ -940,7 +942,7 @@ public class BeneController
             DefaultTableModel model = (DefaultTableModel) bp.livestockTable.getModel();
             model.addRow(new Object[]{
                 bp.livestockTable.getRowCount() + 1, bp.livestockAddLSTF.getText(),
-                bp.classificationAddLSTF.getText(), bp.headsAddLSTF.getText(),
+                bp.classificationAddLSTF.getText(), bp.headsAddLSSpin.getValue().toString(),
                 bp.ageAddLSSpin.getValue().toString(),
                 ((JTextField)bp.expDisposalAddLSDC.getDateEditor().getUiComponent()).getText(),
                 bp.remarksAddLSTA.getText()});
@@ -988,7 +990,7 @@ public class BeneController
             model.removeRow(Integer.parseInt(bp.numberEditLSLbl.getText()) - 1);
             model.insertRow(Integer.parseInt(bp.numberEditLSLbl.getText()) - 1, new Object[]{
                 bp.numberEditLSLbl.getText(), bp.livestockEditLSTF.getText(),
-                bp.classificationEditLSTF.getText(), bp.headsEditLSTF.getText(),
+                bp.classificationEditLSTF.getText(), Alter.getVal(bp.headsEditLSSpin),
                 bp.ageEditLSSpin.getValue().toString(),
                 ((JTextField)bp.expDisposalAddLSDC.getDateEditor().getUiComponent()).getText(),
                 bp.remarksEditLSTA.getText()});
@@ -1042,7 +1044,7 @@ public class BeneController
             bp.addCropDialog.setTitle("Add Crop/Tree");
             bp.addCropDialog.setModal(true);
             bp.addCropDialog.pack();
-            bp.addCropDialog.setLocationRelativeTo(bp.addBeneDialog);
+            bp.addCropDialog.setLocationRelativeTo(null);
             bp.addCropDialog.setVisible(true);
         }
     }
@@ -1054,7 +1056,7 @@ public class BeneController
             bp.addLSDialog.setTitle("Add Livestock");
             bp.addLSDialog.setModal(true);
             bp.addLSDialog.pack();
-            bp.addLSDialog.setLocationRelativeTo(bp.addBeneDialog);
+            bp.addLSDialog.setLocationRelativeTo(null);
             bp.addLSDialog.setVisible(true);
         }
     }
@@ -1066,7 +1068,7 @@ public class BeneController
             bp.addMemberDialog.setTitle("Add Family Member");
             bp.addMemberDialog.setModal(true);
             bp.addMemberDialog.pack();
-            bp.addMemberDialog.setLocationRelativeTo(bp);
+            bp.addMemberDialog.setLocationRelativeTo(null);
             bp.addMemberDialog.setVisible(true);
         }
     }
@@ -1079,7 +1081,7 @@ public class BeneController
             {           
                 if(bp.fNameTF.getText().trim().isEmpty() || bp.lNameTF.getText().trim().isEmpty()) 
                 {
-                    throw new IllegalArgumentException("Fields cannot be empty");
+                    JOptionPane.showMessageDialog(null, "First Name and Last Name cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else
                 {
@@ -1115,9 +1117,9 @@ public class BeneController
                     bp.addBeneDialog.dispose();
                     displayAllBene();
                 }
-            } catch(IllegalArgumentException ex) 
+            } catch(Exception ex) 
             {
-                JOptionPane.showMessageDialog(null, "First name and Last Name cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, ex , "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

@@ -65,7 +65,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Vehicle Monitoring System");
+        setTitle("Badiangan");
 
         DateTimePanel.setBackground(new java.awt.Color(51, 51, 51));
         DateTimePanel.setForeground(new java.awt.Color(153, 153, 153));

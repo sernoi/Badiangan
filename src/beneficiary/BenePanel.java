@@ -242,7 +242,6 @@ public class BenePanel extends javax.swing.JPanel {
         classificationAddLSTF = new javax.swing.JTextField();
         jLabel68 = new javax.swing.JLabel();
         jLabel69 = new javax.swing.JLabel();
-        headsAddLSTF = new javax.swing.JTextField();
         okAddLSBtn = new javax.swing.JButton();
         cancelAddLSBtn = new javax.swing.JButton();
         jLabel70 = new javax.swing.JLabel();
@@ -252,6 +251,7 @@ public class BenePanel extends javax.swing.JPanel {
         jScrollPane9 = new javax.swing.JScrollPane();
         remarksAddLSTA = new javax.swing.JTextArea();
         ageAddLSSpin = new javax.swing.JSpinner();
+        headsAddLSSpin = new javax.swing.JSpinner();
         editLSDialog = new javax.swing.JDialog();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
@@ -260,7 +260,6 @@ public class BenePanel extends javax.swing.JPanel {
         classificationEditLSTF = new javax.swing.JTextField();
         jLabel74 = new javax.swing.JLabel();
         jLabel75 = new javax.swing.JLabel();
-        headsEditLSTF = new javax.swing.JTextField();
         okEditLSBtn = new javax.swing.JButton();
         cancelEditLSBtn = new javax.swing.JButton();
         jLabel76 = new javax.swing.JLabel();
@@ -272,6 +271,7 @@ public class BenePanel extends javax.swing.JPanel {
         numberEditLSLbl = new javax.swing.JLabel();
         jLabel79 = new javax.swing.JLabel();
         ageEditLSSpin = new javax.swing.JSpinner();
+        headsEditLSSpin = new javax.swing.JSpinner();
         benePopMenu = new javax.swing.JPopupMenu();
         viewBeneMenuItem = new javax.swing.JMenuItem();
         editBeneMenuItem = new javax.swing.JMenuItem();
@@ -2006,7 +2006,9 @@ public class BenePanel extends javax.swing.JPanel {
         remarksAddLSTA.setRows(5);
         jScrollPane9.setViewportView(remarksAddLSTA);
 
-        ageAddLSSpin.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
+        ageAddLSSpin.setModel(new javax.swing.SpinnerNumberModel());
+
+        headsAddLSSpin.setModel(new javax.swing.SpinnerNumberModel());
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -2039,11 +2041,11 @@ public class BenePanel extends javax.swing.JPanel {
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(livestockAddLSTF)
                             .addComponent(classificationAddLSTF, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
-                            .addComponent(headsAddLSTF, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
                             .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(expDisposalAddLSDC, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ageAddLSSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(ageAddLSSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(headsAddLSSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -2059,9 +2061,9 @@ public class BenePanel extends javax.swing.JPanel {
                     .addComponent(classificationAddLSTF)
                     .addComponent(jLabel68, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(headsAddLSTF)
-                    .addComponent(jLabel69, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel69, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(headsAddLSSpin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel70, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2073,7 +2075,7 @@ public class BenePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel72)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okAddLSBtn)
@@ -2164,6 +2166,8 @@ public class BenePanel extends javax.swing.JPanel {
 
         ageEditLSSpin.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
 
+        headsEditLSSpin.setModel(new javax.swing.SpinnerNumberModel());
+
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
@@ -2196,12 +2200,13 @@ public class BenePanel extends javax.swing.JPanel {
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(livestockEditLSTF)
                             .addComponent(classificationEditLSTF)
-                            .addComponent(headsEditLSTF)
                             .addComponent(numberEditLSLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel15Layout.createSequentialGroup()
                                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(expDisposalEditLSDC, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ageEditLSSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(headsEditLSSpin, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(ageEditLSSpin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)))
                                 .addGap(0, 91, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -2221,9 +2226,9 @@ public class BenePanel extends javax.swing.JPanel {
                     .addComponent(classificationEditLSTF)
                     .addComponent(jLabel74, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(headsEditLSTF)
-                    .addComponent(jLabel75, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel75, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(headsEditLSSpin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel76, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2235,7 +2240,7 @@ public class BenePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel78)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okEditLSBtn)
@@ -2586,8 +2591,8 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JComboBox<String> heaCB;
     public javax.swing.JComboBox<String> heaCB1;
     public javax.swing.JComboBox<String> heaEditMemberCB;
-    public javax.swing.JTextField headsAddLSTF;
-    public javax.swing.JTextField headsEditLSTF;
+    public javax.swing.JSpinner headsAddLSSpin;
+    public javax.swing.JSpinner headsEditLSSpin;
     public javax.swing.JComboBox<String> healthCondCB;
     public javax.swing.JComboBox<String> healthCondCB1;
     public javax.swing.JComboBox<String> houseCondCB;

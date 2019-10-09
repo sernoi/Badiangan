@@ -1,7 +1,5 @@
 package livestock;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-import crop.CropModel;
 import db.DB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +38,7 @@ public class LSModel
     }
     
     public static void saveLS(int beneId, String ls, String classification,
-            int heads, double age, String exp, String remarks)
+            int heads, int age, String exp, String remarks)
     {
         Connection conn = null;
         try {
@@ -51,7 +49,7 @@ public class LSModel
             stmt.setString(2, ls);
             stmt.setString(3, classification);
             stmt.setInt(4, heads);
-            stmt.setDouble(5, age);
+            stmt.setInt(5, age);
             stmt.setString(6, exp);
             stmt.setString(7, remarks);
             stmt.execute();
@@ -72,15 +70,14 @@ public class LSModel
     }
     
     public static void updateLS(int id, int bene_id, String ls, 
-            String cl, int heads, int age, 
-            String exp, String remarks)
+            String cl, int heads, int age, String exp, String remarks)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Update crop set fk_bene_id_livestock = ? , crop = ? , "
-                    + "area = ? , variety = ? , classification = ?, exp = ?, "
-                    + "remarks = ? where crop_id = '"+id+"'";
+            String sql = "Update livestock set fk_bene_id_livestock = ? , livestock_raised = ? , "
+                    + "classification = ? , heads = ? , age = ?, exp = ?, "
+                    + "remarks = ? where ls_id = '"+id+"'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, bene_id);
             stmt.setString(2, ls);
@@ -92,7 +89,7 @@ public class LSModel
             stmt.execute();
         }
         catch (SQLException ex) {
-            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
         }
         finally
@@ -102,7 +99,7 @@ public class LSModel
             } catch (SQLException ex) 
             {
                 JOptionPane.showMessageDialog(null, "Cannot close connection of DB!");
-                Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

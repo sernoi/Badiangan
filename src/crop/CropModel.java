@@ -1,6 +1,5 @@
 package crop;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import db.DB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,7 +43,6 @@ public class CropModel
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            //String sql = "Select * from crop";
             String sql = "SELECT crop.crop_id as 'ID', "
                     + "CONCAT_WS(' ', beneficiary.fname, beneficiary.mname, beneficiary.lname) as 'Beneficiary', "
                     + "crop.crop as 'Crop', crop.area as 'Area', crop.variety as 'Variety', "

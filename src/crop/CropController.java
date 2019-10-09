@@ -1,19 +1,9 @@
 package crop;
-import fmember.*;
-import admin.*;
-import beneficiary.BeneController;
-import java.awt.Dialog;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,8 +12,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -129,7 +117,7 @@ public class CropController
                 date = new SimpleDateFormat("yyyy-MM-dd").parse(cp.table.getValueAt(dataRow,6).toString());
                 cp.expDC1.setDate(date); //dob
             } catch (ParseException ex) {
-                Logger.getLogger(BeneController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CropController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             cp.remarksTA1.setText(cp.table.getValueAt(dataRow,7).toString());

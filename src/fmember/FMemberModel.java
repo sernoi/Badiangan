@@ -1,6 +1,5 @@
 package fmember;
 
-import beneficiary.*;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import db.DB;
 import java.sql.Connection;
@@ -117,15 +116,14 @@ public class FMemberModel
         }
     }
     
-    public static void deleteFM(String beneId)
+    public static void deleteFM(String id)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Delete from beneficiary where bene_id = '"+beneId+"'";
+            String sql = "Delete from fmember where fmem_id = '"+id+"'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.execute();
-            //JOptionPane.showMessageDialog(null,"Subscriber Deleted!");
         } catch (SQLException ex) {
             Logger.getLogger(FMemberModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);

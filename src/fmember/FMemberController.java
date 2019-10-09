@@ -1,23 +1,15 @@
 package fmember;
-import admin.*;
-import java.awt.Dialog;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -55,32 +47,135 @@ public class FMemberController
         displayAllFM();
         initRBG();
     }
+    /**
+     * Clears the fields in the jDialog
+     * Invoked by reset button and close operation
+     */
+    void clearFields()
+    {
+        //clears all fields in addFMDialog
+        JTextField text = (JTextField) fmp.addBeneFMCB.getEditor().getEditorComponent();
+        text.setText("");
+        fmp.fnameAddMemberTF.setText("");
+        fmp.mnameAddMemberTF.setText("");
+        fmp.lnameAddMemberTF.setText("");
+        fmp.relAddMemberCB.setSelectedIndex(0);
+        fmp.ageAddMemberSpin.setValue(0);
+        fmp.maleAddMemberRB.setSelected(true);
+        fmp.heaAddMemberCB.setSelectedIndex(0);
+        fmp.occAddMemberTF.setText("");
+        fmp.remarksAddMemberTA.setText("");
+        
+        //clears all fields in editFMDialog
+        JTextField text1 = (JTextField) fmp.editBeneFMCB.getEditor().getEditorComponent();
+        text1.setText("");
+        fmp.fnameEditMemberTF.setText("");
+        fmp.mnameEditMemberTF.setText("");
+        fmp.lnameEditMemberTF.setText("");
+        fmp.relEditMemberCB.setSelectedIndex(0);
+        fmp.ageEditMemberSpin.setValue(0);
+        fmp.maleEditMemberRB.setSelected(true);
+        fmp.heaEditMemberCB.setSelectedIndex(0);
+        fmp.occEditMemberTF.setText("");
+        fmp.remarksEditMemberTA.setText("");
+    }
+    void displayAllFM()
+    {
+        //this is to load all the schedules in the database upon selecting the Event Scheduler in the menu bar
+        ResultSet rs = FMemberModel.getAllFM();
+        fmp.fmTable.setModel(DbUtils.resultSetToTableModel(rs));
+        // this is to disable editing in the jtable
+        for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class))
+        {
+            TableCellEditor ce = fmp.fmTable.getDefaultEditor(c);
+            if (ce instanceof DefaultCellEditor)
+            {
+                ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
+            }
+        }
+        fmp.fmTable.getColumnModel().getColumn(0).setMinWidth(0);
+        fmp.fmTable.getColumnModel().getColumn(0).setMaxWidth(50);
+        fmp.fmTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+        new SearchModel(fmp, fmp.fmTable, fmp.searchTF, rs);
+    }
+    void initRBG()
+    {
+        fmp.sexAddFMRB.add(fmp.maleAddMemberRB);
+        fmp.sexAddFMRB.add(fmp.femaleAddMemberRB);
+        fmp.maleAddMemberRB.setSelected(true);
+        
+        fmp.sexEditFMRB.add(fmp.maleEditMemberRB);
+        fmp.sexEditFMRB.add(fmp.femaleEditMemberRB);
+        fmp.maleEditMemberRB.setSelected(true);
+    }
+    class CloseDialogClass extends WindowAdapter implements ActionListener
+    {
+        @Override
+        public void windowClosing(WindowEvent e){
+            clearFields();
+            fmp.addFMDialog.dispose();
+            fmp.editFMDialog.dispose();
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            clearFields();
+            fmp.addFMDialog.dispose();
+            fmp.editFMDialog.dispose();
+        }
+    }
+    class DeleteFMClass implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            int dataRow = fmp.fmTable.getSelectedRow();
+            if(dataRow >= 0)
+            {
+                String fmID = fmp.fmTable.getValueAt(dataRow,0).toString();
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog (fmp, "Would You Like to "
+                        + "Delete Family Member: " + fmID + "?","Warning",dialogButton);
+                if(dialogResult == JOptionPane.YES_OPTION)
+                {
+                    FMemberModel.deleteFM(fmID);
+                    displayAllFM();
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(fmp, "Please select Family Member to delete.");
+            }
+        }
+    }
     
     class DialogDisposal extends WindowAdapter
     {
         
     }
-    
-    class ViewFMClass implements ActionListener
+    class EditFMClass implements ActionListener
     {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e)
+        {
             int dataRow = fmp.fmTable.getSelectedRow();
             if(dataRow >= 0)
             {
-                JOptionPane.showMessageDialog(fmp,
-                "ID: " + (fmp.fmTable.getValueAt(dataRow,0).toString()) + "\n" +
-                "Beneficiary: " + (fmp.fmTable.getValueAt(dataRow,1).toString()) + "\n" +
-                "First Name: " + (fmp.fmTable.getValueAt(dataRow,2).toString()) + "\n" +
-                "Middle Name: " + (fmp.fmTable.getValueAt(dataRow,3).toString()) + "\n" +
-                "Last Name: " + (fmp.fmTable.getValueAt(dataRow,4).toString()) + "\n" +
-                "Rel to HOD: " + (fmp.fmTable.getValueAt(dataRow,5).toString()) + "\n" +
-                "Age: " + (fmp.fmTable.getValueAt(dataRow,6).toString()) + "\n" +   
-                "Sex: " + (fmp.fmTable.getValueAt(dataRow,7).toString()) + "\n" +
-                "Highest Ed Att: " + (fmp.fmTable.getValueAt(dataRow,8).toString()) + "\n" +
-                "Occ Skills: " + (fmp.fmTable.getValueAt(dataRow,9).toString()) + "\n" +
-                "Remarks: " + (fmp.fmTable.getValueAt(dataRow,10).toString())
-                , "Family Member Info", JOptionPane.INFORMATION_MESSAGE);
+                fmp.idEditFMLbl.setText(fmp.fmTable.getValueAt(dataRow,0).toString());
+                fmp.fnameEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,2).toString());
+                fmp.mnameEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,3).toString());
+                fmp.lnameEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,4).toString());
+                fmp.relEditMemberCB.setSelectedItem(fmp.fmTable.getValueAt(dataRow,5).toString());
+                fmp.ageEditMemberSpin.setValue(Integer.parseInt(fmp.fmTable.getValueAt(dataRow,6).toString()));
+                fmp.maleEditMemberRB.setSelected(true);
+                fmp.heaEditMemberCB.setSelectedItem(fmp.fmTable.getValueAt(dataRow,8).toString());
+                fmp.occEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,9).toString());
+                fmp.remarksEditMemberTA.setText(fmp.fmTable.getValueAt(dataRow,10).toString());
+                fmp.editFMDialog.setTitle("Edit Family Member");
+                fmp.editFMDialog.setModal(true);
+                fmp.editFMDialog.pack();
+                fmp.editFMDialog.setLocationRelativeTo(fmp);
+                fmp.editFMDialog.setVisible(true);
             }
             else
             {
@@ -135,42 +230,6 @@ public class FMemberController
         
     }
     
-//    class SearchFMClass implements KeyListener
-//    {
-//        void searchNow()
-//        {
-//            ResultSet rs = FMemberModel.searchFM(fmp.searchTF.getText());
-//            fmp.fmTable.setModel(DbUtils.resultSetToTableModel(rs));
-//            // this is to disable editing in the jtable
-//            for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class)) 
-//            {
-//                TableCellEditor ce = fmp.fmTable.getDefaultEditor(c);
-//                if (ce instanceof DefaultCellEditor) 
-//                {
-//                    ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
-//                }
-//            }
-//            fmp.fmTable.getColumnModel().getColumn(0).setMinWidth(0);
-//            fmp.fmTable.getColumnModel().getColumn(0).setMaxWidth(50);
-//            fmp.fmTable.getColumnModel().getColumn(0).setPreferredWidth(25);
-//        }
-//
-//        @Override
-//        public void keyTyped(KeyEvent e) {
-//            searchNow();
-//        }
-//
-//        @Override
-//        public void keyPressed(KeyEvent e){
-//            searchNow();
-//        }
-//
-//        @Override
-//        public void keyReleased(KeyEvent e) {
-//            searchNow();
-//        }
-//    }
-    
     class OpenAddFMDialog implements ActionListener
     {
         @Override
@@ -208,37 +267,6 @@ public class FMemberController
         }
     }
     
-    class EditFMClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) 
-        {
-            int dataRow = fmp.fmTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                fmp.idEditFMLbl.setText(fmp.fmTable.getValueAt(dataRow,0).toString());
-                fmp.fnameEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,2).toString());
-                fmp.mnameEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,3).toString());
-                fmp.lnameEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,4).toString());
-                fmp.relEditMemberCB.setSelectedItem(fmp.fmTable.getValueAt(dataRow,5).toString());
-                fmp.ageEditMemberSpin.setValue(Integer.parseInt(fmp.fmTable.getValueAt(dataRow,6).toString()));
-                fmp.maleEditMemberRB.setSelected(true);
-                fmp.heaEditMemberCB.setSelectedItem(fmp.fmTable.getValueAt(dataRow,8).toString());
-                fmp.occEditMemberTF.setText(fmp.fmTable.getValueAt(dataRow,9).toString());
-                fmp.remarksEditMemberTA.setText(fmp.fmTable.getValueAt(dataRow,10).toString());
-                fmp.editFMDialog.setTitle("Edit Family Member");
-                fmp.editFMDialog.setModal(true);
-                fmp.editFMDialog.pack();
-                fmp.editFMDialog.setLocationRelativeTo(fmp);
-                fmp.editFMDialog.setVisible(true);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(fmp, "Please select Family Member to edit.");
-            }
-        }
-    }
-    
     class UpdateFMClass implements ActionListener
     {
         @Override
@@ -262,111 +290,33 @@ public class FMemberController
             displayAllFM();
         }
     }
-    
-    class DeleteFMClass implements ActionListener
+    class ViewFMClass implements ActionListener
     {
         @Override
-        public void actionPerformed(ActionEvent e) 
-        {
+        public void actionPerformed(ActionEvent e) {
             int dataRow = fmp.fmTable.getSelectedRow();
             if(dataRow >= 0)
             {
-                String fmID = fmp.fmTable.getValueAt(dataRow,0).toString();
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog (fmp, "Would You Like to "
-                                   + "Delete Family Member: " + fmID + "?","Warning",dialogButton);
-                if(dialogResult == JOptionPane.YES_OPTION)
-                {
-                    FMemberModel.deleteFM(fmID);
-                    displayAllFM();
-                }  
+                JOptionPane.showMessageDialog(fmp,
+                        "ID: " + (fmp.fmTable.getValueAt(dataRow,0).toString()) + "\n" +
+                                "Beneficiary: " + (fmp.fmTable.getValueAt(dataRow,1).toString()) + "\n" +
+                                        "First Name: " + (fmp.fmTable.getValueAt(dataRow,2).toString()) + "\n" +
+                                                "Middle Name: " + (fmp.fmTable.getValueAt(dataRow,3).toString()) + "\n" +
+                                                        "Last Name: " + (fmp.fmTable.getValueAt(dataRow,4).toString()) + "\n" +
+                                                                "Rel to HOD: " + (fmp.fmTable.getValueAt(dataRow,5).toString()) + "\n" +
+                                                                        "Age: " + (fmp.fmTable.getValueAt(dataRow,6).toString()) + "\n" +
+                                                                                "Sex: " + (fmp.fmTable.getValueAt(dataRow,7).toString()) + "\n" +  
+                                                                                        "Highest Ed Att: " + (fmp.fmTable.getValueAt(dataRow,8).toString()) + "\n" +
+                                                                                                "Occ Skills: " + (fmp.fmTable.getValueAt(dataRow,9).toString()) + "\n" +
+                                                                                                        "Remarks: " + (fmp.fmTable.getValueAt(dataRow,10).toString())
+                        , "Family Member Info", JOptionPane.INFORMATION_MESSAGE);
             }
             else
             {
-                JOptionPane.showMessageDialog(fmp, "Please select Family Member to delete.");
+                JOptionPane.showMessageDialog(fmp, "Please select Family Member to edit.");
             }
         }
     }
     
-    class CloseDialogClass extends WindowAdapter implements ActionListener
-    {
-        @Override 
-            public void windowClosing(WindowEvent e){
-            clearFields();
-            fmp.addFMDialog.dispose();
-            fmp.editFMDialog.dispose();
-        }
-            
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            clearFields();
-            fmp.addFMDialog.dispose();
-            fmp.editFMDialog.dispose();
-        }
-    }
-
-    void displayAllFM()
-    {
-        //this is to load all the schedules in the database upon selecting the Event Scheduler in the menu bar
-        ResultSet rs = FMemberModel.getAllFM();
-        fmp.fmTable.setModel(DbUtils.resultSetToTableModel(rs));
-        // this is to disable editing in the jtable
-        for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class)) 
-        {
-            TableCellEditor ce = fmp.fmTable.getDefaultEditor(c);
-            if (ce instanceof DefaultCellEditor) 
-            {
-                ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
-            }
-        }
-        fmp.fmTable.getColumnModel().getColumn(0).setMinWidth(0);
-        fmp.fmTable.getColumnModel().getColumn(0).setMaxWidth(50);
-        fmp.fmTable.getColumnModel().getColumn(0).setPreferredWidth(25);
-        new SearchModel(fmp, fmp.fmTable, fmp.searchTF, rs);
-    }
-    
-    /**
-     * Clears the fields in the jDialog
-     * Invoked by reset button and close operation
-     */
-    void clearFields()
-    {
-        //clears all fields in addFMDialog
-        JTextField text = (JTextField) fmp.addBeneFMCB.getEditor().getEditorComponent();
-        text.setText("");
-        fmp.fnameAddMemberTF.setText("");
-        fmp.mnameAddMemberTF.setText("");
-        fmp.lnameAddMemberTF.setText("");
-        fmp.relAddMemberCB.setSelectedIndex(0);
-        fmp.ageAddMemberSpin.setValue(0);
-        fmp.maleAddMemberRB.setSelected(true);
-        fmp.heaAddMemberCB.setSelectedIndex(0);
-        fmp.occAddMemberTF.setText("");
-        fmp.remarksAddMemberTA.setText("");
-        
-        //clears all fields in editFMDialog
-        JTextField text1 = (JTextField) fmp.editBeneFMCB.getEditor().getEditorComponent();
-        text1.setText("");
-        fmp.fnameEditMemberTF.setText("");
-        fmp.mnameEditMemberTF.setText("");
-        fmp.lnameEditMemberTF.setText("");
-        fmp.relEditMemberCB.setSelectedIndex(0);
-        fmp.ageEditMemberSpin.setValue(0);
-        fmp.maleEditMemberRB.setSelected(true);
-        fmp.heaEditMemberCB.setSelectedIndex(0);
-        fmp.occEditMemberTF.setText("");
-        fmp.remarksEditMemberTA.setText("");
-    }
-    
-    void initRBG()
-    {
-        fmp.sexAddFMRB.add(fmp.maleAddMemberRB);
-        fmp.sexAddFMRB.add(fmp.femaleAddMemberRB);
-        fmp.maleAddMemberRB.setSelected(true);
-        
-        fmp.sexEditFMRB.add(fmp.maleEditMemberRB);
-        fmp.sexEditFMRB.add(fmp.femaleEditMemberRB);
-        fmp.maleEditMemberRB.setSelected(true);
-    }
     
 }
