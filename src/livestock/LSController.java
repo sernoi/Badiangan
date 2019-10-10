@@ -53,6 +53,7 @@ public class LSController
         lsp.classificationTF.setText("");
         lsp.headsSpin.setValue(0);
         lsp.ageSpin.setValue(0);
+        lsp.expDC.setDate(new Date());
         lsp.remarksTA.setText("");
     }
     void deleteLS()
@@ -72,7 +73,7 @@ public class LSController
         }
         else
         {
-            JOptionPane.showMessageDialog(lsp, "Please select a ls to delete.");
+            JOptionPane.showMessageDialog(lsp, "Please select a livestock to delete.");
         }
     }  
     void displayAllLS()
@@ -140,27 +141,6 @@ public class LSController
         lsp.addDialog.dispose();
         displayAllLS();
     }
-    void viewLS()
-    {
-        int dataRow = lsp.table.getSelectedRow();
-        if(dataRow >= 0)
-        {
-            JOptionPane.showMessageDialog(lsp,
-            "ID: " + (lsp.table.getValueAt(dataRow,0).toString()) + "\n" 
-            + "Beneficiary: " + (lsp.table.getValueAt(dataRow,1).toString()) + "\n" 
-            + "Livestock Raised: " + (lsp.table.getValueAt(dataRow,2).toString()) + "\n" 
-            + "Area: " + (lsp.table.getValueAt(dataRow,3).toString()) + "\n" 
-            + "Variety: " + (lsp.table.getValueAt(dataRow,4).toString()) + "\n" 
-            + "Classification: " + (lsp.table.getValueAt(dataRow,5).toString()) + "\n" 
-            + "Exp Harvest Date: " + (lsp.table.getValueAt(dataRow,6).toString()) + "\n" 
-            + "Remarks: " + (lsp.table.getValueAt(dataRow,7).toString()),
-            "LS Info", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(lsp, "Please select ls to edit.");
-        }
-    }
     void updateLS()
     {
         JTextField text = (JTextField) lsp.beneCB1.getEditor().getEditorComponent();
@@ -176,6 +156,27 @@ public class LSController
                 lsp.remarksTA1.getText());
         lsp.editDialog.dispose();
         displayAllLS();
+    }
+    void viewLS()
+    {
+        int dataRow = lsp.table.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            JOptionPane.showMessageDialog(lsp,
+                    "ID: " + (lsp.table.getValueAt(dataRow,0).toString()) + "\n"
+                            + "Beneficiary: " + (lsp.table.getValueAt(dataRow,1).toString()) + "\n"
+                                    + "Livestock Raised: " + (lsp.table.getValueAt(dataRow,2).toString()) + "\n"
+                                            + "Area: " + (lsp.table.getValueAt(dataRow,3).toString()) + "\n"
+                                                    + "Variety: " + (lsp.table.getValueAt(dataRow,4).toString()) + "\n"
+                                                            + "Classification: " + (lsp.table.getValueAt(dataRow,5).toString()) + "\n"
+                                                                    + "Exp Harvest Date: " + (lsp.table.getValueAt(dataRow,6).toString()) + "\n"
+                                                                            + "Remarks: " + (lsp.table.getValueAt(dataRow,7).toString()),
+                    "LS Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(lsp, "Please select ls to edit.");
+        }
     }
 
     class LSAction implements ActionListener

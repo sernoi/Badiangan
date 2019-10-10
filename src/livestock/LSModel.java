@@ -12,6 +12,30 @@ import javax.swing.JOptionPane;
 
 public class LSModel 
 {
+    public static void deleteLS(String id)
+    {
+        Connection conn = null;
+        try {
+            conn = DB.getConnection();
+            String sql = "Delete from livestock where ls_id = '"+id+"'";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.execute();
+            //JOptionPane.showMessageDialog(null,"Subscriber Deleted!");
+        } catch (SQLException ex) {
+            Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        finally
+        {
+            try {
+                conn.close();
+            } catch (SQLException ex)
+            {
+                JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
+                Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
         public static ResultSet getAllLS()
     {
         ResultSet rs = null;
@@ -37,7 +61,7 @@ public class LSModel
         return rs;
     }
     
-    public static void saveLS(int beneId, String ls, String classification,
+    public static void saveLS(int id, String ls, String classification,
             int heads, int age, String exp, String remarks)
     {
         Connection conn = null;
@@ -45,7 +69,7 @@ public class LSModel
             conn = DB.getConnection();
             String sql = "Insert into livestock values (0,?,?,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, beneId);
+            stmt.setInt(1, id);
             stmt.setString(2, ls);
             stmt.setString(3, classification);
             stmt.setInt(4, heads);
@@ -104,28 +128,4 @@ public class LSModel
         }
     }
     
-    public static void deleteLS(String beneId)
-    {
-        Connection conn = null;
-        try {
-            conn = DB.getConnection();
-            String sql = "Delete from beneficiary where bene_id = '"+beneId+"'";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.execute();
-            //JOptionPane.showMessageDialog(null,"Subscriber Deleted!");
-        } catch (SQLException ex) {
-            Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex);
-        }
-        finally
-        {
-            try {
-                conn.close();
-            } catch (SQLException ex) 
-            {
-                JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
-                Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
 }

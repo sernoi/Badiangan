@@ -96,6 +96,7 @@ public class FMemberPanel extends javax.swing.JPanel {
         sexAddFMRB = new javax.swing.ButtonGroup();
         sexEditFMRB = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
+        jLabel80 = new javax.swing.JLabel();
         searchTF = new javax.swing.JTextField();
         addFMBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -529,6 +530,11 @@ public class FMemberPanel extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(69, 73, 84));
 
+        jLabel80.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel80.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel80.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel80.setText("Family Members");
+
         addFMBtn.setBackground(new java.awt.Color(51, 255, 255));
         addFMBtn.setText("Add FMember");
 
@@ -568,12 +574,14 @@ public class FMemberPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1081, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel80, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(addFMBtn)
                         .addGap(18, 18, 18)
                         .addComponent(editFMBtn)
@@ -590,7 +598,8 @@ public class FMemberPanel extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(deleteFMBtn)
                     .addComponent(addFMBtn)
-                    .addComponent(editFMBtn))
+                    .addComponent(editFMBtn)
+                    .addComponent(jLabel80))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addContainerGap())
@@ -696,6 +705,7 @@ public class FMemberPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     public javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel80;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

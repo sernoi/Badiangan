@@ -79,6 +79,7 @@ public class LSPanel extends javax.swing.JPanel {
         deleteMenuItem = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         searchTF = new javax.swing.JTextField();
+        jLabel80 = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -443,6 +444,11 @@ public class LSPanel extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(69, 73, 84));
 
+        jLabel80.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel80.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel80.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel80.setText("Livestocks");
+
         addBtn.setBackground(new java.awt.Color(51, 255, 255));
         addBtn.setText("Add Livestock");
 
@@ -482,12 +488,14 @@ public class LSPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1042, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
+                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel80, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addBtn)
                         .addGap(18, 18, 18)
                         .addComponent(editBtn)
@@ -504,7 +512,8 @@ public class LSPanel extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(deleteBtn)
                     .addComponent(addBtn)
-                    .addComponent(editBtn))
+                    .addComponent(editBtn)
+                    .addComponent(jLabel80))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addContainerGap())
@@ -598,6 +607,7 @@ public class LSPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
+    private javax.swing.JLabel jLabel80;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

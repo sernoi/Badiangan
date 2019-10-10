@@ -310,6 +310,7 @@ public class BenePanel extends javax.swing.JPanel {
         editBeneBtn = new javax.swing.JButton();
         deleteBeneBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel80 = new javax.swing.JLabel();
 
         addBeneDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addBeneDialog.setTitle("Add Beneficiary");
@@ -588,6 +589,7 @@ public class BenePanel extends javax.swing.JPanel {
         beneIdLbl.setForeground(new java.awt.Color(255, 255, 255));
         beneIdLbl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         beneIdLbl.setText("0");
+        beneIdLbl.setToolTipText("");
 
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -2367,6 +2369,11 @@ public class BenePanel extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Search");
 
+        jLabel80.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel80.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel80.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel80.setText("Beneficiaries");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -2374,12 +2381,14 @@ public class BenePanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1070, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel80, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addBeneBtn)
                         .addGap(18, 18, 18)
                         .addComponent(editBeneBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2396,7 +2405,8 @@ public class BenePanel extends javax.swing.JPanel {
                     .addComponent(addBeneBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(editBeneBtn)
                     .addComponent(deleteBeneBtn)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel80, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
                 .addContainerGap())
@@ -2681,6 +2691,7 @@ public class BenePanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel79;
+    private javax.swing.JLabel jLabel80;
     public javax.swing.JLabel jLabel82;
     public javax.swing.JLabel jLabel83;
     public javax.swing.JLabel jLabel84;

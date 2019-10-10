@@ -89,6 +89,7 @@ public class CropPanel extends javax.swing.JPanel {
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel80 = new javax.swing.JLabel();
 
         addDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addDialog.setTitle("Add Crop/Tree");
@@ -468,6 +469,11 @@ public class CropPanel extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Search");
 
+        jLabel80.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel80.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel80.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel80.setText("Crops/Trees");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -475,12 +481,14 @@ public class CropPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 232, Short.MAX_VALUE)
+                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel80, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addBtn)
                         .addGap(18, 18, 18)
                         .addComponent(editBtn)
@@ -497,7 +505,8 @@ public class CropPanel extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(deleteBtn)
                     .addComponent(addBtn)
-                    .addComponent(editBtn))
+                    .addComponent(editBtn)
+                    .addComponent(jLabel80, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addContainerGap())
@@ -591,6 +600,7 @@ public class CropPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel80;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
