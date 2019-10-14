@@ -16,6 +16,9 @@ public class SearchModel extends JPanel {
     public SearchModel(JPanel pan, JTable tbl, JTextField tf, ResultSet rs) {
         DefaultTableModel model = new DefaultTableModel(getTableData(tbl), getHeaders(tbl));
         tbl.setModel(model);
+        tbl.getColumnModel().getColumn(0).setMinWidth(0);
+        tbl.getColumnModel().getColumn(0).setMaxWidth(100);
+        tbl.getColumnModel().getColumn(0).setPreferredWidth(50);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tbl.getModel());
         tbl.setRowSorter(rowSorter);
         tf.getDocument().addDocumentListener(new DocumentListener(){

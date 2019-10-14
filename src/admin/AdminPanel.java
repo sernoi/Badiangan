@@ -4,7 +4,6 @@ package admin;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowListener;
 import javax.swing.event.PopupMenuListener;
 
@@ -410,6 +409,7 @@ public class AdminPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        adminTable.setEnabled(false);
         adminTable.setGridColor(new java.awt.Color(0, 102, 102));
         jScrollPane1.setViewportView(adminTable);
 
@@ -441,11 +441,11 @@ public class AdminPanel extends javax.swing.JPanel {
                         .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(addAdminBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(editAdminBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(deleteAdminBtn)))
                 .addContainerGap())
         );
@@ -454,14 +454,14 @@ public class AdminPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editAdminBtn)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(deleteAdminBtn)
-                        .addComponent(addAdminBtn)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(editAdminBtn)
+                        .addComponent(addAdminBtn)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
                 .addContainerGap())
@@ -482,7 +482,7 @@ public class AdminPanel extends javax.swing.JPanel {
     public void allListener(ActionListener add,
             ActionListener save, ActionListener edit, ActionListener update,
             ActionListener delete, ActionListener reset, WindowListener show,
-            KeyListener searchNow, PopupMenuListener pop, MouseListener tablePop,
+            PopupMenuListener pop, MouseListener tablePop,
             ActionListener menu1, ActionListener menu2, ActionListener menu3, 
             ActionListener menu4)
     {
@@ -495,7 +495,6 @@ public class AdminPanel extends javax.swing.JPanel {
         resetAdminBtn1.addActionListener(reset);
         addAdminDialog.addWindowListener(show);
         editAdminDialog.addWindowListener(show);
-        searchTF.addKeyListener(searchNow);
         popupmenu.addPopupMenuListener(pop);
         adminTable.addMouseListener(tablePop);
         viewAdminMenuItem.addActionListener(menu1);

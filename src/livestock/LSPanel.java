@@ -77,6 +77,7 @@ public class LSPanel extends javax.swing.JPanel {
         editMenuItem = new javax.swing.JMenuItem();
         addMenuItem = new javax.swing.JMenuItem();
         deleteMenuItem = new javax.swing.JMenuItem();
+        disposeMenuItem = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         searchTF = new javax.swing.JTextField();
         jLabel80 = new javax.swing.JLabel();
@@ -392,7 +393,7 @@ public class LSPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel37)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateBtn)
@@ -400,7 +401,7 @@ public class LSPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        expDC.setDate(new Date());
+        expDC1.setDate(new Date());
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -442,6 +443,9 @@ public class LSPanel extends javax.swing.JPanel {
         deleteMenuItem.setText("Delete");
         popUpMenu.add(deleteMenuItem);
 
+        disposeMenuItem.setText("Dispose");
+        popUpMenu.add(disposeMenuItem);
+
         jPanel1.setBackground(new java.awt.Color(69, 73, 84));
 
         jLabel80.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -464,6 +468,7 @@ public class LSPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        table.setEnabled(false);
         table.setGridColor(new java.awt.Color(0, 102, 102));
         jScrollPane1.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
@@ -583,6 +588,7 @@ public class LSPanel extends javax.swing.JPanel {
     public javax.swing.JTextField classificationTF1;
     public javax.swing.JButton deleteBtn;
     public javax.swing.JMenuItem deleteMenuItem;
+    public javax.swing.JMenuItem disposeMenuItem;
     public javax.swing.JButton editBtn;
     public javax.swing.JDialog editDialog;
     public javax.swing.JMenuItem editMenuItem;

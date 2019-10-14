@@ -19,6 +19,7 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.TableCellEditor;
 import net.proteanit.sql.DbUtils;
+import util.SearchModel;
 public class AdminController 
 {
     AdminPanel ap;
@@ -29,7 +30,7 @@ public class AdminController
         this.ap.allListener(new OpenAddAdminDialog(),
                 new SaveAdminClass(), new EditAdminClass(), new UpdateAdminClass(),
                 new DeleteAdminClass(), new ResetFieldsClass(), new CloseDialogClass(),
-                new SearchAdminClass(), new MyPopUpMenu(), new MyPopUpMenu(),
+                new MyPopUpMenu(), new MyPopUpMenu(),
                 new ViewAdminClass(), new EditAdminClass(), new OpenAddAdminDialog(),
                 new DeleteAdminClass());
         
@@ -70,15 +71,7 @@ public class AdminController
         //this is to load all the schedules in the database upon selecting the Event Scheduler in the menu bar
         ResultSet rs = AdminModel.getAllAdmins();
         ap.adminTable.setModel(DbUtils.resultSetToTableModel(rs));
-        // this is to disable editing in the jtable
-        for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class))
-        {
-            TableCellEditor ce = ap.adminTable.getDefaultEditor(c);
-            if (ce instanceof DefaultCellEditor)
-            {
-                ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
-            }
-        }
+        new SearchModel(ap, ap.adminTable, ap.searchTF, rs);
     }
     class CloseDialogClass extends WindowAdapter
     {
@@ -145,6 +138,7 @@ public class AdminController
         @Override
         public void mouseReleased(MouseEvent e) 
         {      
+            System.out.println();
             int r = ap.adminTable.rowAtPoint(e.getPoint());
             if (r >= 0 && r < ap.adminTable.getRowCount()) {
                 ap.adminTable.setRowSelectionInterval(r, r);
@@ -231,39 +225,7 @@ public class AdminController
             }
         }
     }
-    class SearchAdminClass implements KeyListener
-    {
-        void searchNow() 
-        {
-            ResultSet rs = AdminModel.searchAdmin(ap.searchTF.getText());
-            ap.adminTable.setModel(DbUtils.resultSetToTableModel(rs));
-            // this is to disable editing in the jtable
-            for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class))
-            {
-                TableCellEditor ce = ap.adminTable.getDefaultEditor(c);
-                if (ce instanceof DefaultCellEditor)
-                {
-                    ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
-                }
-            }
-        }
-        
-        @Override
-        public void keyTyped(KeyEvent e) {
-            searchNow();
-        }
-        
-        @Override
-        public void keyPressed(KeyEvent e){
-            searchNow();
-        }
-        
-        @Override
-        public void keyReleased(KeyEvent e) {
-            searchNow();
-        }
-    }
-    
+
     class UpdateAdminClass implements ActionListener
     {
         @Override

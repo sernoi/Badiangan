@@ -1,4 +1,5 @@
 package crop;
+import crop.harvest.HarvestModel;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.TableCellEditor;
 import net.proteanit.sql.DbUtils;
+import util.Alter;
 import util.ComboKeyHandler;
 import util.SearchModel;
 
@@ -37,6 +39,7 @@ public class CropController
     }
     void addCrop()
     {
+        
         cp.addDialog.setTitle("Add Crop");
         cp.addDialog.setModal(true);
         cp.addDialog.pack();
@@ -61,6 +64,12 @@ public class CropController
         cp.varietyTF1.setText("");
         cp.classificationTF1.setText("");
         cp.remarksTA1.setText("");
+        
+        cp.formTF.setText("");
+        cp.qtySpin.setValue(0);
+        cp.profitSpin.setValue(0);
+        cp.dateDC.setDate(new Date());
+        cp.remarksTA2.setText("");
     }
     void deleteCrop()
     {
@@ -86,18 +95,6 @@ public class CropController
     {
         ResultSet rs = CropModel.getAllCrop();
         cp.table.setModel(DbUtils.resultSetToTableModel(rs));
-        // this is to disable editing in the jtable
-        for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class))
-        {
-            TableCellEditor ce = cp.table.getDefaultEditor(c);
-            if (ce instanceof DefaultCellEditor)
-            {
-                ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
-            }
-        }
-        cp.table.getColumnModel().getColumn(0).setMinWidth(0);
-        cp.table.getColumnModel().getColumn(0).setMaxWidth(50);
-        cp.table.getColumnModel().getColumn(0).setPreferredWidth(25);
         new SearchModel(cp, cp.table, cp.searchTF, rs);
     }
     void editCrop()
@@ -132,6 +129,31 @@ public class CropController
             JOptionPane.showMessageDialog(cp, "Please select crop to edit.");
         }
     }
+    void harvestCrop()
+    {
+        int dataRow = cp.table.getSelectedRow();
+        if(cp.table.getValueAt(dataRow,8).toString().equals("Harvested"))
+        {
+            JOptionPane.showMessageDialog(null, "Crop already harvested!");
+        }
+        else
+        {
+            if(dataRow >= 0)
+            {
+                cp.idHLbl.setText(cp.table.getValueAt(dataRow,0).toString());
+                cp.harvestDialog.setTitle("Harveset Crop/Tree");
+                cp.harvestDialog.setModal(true);
+                cp.harvestDialog.pack();
+                cp.harvestDialog.setLocationRelativeTo(null);
+                cp.harvestDialog.setVisible(true);
+            clearFields();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(cp, "Please select crop to harvest.");
+            }
+        }
+    }
     void saveCrop()
     {
         JTextField text = (JTextField) cp.beneCB.getEditor().getEditorComponent();
@@ -147,26 +169,20 @@ public class CropController
         cp.addDialog.dispose();
         displayAllCrops();
     }
-    void viewCrop()
+    void saveHarvest()
     {
-        int dataRow = cp.table.getSelectedRow();
-        if(dataRow >= 0)
-        {
-            JOptionPane.showMessageDialog(cp,
-            "ID: " + (cp.table.getValueAt(dataRow,0).toString()) + "\n" 
-            + "Beneficiary: " + (cp.table.getValueAt(dataRow,1).toString()) + "\n" 
-            + "Crop/Tree: " + (cp.table.getValueAt(dataRow,2).toString()) + "\n" 
-            + "Area: " + (cp.table.getValueAt(dataRow,3).toString()) + "\n" 
-            + "Variety: " + (cp.table.getValueAt(dataRow,4).toString()) + "\n" 
-            + "Classification: " + (cp.table.getValueAt(dataRow,5).toString()) + "\n" 
-            + "Exp Harvest Date: " + (cp.table.getValueAt(dataRow,6).toString()) + "\n" 
-            + "Remarks: " + (cp.table.getValueAt(dataRow,7).toString()),
-            "Crop Info", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(cp, "Please select crop to edit.");
-        }
+        HarvestModel.saveHarvest(
+                Integer.parseInt(cp.idHLbl.getText()),
+                cp.formTF.getText(),
+                Alter.getInt(cp.qtySpin),
+                Alter.getDouble(cp.profitSpin),
+                Alter.gatVal(cp.dateDC),
+                cp.remarksTA2.getText());
+        
+        CropModel.updateCropHarvested(Integer.parseInt(cp.idHLbl.getText()));
+        JOptionPane.showMessageDialog(null,"Crop Harvested!");
+        cp.harvestDialog.dispose();
+        displayAllCrops();
     }
     void updateCrop()
     {
@@ -183,6 +199,27 @@ public class CropController
                 cp.remarksTA1.getText());
         cp.editDialog.dispose();
         displayAllCrops();
+    }
+    void viewCrop()
+    {
+        int dataRow = cp.table.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            JOptionPane.showMessageDialog(cp,
+                    "ID: " + (cp.table.getValueAt(dataRow,0).toString()) + "\n"
+                            + "Beneficiary: " + (cp.table.getValueAt(dataRow,1).toString()) + "\n"
+                                    + "Crop/Tree: " + (cp.table.getValueAt(dataRow,2).toString()) + "\n"
+                                            + "Area: " + (cp.table.getValueAt(dataRow,3).toString()) + "\n"
+                                                    + "Variety: " + (cp.table.getValueAt(dataRow,4).toString()) + "\n"
+                                                            + "Classification: " + (cp.table.getValueAt(dataRow,5).toString()) + "\n"
+                                                                    + "Exp Harvest Date: " + (cp.table.getValueAt(dataRow,6).toString()) + "\n"
+                                                                            + "Remarks: " + (cp.table.getValueAt(dataRow,7).toString()),
+                    "Crop Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(cp, "Please select crop to edit.");
+        }
     }
 
     class CCAction implements ActionListener
@@ -217,6 +254,10 @@ public class CropController
             {
                 cp.editDialog.dispose();
             }
+            if(e.getSource() == cp.cancelHarvestBtn)
+            {
+                cp.harvestDialog.dispose();
+            }
             if(e.getSource() == cp.viewMenuItem)
             {
                 viewCrop();
@@ -232,6 +273,18 @@ public class CropController
             if(e.getSource() == cp.deleteMenuItem)
             {
                 deleteCrop();
+            }
+            if(e.getSource() == cp.harvestMenuItem)
+            {
+                harvestCrop();
+            }
+            if(e.getSource() == cp.cancelHarvestBtn)
+            {
+                cp.harvestDialog.dispose();
+            }
+            if(e.getSource() == cp.saveHarvestBtn)
+            {
+                saveHarvest();
             }
         }
     }

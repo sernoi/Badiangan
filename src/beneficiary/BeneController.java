@@ -37,6 +37,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import util.Alter;
 import util.BrgyModel;
+import util.SearchModel;
 public class BeneController 
 {
     BenePanel bp;
@@ -50,7 +51,6 @@ public class BeneController
                 new EditBeneClass(), new OpenAddBeneClass(), new DeleteBeneClass(),
                 new OpenAddBeneClass(), new SaveBeneClass(), new CloseAddBeneDialogClass(), 
                 new EditBeneClass(), new UpdateBeneClass(),new CloseEditBeneDialogClass(), new DeleteBeneClass(),
-                new SearchBeneClass(), new SearchBeneClass(),
                 
                 //Members Classes
                 new MemberPopUpMenu(), new MemberPopUpMenu(), new ViewMemberClass(), 
@@ -86,7 +86,7 @@ public class BeneController
     }
     void clearAddBeneFields()
     {
-        bp.beneIdLbl.setText("0"); //beneID
+        //bp.beneIdLbl.setText("0"); //beneID
         bp.fNameTF.setText(""); //fname
         bp.mNameTF.setText("");//mname
         bp.lNameTF.setText(""); //lname
@@ -194,18 +194,7 @@ public class BeneController
         //this is to load all the schedules in the database upon selecting the Event Scheduler in the menu bar
         ResultSet rs = BeneModel.getAllBene();
         bp.beneTable.setModel(DbUtils.resultSetToTableModel(rs));
-        // this is to disable editing in the jtable
-        for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class))
-        {
-            TableCellEditor ce = bp.beneTable.getDefaultEditor(c);
-            if (ce instanceof DefaultCellEditor)
-            {
-                ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
-            }
-        }
-        bp.beneTable.getColumnModel().getColumn(0).setMinWidth(0);
-        bp.beneTable.getColumnModel().getColumn(0).setMaxWidth(100);
-        bp.beneTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        new SearchModel(bp, bp.beneTable, bp.searchTF, rs);
     }
     void initRBG()
     {
@@ -273,8 +262,9 @@ public class BeneController
         {
             for(int x = 0 ; x < bp.cropTable.getRowCount() ; x++)
             {
+                String title = bp.addBeneDialog.getTitle();
                 CropModel.saveCrop(
-                        Integer.parseInt(bp.beneIdLbl.getText()),
+                        Integer.parseInt(title.substring(title.indexOf(":") + 1)),
                         bp.cropTable.getValueAt(x,1).toString(),
                         bp.cropTable.getValueAt(x,2).toString(),
                         bp.cropTable.getValueAt(x,3).toString(),
@@ -292,8 +282,9 @@ public class BeneController
         {
             for(int x = 0 ; x < bp.membersTable.getRowCount() ; x++)
             {
+                String title = bp.addBeneDialog.getTitle();
                 FMemberModel.saveFM(
-                        Integer.parseInt(bp.beneIdLbl.getText()),
+                        Integer.parseInt(title.substring(title.indexOf(":") + 1)), //beneID
                         bp.membersTable.getValueAt(x,1).toString(),
                         bp.membersTable.getValueAt(x,2).toString(),
                         bp.membersTable.getValueAt(x,3).toString(),
@@ -314,8 +305,9 @@ public class BeneController
         {
             for(int x = 0 ; x < bp.livestockTable.getRowCount() ; x++)
             {
+                String title = bp.addBeneDialog.getTitle();
                 LSModel.saveLS(
-                        Integer.parseInt(bp.beneIdLbl.getText()), //bene
+                        Integer.parseInt(title.substring(title.indexOf(":") + 1)), //beneID
                         bp.livestockTable.getValueAt(x,1).toString(), //ls
                         bp.livestockTable.getValueAt(x,2).toString(), //cl
                         Integer.parseInt(bp.livestockTable.getValueAt(x,3).toString()), //heads
@@ -990,7 +982,7 @@ public class BeneController
             model.removeRow(Integer.parseInt(bp.numberEditLSLbl.getText()) - 1);
             model.insertRow(Integer.parseInt(bp.numberEditLSLbl.getText()) - 1, new Object[]{
                 bp.numberEditLSLbl.getText(), bp.livestockEditLSTF.getText(),
-                bp.classificationEditLSTF.getText(), Alter.getVal(bp.headsEditLSSpin),
+                bp.classificationEditLSTF.getText(), Alter.getInt(bp.headsEditLSSpin),
                 bp.ageEditLSSpin.getValue().toString(),
                 ((JTextField)bp.expDisposalAddLSDC.getDateEditor().getUiComponent()).getText(),
                 bp.remarksEditLSTA.getText()});
@@ -1024,8 +1016,8 @@ public class BeneController
             Date date = new Date();
             bp.dobDC.setDate(date);
             bp.brgyCB.setModel(new DefaultComboBoxModel(BrgyModel.getBrgy().toArray()));
-            bp.beneIdLbl.setText("" + (BeneModel.getIdOfLatestBene() + 1));
-            bp.addBeneDialog.setTitle("Add Beneficiary");
+            //bp.beneIdLbl.setText("" + (BeneModel.getIdOfLatestBene() + 1));
+            bp.addBeneDialog.setTitle("Add Beneficiary:" + (BeneModel.getIdOfLatestBene() + 1));
             bp.addBeneDialog.setModal(true);
             bp.addBeneDialog.pack();
             bp.addBeneDialog.setLocationRelativeTo(null);
@@ -1087,9 +1079,10 @@ public class BeneController
                 {
                     String brgyStr = bp.brgyCB.getSelectedItem().toString();
                     String locStr = bp.longLatLbl.getText();
+                    String title = bp.addBeneDialog.getTitle();
 
                     BeneModel.saveBene(
-                            Integer.parseInt(bp.beneIdLbl.getText()), //beneID
+                            Integer.parseInt(title.substring(title.indexOf(":") + 1)), //beneID
                             bp.fNameTF.getText(), //fname
                             bp.mNameTF.getText(), //mname
                             bp.lNameTF.getText(), //lname
@@ -1114,6 +1107,7 @@ public class BeneController
                     saveFMembertoDB();
                     saveCropstoDB();
                     saveLStoDB();
+                    JOptionPane.showMessageDialog(null, "Beneficiary Added" , "Success", JOptionPane.INFORMATION_MESSAGE);
                     bp.addBeneDialog.dispose();
                     displayAllBene();
                 }
@@ -1121,47 +1115,6 @@ public class BeneController
             {
                 JOptionPane.showMessageDialog(null, ex , "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }
-    }
-    class SearchBeneClass implements ActionListener, KeyListener
-    {
-        void searchNow()
-        {
-            ResultSet rs = BeneModel.searchBene(bp.searchTF.getText());
-            bp.beneTable.setModel(DbUtils.resultSetToTableModel(rs));
-            // this is to disable editing in the jtable
-            for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class))
-            {
-                TableCellEditor ce = bp.beneTable.getDefaultEditor(c);
-                if (ce instanceof DefaultCellEditor)
-                {
-                    ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
-                }
-            }
-            bp.beneTable.getColumnModel().getColumn(0).setMinWidth(0);
-            bp.beneTable.getColumnModel().getColumn(0).setMaxWidth(100);
-            bp.beneTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-        }
-        
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            searchNow();
-        }
-        
-        @Override
-        public void keyTyped(KeyEvent e) {
-            searchNow();
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e){
-            searchNow();
-        }
-        
-        @Override
-        public void keyReleased(KeyEvent e) {
-            searchNow();
         }
     }
     class UpdateBeneClass implements ActionListener

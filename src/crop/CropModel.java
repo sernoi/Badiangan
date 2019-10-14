@@ -47,7 +47,7 @@ public class CropModel
                     + "CONCAT_WS(' ', beneficiary.fname, beneficiary.mname, beneficiary.lname) as 'Beneficiary', "
                     + "crop.crop as 'Crop', crop.area as 'Area', crop.variety as 'Variety', "
                     + "crop.classification as 'Classification', crop.exp as 'Exp Harvest Date', "
-                    + "crop.remarks as 'Remarks' "
+                    + "crop.remarks as 'Remarks', crop.status as 'Status' "
                     + "from crop, beneficiary where "
                     + "crop.fk_bene_id_crop = beneficiary.bene_id";
             Statement stmt = conn.createStatement();
@@ -110,6 +110,32 @@ public class CropModel
             stmt.setString(5, classification);
             stmt.setString(6, exp);
             stmt.setString(7, remarks);
+            stmt.execute();
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        finally
+        {
+            try {
+                conn.close();
+            } catch (SQLException ex) 
+            {
+                JOptionPane.showMessageDialog(null, "Cannot close connection of DB!");
+                Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public static void updateCropHarvested(int id)
+    {
+        Connection conn = null;
+        try {
+            conn = DB.getConnection();
+            String sql = "Update crop set status = 'Harvested' "
+                    + "where crop_id = '"+id+"'";
+            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.execute();
         }
         catch (SQLException ex) {

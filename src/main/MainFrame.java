@@ -6,12 +6,15 @@ import beneficiary.BeneController;
 import beneficiary.BenePanel;
 import crop.CropController;
 import crop.CropPanel;
+import crop.harvest.HarvestController;
+import crop.harvest.HarvestPanel;
 import fmember.FMemberController;
 import fmember.FMemberPanel;
 import java.awt.CardLayout;
 import livestock.LSController;
 import livestock.LSPanel;
-import util.SearchModel;
+import livestock.disposal.DisposalController;
+import livestock.disposal.DisposalPanel;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -201,12 +204,25 @@ public class MainFrame extends javax.swing.JFrame {
         accountMenu.setForeground(new java.awt.Color(0, 0, 0));
         accountMenu.setText("Transaction");
 
+        jMenuItem13.setForeground(new java.awt.Color(0, 0, 0));
         jMenuItem13.setText("Crops Harvest");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         accountMenu.add(jMenuItem13);
 
+        jMenuItem14.setForeground(new java.awt.Color(0, 0, 0));
         jMenuItem14.setText("Livestocks Disposal");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         accountMenu.add(jMenuItem14);
 
+        jMenuItem15.setForeground(new java.awt.Color(0, 0, 0));
         jMenuItem15.setText("Family Assistance Record");
         accountMenu.add(jMenuItem15);
 
@@ -332,6 +348,22 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.add(lsp,"LSPanel");
         cl.show(mainPanel, "LSPanel");  
     }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        HarvestPanel hp = new HarvestPanel();
+        new HarvestController(hp,mainPanel);
+        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+        mainPanel.add(hp,"HarvestPanel");
+        cl.show(mainPanel, "HarvestPanel"); 
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        DisposalPanel dp = new DisposalPanel();
+        new DisposalController(dp,mainPanel);
+        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+        mainPanel.add(dp,"HarvestPanel");
+        cl.show(mainPanel, "HarvestPanel"); 
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DateTimePanel;

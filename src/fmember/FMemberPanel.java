@@ -550,6 +550,7 @@ public class FMemberPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        fmTable.setEnabled(false);
         fmTable.setGridColor(new java.awt.Color(0, 102, 102));
         jScrollPane1.setViewportView(fmTable);
         if (fmTable.getColumnModel().getColumnCount() > 0) {

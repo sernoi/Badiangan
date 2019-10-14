@@ -1,6 +1,5 @@
 package beneficiary;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import db.DB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,7 +42,7 @@ public class BeneModel
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "SELECT bene_id as '#',"
+            String sql = "SELECT bene_id as 'ID',"
                     + "fname as 'First Name', mname as 'Middle Name', "
                     + "lname as 'Last Name', sex as 'Sex', dob as 'Date of Birth', "
                     + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) as 'Brgy', "
@@ -135,43 +134,6 @@ public class BeneModel
                 Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-    public static ResultSet searchBene(String str)
-    {
-        ResultSet rs = null;
-        Connection conn = null;
-        try {
-            conn = DB.getConnection();
-            String sql = "SELECT bene_id as '#', "
-                    + "fname as 'First Name', mname as 'Middle Name', "
-                    + "lname as 'Last Name', sex as 'Sex', dob as 'Date of Birth', "
-                    + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) as 'Brgy', "
-                    + "code as 'Code', fourps as '4Ps', ip as 'Indigent', hea as 'Highest Educ Att', "
-                    + "ethnicity as 'Ethnicity', net_income as 'Net Income', occ as 'Occupation', "
-                    + "health_condition as 'Health Condition', house_status as 'House Status', "
-                    + "house_condition as 'House Condition', contact_num as 'Contact #', "
-                    + "loc_long as 'Longitude', loc_lat as 'Latitude' "
-                    + "from beneficiary where "
-                    
-                    + "bene_id LIKE '%" + str + "%' or fname LIKE '%" + str + "%' or "
-                    + "mname LIKE '%" + str + "%' or lname LIKE '%" + str + "%' or "
-                    + "sex LIKE '%" + str + "%' or dob LIKE '%" + str + "%' or "
-                    + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) LIKE '%" + str + "%' or "
-                    + "code LIKE '%" + str + "%' or fourps LIKE '%" + str + "%' or "
-                    + "ip LIKE '%" + str + "%' or hea LIKE '%" + str + "%' or "
-                    + "ethnicity LIKE '%" + str + "%' or net_income LIKE '%" + str + "%' or "
-                    + "occ LIKE '%" + str + "%' or health_condition LIKE '%" + str + "%' or "
-                    + "house_status LIKE '%" + str + "%' or house_condition LIKE '%" + str + "%' or "
-                    + "loc_long LIKE '%" + str + "%' or loc_lat LIKE '%" + str + "%' or "
-                    + "contact_num LIKE '%" + str + "%'";
-            Statement stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
-        } catch (SQLException ex) {
-            //Logger.getLogger(AddSubscriberModel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex);
-            return null;
-        }
-        return rs;
     }
     
     public static void updateBene(int beneId, String fName, String mName,

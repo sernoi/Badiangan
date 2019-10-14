@@ -94,8 +94,8 @@ public class FMemberController
             }
         }
         fmp.fmTable.getColumnModel().getColumn(0).setMinWidth(0);
-        fmp.fmTable.getColumnModel().getColumn(0).setMaxWidth(50);
-        fmp.fmTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+        fmp.fmTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        fmp.fmTable.getColumnModel().getColumn(0).setPreferredWidth(50);
         new SearchModel(fmp, fmp.fmTable, fmp.searchTF, rs);
     }
     void initRBG()

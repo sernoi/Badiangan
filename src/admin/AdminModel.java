@@ -43,7 +43,7 @@ public class AdminModel
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "SELECT admin_id as 'Admin ID',username as 'Username', fname as 'First Name', "
+            String sql = "SELECT admin_id as 'ID',username as 'Username', fname as 'First Name', "
                          + "mname as 'Middle Name', lname as 'Last Name', department as 'Department',"
                     + " position as 'Position' from admin";
             Statement stmt = conn.createStatement();
@@ -55,8 +55,6 @@ public class AdminModel
         }
         return rs;
     }
-    
-    
     public static void saveAdmin(String username, String password,
             String department, String position, String fName, String lName, String mName)
     {
@@ -93,29 +91,6 @@ public class AdminModel
             }
         }
     }
-    public static ResultSet searchAdmin(String str)
-    {
-        ResultSet rs = null;
-        Connection conn = null;
-        try {
-            conn = DB.getConnection();
-            String sql = "SELECT admin_id as 'Admin ID',username as 'Username', fname as 'First Name', "
-                    + "mname as 'Middle Name', lname as 'Last Name', department as 'Department',"
-                    + "position as 'Position' from admin where "
-                    + "admin_id LIKE '%" + str + "%' or fname LIKE '%" + str + "%' or "
-                    + "mname LIKE '%" + str + "%' or lname LIKE '%" + str + "%' or "
-                    + "department LIKE '%" + str + "%' or username LIKE '%" + str + "%' or "
-                    + "position LIKE '%" + str + "%'";
-            Statement stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
-        } catch (SQLException ex) {
-            //Logger.getLogger(AddSubscriberModel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex);
-            return null;
-        }
-        return rs;
-    }
-    
     public static void updateAdmin(String adminID, String username, String password, 
             String fname, String mname, String lname, String department, String position)
     {
@@ -154,5 +129,4 @@ public class AdminModel
             }
         }
     }
-    
 }

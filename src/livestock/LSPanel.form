@@ -496,7 +496,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane9" pref="79" max="32767" attributes="0"/>
+                          <Component id="jScrollPane9" pref="90" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="updateBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -590,7 +590,7 @@
                     <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="expDC.setDate(new Date());"/>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="expDC1.setDate(new Date());"/>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
@@ -722,6 +722,14 @@
         <MenuItem class="javax.swing.JMenuItem" name="deleteMenuItem">
           <Properties>
             <Property name="text" type="java.lang.String" value="Delete"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="disposeMenuItem">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Dispose"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -877,6 +885,7 @@
                     </Column>
                   </TableColumnModel>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="0" type="rgb"/>
                 </Property>

@@ -12,9 +12,14 @@ public class Alter
         return Integer.parseInt(str);
     }
     
-    public static int getVal(JSpinner spin)
+    public static int getInt(JSpinner spin)
     {
         return toInt(spin.getValue().toString());
+    }
+    
+    public static double getDouble(JSpinner spin)
+    {
+        return Double.parseDouble(spin.getValue().toString());
     }
     
     public static String gatVal(JDateChooser dc)
@@ -22,8 +27,13 @@ public class Alter
         return ((JTextField)dc.getDateEditor().getUiComponent()).getText();
     }
     
-    public static String getVal(JComboBox box)
+    public static String getString(JComboBox box)
     {
         return box.getSelectedItem().toString();
+    }
+    
+    public static int getInt(JComboBox box)
+    {
+        return Integer.parseInt(box.getSelectedItem().toString());
     }
 }

@@ -1,4 +1,5 @@
-package livestock;
+package registration;
+import livestock.*;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,10 +26,10 @@ import util.Alter;
 import util.ComboKeyHandler;
 import util.SearchModel;
 
-public class LSController
+public class RegController
 {
     LSPanel lsp;
-    public LSController(LSPanel lsp)
+    public RegController(LSPanel lsp)
     {
         this.lsp = lsp;
         this.lsp.allListener(new LSAction(), new LSPopUp(), new LSMouse(), 
@@ -111,7 +112,7 @@ public class LSController
                 date = new SimpleDateFormat("yyyy-MM-dd").parse(lsp.table.getValueAt(dataRow,6).toString());
                 lsp.expDC1.setDate(date); //dob
             } catch (ParseException ex) {
-                Logger.getLogger(LSController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RegController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             lsp.remarksTA1.setText(lsp.table.getValueAt(dataRow,7).toString());
