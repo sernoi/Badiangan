@@ -1,7 +1,4 @@
 package livestock.disposal;
-import crop.CropController;
-import crop.CropPanel;
-import crop.harvest.*;
 import java.awt.CardLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -86,15 +83,6 @@ public class DisposalController
     {
         ResultSet rs = DisposalModel.getAllDisposal();
         dp.table.setModel(DbUtils.resultSetToTableModel(rs));
-        // this is to disable editing in the jtable
-        for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class))
-        {
-            TableCellEditor ce = dp.table.getDefaultEditor(c);
-            if (ce instanceof DefaultCellEditor)
-            {
-                ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
-            }
-        }
         new SearchModel(dp, dp.table, dp.searchTF, rs);
     }
     void editDisposal()
@@ -159,6 +147,7 @@ public class DisposalController
             JOptionPane.showMessageDialog(dp, "Please select disposal to view.");
         }
     }
+
 
     class Action implements ActionListener
     {

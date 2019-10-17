@@ -6,21 +6,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.sql.ResultSet;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -30,20 +27,23 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 import livestock.LSModel;
+import main.MainFrame;
 import net.proteanit.sql.DbUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import registration.RegModel;
 import util.Alter;
 import util.BrgyModel;
 import util.SearchModel;
 public class BeneController 
 {
     BenePanel bp;
-    public BeneController(BenePanel bp)
+    MainFrame mf;
+    public BeneController(BenePanel bp, MainFrame mf)
     {
         this.bp = bp;
+        this.mf = mf;
   
         this.bp.allListener(
                 //Bene Classes
@@ -1107,6 +1107,16 @@ public class BeneController
                     saveFMembertoDB();
                     saveCropstoDB();
                     saveLStoDB();
+                    
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    Date dateobj = new Date();
+
+                    RegModel.saveReg(
+                            Integer.parseInt(mf.adminIDTF.getText()), 
+                            Integer.parseInt(title.substring(title.indexOf(":") + 1)), 
+                            bp.walkinYesRB.isSelected() ? "Yes" : "No", 
+                            Alter.getString(bp.caseCBB), 
+                            df.format(dateobj));
                     JOptionPane.showMessageDialog(null, "Beneficiary Added" , "Success", JOptionPane.INFORMATION_MESSAGE);
                     bp.addBeneDialog.dispose();
                     displayAllBene();

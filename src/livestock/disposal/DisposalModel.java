@@ -1,5 +1,6 @@
 package livestock.disposal;
 
+import crop.CropModel;
 import db.DB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,8 +47,8 @@ public class DisposalModel
             conn = DB.getConnection();
             String sql = "SELECT ls_season_id as 'ID', "
                     + "fk_ls_id_ls_season as 'Livestock ID', "
-                    + "date as 'Date', "
                     + "profit as 'Profit', "
+                    + "date as 'Date', "
                     + "remarks as 'Remarks' from "
                     + "ls_season";
             Statement stmt = conn.createStatement();
@@ -115,6 +116,32 @@ public class DisposalModel
             {
                 JOptionPane.showMessageDialog(null, "Cannot close connection of DB!");
                 Logger.getLogger(DisposalModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public static void updateLSDisposed(int id)
+    {
+        Connection conn = null;
+        try {
+            conn = DB.getConnection();
+            String sql = "Update livestock set status = 'Disposed' "
+                    + "where ls_id = '"+id+"'";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.execute();
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        finally
+        {
+            try {
+                conn.close();
+            } catch (SQLException ex) 
+            {
+                JOptionPane.showMessageDialog(null, "Cannot close connection of DB!");
+                Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

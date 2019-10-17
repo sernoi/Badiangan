@@ -8,6 +8,10 @@ import crop.CropController;
 import crop.CropPanel;
 import crop.harvest.HarvestController;
 import crop.harvest.HarvestPanel;
+import disaster.DisasterController;
+import disaster.DisasterPanel;
+import far.FarController;
+import far.FarPanel;
 import fmember.FMemberController;
 import fmember.FMemberPanel;
 import java.awt.CardLayout;
@@ -15,6 +19,8 @@ import livestock.LSController;
 import livestock.LSPanel;
 import livestock.disposal.DisposalController;
 import livestock.disposal.DisposalPanel;
+import registration.RegController;
+import registration.RegPanel;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -53,19 +59,18 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
-        accountMenu = new javax.swing.JMenu();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
         manageMenu = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         reportMenu = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Badiangan");
@@ -201,33 +206,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         MenuBar.add(jMenu1);
 
-        accountMenu.setForeground(new java.awt.Color(0, 0, 0));
-        accountMenu.setText("Transaction");
-
-        jMenuItem13.setForeground(new java.awt.Color(0, 0, 0));
-        jMenuItem13.setText("Crops Harvest");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
-            }
-        });
-        accountMenu.add(jMenuItem13);
-
-        jMenuItem14.setForeground(new java.awt.Color(0, 0, 0));
-        jMenuItem14.setText("Livestocks Disposal");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
-            }
-        });
-        accountMenu.add(jMenuItem14);
-
-        jMenuItem15.setForeground(new java.awt.Color(0, 0, 0));
-        jMenuItem15.setText("Family Assistance Record");
-        accountMenu.add(jMenuItem15);
-
-        MenuBar.add(accountMenu);
-
         manageMenu.setForeground(new java.awt.Color(0, 0, 0));
         manageMenu.setText("Disaster");
 
@@ -241,7 +219,21 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuItem9.setForeground(new java.awt.Color(0, 0, 0));
         jMenuItem9.setText("Disasters");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         manageMenu.add(jMenuItem9);
+
+        jMenuItem15.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem15.setText("Family Assistance Record");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        manageMenu.add(jMenuItem15);
 
         MenuBar.add(manageMenu);
 
@@ -275,6 +267,24 @@ public class MainFrame extends javax.swing.JFrame {
         });
         reportMenu.add(jMenuItem2);
 
+        jMenuItem13.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem13.setText("Crops Harvest");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        reportMenu.add(jMenuItem13);
+
+        jMenuItem14.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem14.setText("Livestocks Disposal");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        reportMenu.add(jMenuItem14);
+
         MenuBar.add(reportMenu);
 
         setJMenuBar(MenuBar);
@@ -307,7 +317,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         BenePanel bp = new BenePanel();
-        new BeneController(bp);
+        new BeneController(bp,this);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(bp,"BenePanel");
         cl.show(mainPanel, "BenePanel");    
@@ -322,7 +332,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-    
+        RegPanel rp = new RegPanel();
+        new RegController(rp);
+        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+        mainPanel.add(rp,"RegPanel");
+        cl.show(mainPanel, "RegPanel");  
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
@@ -365,10 +379,25 @@ public class MainFrame extends javax.swing.JFrame {
         cl.show(mainPanel, "HarvestPanel"); 
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        FarPanel fp = new FarPanel();
+        new FarController(fp);
+        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+        mainPanel.add(fp,"FarPanel");
+        cl.show(mainPanel, "FarPanel"); 
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        DisasterPanel disp = new DisasterPanel();
+        new DisasterController(disp);
+        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+        mainPanel.add(disp,"DisasterPanel");
+        cl.show(mainPanel, "DisasterPanel"); 
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DateTimePanel;
     private javax.swing.JMenuBar MenuBar;
-    private javax.swing.JMenu accountMenu;
     public javax.swing.JLabel adminIDTF;
     public javax.swing.JLabel dateLabel;
     private javax.swing.JMenu fileMenu;

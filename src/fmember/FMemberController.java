@@ -18,7 +18,7 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.TableCellEditor;
 import net.proteanit.sql.DbUtils;
-import util.ComboKeyHandler;
+import util.BeneCBBHandler;
 import util.SearchModel;
 
 public class FMemberController
@@ -28,8 +28,7 @@ public class FMemberController
     {
         this.fmp = fmp;
   
-        this.fmp.allListener(
-                //Button Classes
+        this.fmp.allListener(//Button Classes
                 new OpenAddFMDialog(), new SaveFMClass(), new EditFMClass(),
                 new UpdateFMClass(), new DeleteFMClass(), new CloseDialogClass(), 
                 new CloseDialogClass(), new MyPopUpMenu(),
@@ -39,8 +38,8 @@ public class FMemberController
                 new OpenAddFMDialog(), new DeleteFMClass(), 
                 
                 //Auto-generate Beneficiary in ComboBox
-                new ComboKeyHandler(fmp.addBeneFMCB),
-                new ComboKeyHandler(fmp.editBeneFMCB)
+                new BeneCBBHandler(fmp.addBeneFMCB),
+                new BeneCBBHandler(fmp.editBeneFMCB)
                 
         );
         

@@ -20,9 +20,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.TableCellEditor;
+import livestock.disposal.DisposalModel;
 import net.proteanit.sql.DbUtils;
 import util.Alter;
-import util.ComboKeyHandler;
+import util.BeneCBBHandler;
 import util.SearchModel;
 
 public class LSController
@@ -32,7 +33,7 @@ public class LSController
     {
         this.lsp = lsp;
         this.lsp.allListener(new LSAction(), new LSPopUp(), new LSMouse(), 
-                new ComboKeyHandler(lsp.beneCB), new ComboKeyHandler(lsp.beneCB1));
+                new BeneCBBHandler(lsp.beneCB), new BeneCBBHandler(lsp.beneCB1));
         
         displayAllLS();
     }
@@ -55,6 +56,11 @@ public class LSController
         lsp.ageSpin.setValue(0);
         lsp.expDC.setDate(new Date());
         lsp.remarksTA.setText("");
+        
+        lsp.idLSLbl.setText("0");
+        lsp.profitSpin.setValue(0);
+        lsp.dateDC.setDate(new Date());
+        lsp.remarksTA2.setText("");
     }
     void deleteLS()
     {
@@ -178,6 +184,44 @@ public class LSController
             JOptionPane.showMessageDialog(lsp, "Please select ls to edit.");
         }
     }
+    void addDisposal()
+    {
+        int dataRow = lsp.table.getSelectedRow();
+        if(lsp.table.getValueAt(dataRow,8).toString().equals("Disposed"))
+        {
+            JOptionPane.showMessageDialog(null, "Livestock already Disposed!");
+        }
+        else
+        {
+            if(dataRow >= 0)
+            {
+                lsp.idLSLbl.setText(lsp.table.getValueAt(dataRow,0).toString());
+                lsp.disposalDialog.setTitle("Livestock Disposal");
+                lsp.disposalDialog.setModal(true);
+                lsp.disposalDialog.pack();
+                lsp.disposalDialog.setLocationRelativeTo(null);
+                lsp.disposalDialog.setVisible(true);
+            clearFields();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(lsp, "Please select a livestock to dispose.");
+            }
+        }
+    }
+    void saveDisposal()
+    {
+        DisposalModel.saveDisposal(
+                Integer.parseInt(lsp.idLSLbl.getText()),
+                Alter.getDouble(lsp.profitSpin),
+                Alter.gatVal(lsp.dateDC),
+                lsp.remarksTA2.getText());
+        
+        DisposalModel.updateLSDisposed(Integer.parseInt(lsp.idLSLbl.getText()));
+        JOptionPane.showMessageDialog(null,"Livestock Disposed!");
+        lsp.disposalDialog.dispose();
+        displayAllLS();
+    }
 
     class LSAction implements ActionListener
     {
@@ -226,6 +270,18 @@ public class LSController
             if(e.getSource() == lsp.deleteMenuItem)
             {
                 deleteLS();
+            }
+            if(e.getSource() == lsp.disposeMenuItem)
+            {
+                addDisposal();
+            }
+            if(e.getSource() == lsp.okBtn)
+            {
+                saveDisposal();
+            }
+            if(e.getSource() == lsp.cancelBtn2)
+            {
+                lsp.disposalDialog.dispose();
             }
         }
     }

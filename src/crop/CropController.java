@@ -8,11 +8,9 @@ import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -20,10 +18,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
-import javax.swing.table.TableCellEditor;
 import net.proteanit.sql.DbUtils;
 import util.Alter;
-import util.ComboKeyHandler;
+import util.BeneCBBHandler;
 import util.SearchModel;
 
 public class CropController
@@ -33,7 +30,7 @@ public class CropController
     {
         this.cp = cp;
         this.cp.allListener(new CCAction(), new CCPopUp(), new CCMouse(), 
-                new ComboKeyHandler(cp.beneCB), new ComboKeyHandler(cp.beneCB1));
+                new BeneCBBHandler(cp.beneCB), new BeneCBBHandler(cp.beneCB1));
         
         displayAllCrops();
     }
@@ -179,7 +176,7 @@ public class CropController
                 Alter.gatVal(cp.dateDC),
                 cp.remarksTA2.getText());
         
-        CropModel.updateCropHarvested(Integer.parseInt(cp.idHLbl.getText()));
+        HarvestModel.updateCropHarvested(Integer.parseInt(cp.idHLbl.getText()));
         JOptionPane.showMessageDialog(null,"Crop Harvested!");
         cp.harvestDialog.dispose();
         displayAllCrops();

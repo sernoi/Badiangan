@@ -81,7 +81,7 @@ public class BenePanel extends javax.swing.JPanel {
         walkinYesRB = new javax.swing.JRadioButton();
         jLabel27 = new javax.swing.JLabel();
         netIncomeSpin = new javax.swing.JSpinner();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        caseCBB = new javax.swing.JComboBox<>();
         saveBeneBtn = new javax.swing.JButton();
         cancelBeneBtn = new javax.swing.JButton();
         editBeneDialog = new javax.swing.JDialog();
@@ -591,8 +591,8 @@ public class BenePanel extends javax.swing.JPanel {
 
         netIncomeSpin.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
 
-        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Not Applicable", "Animal Bite", "Children and Women Abuse", "Family Planning", "Financial Assistance", "Legal Assistance" }));
+        caseCBB.setForeground(new java.awt.Color(255, 255, 255));
+        caseCBB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Not Applicable", "Animal Bite", "Children and Women Abuse", "Family Planning", "Financial Assistance", "Legal Assistance" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -703,7 +703,7 @@ public class BenePanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(caseCBB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -715,7 +715,7 @@ public class BenePanel extends javax.swing.JPanel {
                     .addComponent(walkinYesRB)
                     .addComponent(walkinNoRB)
                     .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(caseCBB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2538,6 +2538,7 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JButton cancelEditCropBtn;
     public javax.swing.JButton cancelEditLSBtn;
     public javax.swing.JButton cancelEditMemberBtn;
+    public javax.swing.JComboBox<String> caseCBB;
     public javax.swing.JTextField classificationAddCropTF;
     public javax.swing.JTextField classificationAddLSTF;
     public javax.swing.JTextField classificationEditCropTF;
@@ -2603,7 +2604,6 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.ButtonGroup indigentRBG1;
     public javax.swing.JRadioButton indigentYesRB;
     public javax.swing.JRadioButton indigentYesRB1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel10;
     public javax.swing.JLabel jLabel11;

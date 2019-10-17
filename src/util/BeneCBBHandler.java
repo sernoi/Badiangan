@@ -19,16 +19,12 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-/**
- *
- * @author Phuc Anh
- */
-public class ComboKeyHandler extends KeyAdapter {
+public class BeneCBBHandler extends KeyAdapter {
   private final JComboBox<String> comboBox;
   private final List<String> list = new ArrayList<>();
   private boolean shouldHide;
 
-  public ComboKeyHandler(JComboBox<String> combo) {
+  public BeneCBBHandler(JComboBox<String> combo) {
     super();
     this.comboBox = combo;
 //    for (int i = 0; i < comboBox.getModel().getSize(); i++) {
@@ -46,7 +42,7 @@ public class ComboKeyHandler extends KeyAdapter {
                 list.add(rs.getString("bene"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ComboKeyHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BeneCBBHandler.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
         }
   }

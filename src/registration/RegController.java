@@ -1,18 +1,10 @@
 package registration;
-import livestock.*;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -20,249 +12,117 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
-import javax.swing.table.TableCellEditor;
 import net.proteanit.sql.DbUtils;
 import util.Alter;
-import util.ComboKeyHandler;
 import util.SearchModel;
 
 public class RegController
 {
-    LSPanel lsp;
-    public RegController(LSPanel lsp)
+    RegPanel rp;
+    public RegController(RegPanel rp)
     {
-        this.lsp = lsp;
-        this.lsp.allListener(new LSAction(), new LSPopUp(), new LSMouse(), 
-                new ComboKeyHandler(lsp.beneCB), new ComboKeyHandler(lsp.beneCB1));
+        this.rp = rp;
+        this.rp.allListener(new Action(), new PopUp(), new Mouse());
         
-        displayAllLS();
+        displayAllReg();
     }
-    void addLS()
+    void deleteReg()
     {
-        lsp.addDialog.setTitle("Add LS");
-        lsp.addDialog.setModal(true);
-        lsp.addDialog.pack();
-        lsp.addDialog.setLocationRelativeTo(null);
-        lsp.addDialog.setVisible(true);
-        clearFields();
-    }
-    void clearFields()
-    {
-        JTextField text = (JTextField) lsp.beneCB.getEditor().getEditorComponent();
-        text.setText("");
-        lsp.lsTF.setText("");
-        lsp.classificationTF.setText("");
-        lsp.headsSpin.setValue(0);
-        lsp.ageSpin.setValue(0);
-        lsp.expDC.setDate(new Date());
-        lsp.remarksTA.setText("");
-    }
-    void deleteLS()
-    {
-        int dataRow = lsp.table.getSelectedRow();
+        int dataRow = rp.table.getSelectedRow();
         if(dataRow >= 0)
         {
-            String id = lsp.table.getValueAt(dataRow,0).toString();
+            String id = rp.table.getValueAt(dataRow,0).toString();
             int dialogButton = JOptionPane.YES_NO_OPTION;
-            int dialogResult = JOptionPane.showConfirmDialog (lsp, "Would You Like to "
-                    + "delete livestock: " + id + "?","Warning",dialogButton);
+            int dialogResult = JOptionPane.showConfirmDialog (rp, "Would You Like to "
+                    + "delete registration: " + id + "?","Warning",dialogButton);
             if(dialogResult == JOptionPane.YES_OPTION)
             {
-                LSModel.deleteLS(id);
-                displayAllLS();
+                RegModel.deleteReg(id);
+                displayAllReg();
             }
         }
         else
         {
-            JOptionPane.showMessageDialog(lsp, "Please select a livestock to delete.");
+            JOptionPane.showMessageDialog(rp, "Please select a registration to delete.");
         }
     }  
-    void displayAllLS()
+    void displayAllReg()
     {
-        ResultSet rs = LSModel.getAllLS();
-        lsp.table.setModel(DbUtils.resultSetToTableModel(rs));
-        // this is to disable editing in the jtable
-        for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class))
-        {
-            TableCellEditor ce = lsp.table.getDefaultEditor(c);
-            if (ce instanceof DefaultCellEditor)
-            {
-                ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
-            }
-        }
-        lsp.table.getColumnModel().getColumn(0).setMinWidth(0);
-        lsp.table.getColumnModel().getColumn(0).setMaxWidth(50);
-        lsp.table.getColumnModel().getColumn(0).setPreferredWidth(25);
-        new SearchModel(lsp, lsp.table, lsp.searchTF, rs);
+        ResultSet rs = RegModel.getAllReg();
+        rp.table.setModel(DbUtils.resultSetToTableModel(rs));
+        new SearchModel(rp, rp.table, rp.searchTF, rs);
     }
-    void editLS()
+    void viewReg()
     {
-        int dataRow = lsp.table.getSelectedRow();
+        int dataRow = rp.table.getSelectedRow();
         if(dataRow >= 0)
         {
-            lsp.idLbl.setText(lsp.table.getValueAt(dataRow,0).toString());
-            lsp.lsTF1.setText(lsp.table.getValueAt(dataRow,2).toString());
-            lsp.classificationTF1.setText(lsp.table.getValueAt(dataRow,3).toString());
-            lsp.headsSpin1.setValue(Alter.toInt(lsp.table.getValueAt(dataRow,4).toString()));
-            lsp.ageSpin1.setValue(Alter.toInt(lsp.table.getValueAt(dataRow,5).toString()));
-            
-            try 
-            {
-                Date date;
-                date = new SimpleDateFormat("yyyy-MM-dd").parse(lsp.table.getValueAt(dataRow,6).toString());
-                lsp.expDC1.setDate(date); //dob
-            } catch (ParseException ex) {
-                Logger.getLogger(RegController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            lsp.remarksTA1.setText(lsp.table.getValueAt(dataRow,7).toString());
-            lsp.editDialog.setTitle("Edit Livestock");
-            lsp.editDialog.setModal(true);
-            lsp.editDialog.pack();
-            lsp.editDialog.setLocationRelativeTo(lsp);
-            lsp.editDialog.setVisible(true);
+            JOptionPane.showMessageDialog(rp,
+                    "ID: " + (rp.table.getValueAt(dataRow,0).toString()) + "\n"
+                            + "Admin: " + (rp.table.getValueAt(dataRow,1).toString()) + "\n"
+                                    + "Beneficiary: " + (rp.table.getValueAt(dataRow,2).toString()) + "\n"
+                                            + "Walkin Status: " + (rp.table.getValueAt(dataRow,3).toString()) + "\n"
+                                                    + "Case: " + (rp.table.getValueAt(dataRow,4).toString()) + "\n"
+                                                            + "Date: " + (rp.table.getValueAt(dataRow,5).toString()) + "\n",
+                    "Registration Info", JOptionPane.INFORMATION_MESSAGE);
         }
         else
         {
-            JOptionPane.showMessageDialog(lsp, "Please select ls to edit.");
-        }
-    }
-    void saveLS()
-    {
-        JTextField text = (JTextField) lsp.beneCB.getEditor().getEditorComponent();
-        String str = text.getText();
-        LSModel.saveLS(
-                Integer.parseInt(str.substring(str.indexOf(":") + 1,str.indexOf(")"))),
-                lsp.lsTF.getText(),
-                lsp.classificationTF.getText(),
-                Alter.getInt(lsp.headsSpin),
-                Alter.getInt(lsp.ageSpin),
-                ((JTextField)lsp.expDC.getDateEditor().getUiComponent()).getText(),
-                lsp.remarksTA.getText());
-        lsp.addDialog.dispose();
-        displayAllLS();
-    }
-    void updateLS()
-    {
-        JTextField text = (JTextField) lsp.beneCB1.getEditor().getEditorComponent();
-        String str = text.getText();
-        LSModel.updateLS(
-                Integer.parseInt(lsp.idLbl.getText()),
-                Integer.parseInt(str.substring(str.indexOf(":") + 1,str.indexOf(")"))),
-                lsp.lsTF1.getText(),
-                lsp.classificationTF1.getText(),
-                Integer.parseInt(lsp.headsSpin1.getValue().toString()),
-                Integer.parseInt(lsp.ageSpin1.getValue().toString()),
-                ((JTextField)lsp.expDC1.getDateEditor().getUiComponent()).getText(),
-                lsp.remarksTA1.getText());
-        lsp.editDialog.dispose();
-        displayAllLS();
-    }
-    void viewLS()
-    {
-        int dataRow = lsp.table.getSelectedRow();
-        if(dataRow >= 0)
-        {
-            JOptionPane.showMessageDialog(lsp,
-                    "ID: " + (lsp.table.getValueAt(dataRow,0).toString()) + "\n"
-                            + "Beneficiary: " + (lsp.table.getValueAt(dataRow,1).toString()) + "\n"
-                                    + "Livestock Raised: " + (lsp.table.getValueAt(dataRow,2).toString()) + "\n"
-                                            + "Area: " + (lsp.table.getValueAt(dataRow,3).toString()) + "\n"
-                                                    + "Variety: " + (lsp.table.getValueAt(dataRow,4).toString()) + "\n"
-                                                            + "Classification: " + (lsp.table.getValueAt(dataRow,5).toString()) + "\n"
-                                                                    + "Exp Harvest Date: " + (lsp.table.getValueAt(dataRow,6).toString()) + "\n"
-                                                                            + "Remarks: " + (lsp.table.getValueAt(dataRow,7).toString()),
-                    "LS Info", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(lsp, "Please select ls to edit.");
+            JOptionPane.showMessageDialog(rp, "Please select a registration to view.");
         }
     }
 
-    class LSAction implements ActionListener
+    class Action implements ActionListener
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == lsp.addBtn)
+            if(e.getSource() == rp.viewMenuItem)
             {
-                addLS();
+                viewReg();
             }
-            if(e.getSource() == lsp.saveBtn)
+            if(e.getSource() == rp.deleteMenuItem)
             {
-                saveLS();
+                deleteReg();
             }
-            if(e.getSource() == lsp.editBtn)
+            if(e.getSource() == rp.deleteBtn)
             {
-                editLS();
-            }
-            if(e.getSource() == lsp.updateBtn)
-            {
-                updateLS();
-            }
-            if(e.getSource() == lsp.deleteBtn)
-            {
-                deleteLS();
-            }
-            if(e.getSource() == lsp.cancelBtn)
-            {
-                lsp.addDialog.dispose();
-            }
-            if(e.getSource() == lsp.cancelBtn1)
-            {
-                lsp.editDialog.dispose();
-            }
-            if(e.getSource() == lsp.viewMenuItem)
-            {
-                viewLS();
-            }
-            if(e.getSource() == lsp.editMenuItem)
-            {
-                editLS();
-            }
-            if(e.getSource() == lsp.addMenuItem)
-            {
-                addLS();
-            }
-            if(e.getSource() == lsp.deleteMenuItem)
-            {
-                deleteLS();
+                deleteReg();
             }
         }
     }
     
-    class LSMouse extends MouseAdapter
+    class Mouse extends MouseAdapter
     {
         @Override
         public void mouseReleased(MouseEvent e) 
         {      
-            int r = lsp.table.rowAtPoint(e.getPoint());
-            if (r >= 0 && r < lsp.table.getRowCount()) {
-                lsp.table.setRowSelectionInterval(r, r);
+            int r = rp.table.rowAtPoint(e.getPoint());
+            if (r >= 0 && r < rp.table.getRowCount()) {
+                rp.table.setRowSelectionInterval(r, r);
             } else {
-                lsp.table.clearSelection();
+                rp.table.clearSelection();
             }
 
-            int rowindex = lsp.table.getSelectedRow();
+            int rowindex = rp.table.getSelectedRow();
             if (rowindex < 0)
                 return;
             if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
                 JPopupMenu popup = new JPopupMenu();
-                popup.show(lsp, e.getX(), e.getY());
-                lsp.table.setComponentPopupMenu(lsp.popUpMenu);
+                popup.show(rp, e.getX(), e.getY());
+                rp.table.setComponentPopupMenu(rp.popUpMenu);
             }
         }
     }
     
-    class LSPopUp implements PopupMenuListener
+    class PopUp implements PopupMenuListener
     {
         @Override
         public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
             SwingUtilities.invokeLater(() -> {
-                int rowAtPoint = lsp.table.rowAtPoint(SwingUtilities.
-                        convertPoint(lsp.popUpMenu, new Point(0, 0), lsp.table));
+                int rowAtPoint = rp.table.rowAtPoint(SwingUtilities.
+                        convertPoint(rp.popUpMenu, new Point(0, 0), rp.table));
                 if (rowAtPoint > -1) {
-                    lsp.table.setRowSelectionInterval(rowAtPoint, rowAtPoint);
+                    rp.table.setRowSelectionInterval(rowAtPoint, rowAtPoint);
                 }
             });
         }

@@ -1,4 +1,4 @@
-package livestock;
+package far;
 
 import db.DB;
 import java.sql.Connection;
@@ -10,19 +10,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class LSModel 
+public class FarModel 
 {
-    public static void deleteLS(String id)
+    public static void deleteFar(String id)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Delete from livestock where ls_id = '"+id+"'";
+            String sql = "Delete from far where far_id = '"+id+"'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.execute();
-            //JOptionPane.showMessageDialog(null,"Subscriber Deleted!");
         } catch (SQLException ex) {
-            Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FarModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
         }
         finally
@@ -32,53 +31,46 @@ public class LSModel
             } catch (SQLException ex)
             {
                 JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
-                Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FarModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-        public static ResultSet getAllLS()
+        public static ResultSet getAllFar()
     {
         ResultSet rs = null;
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            //String sql = "Select * from livestock";
-            String sql = "SELECT livestock.ls_id as 'ID', "
-                    + "CONCAT_WS(' ', beneficiary.fname, beneficiary.mname, beneficiary.lname) as 'Beneficiary', "
-                    + "livestock.livestock_raised as 'Livestock Raised', "
-                    + "livestock.classification as 'Classification', livestock.heads as 'No. of Heads', "
-                    + "livestock.age as 'Age in Months', livestock.exp as 'Exp Disposal Date', "
-                    + "livestock.remarks as 'Remarks', livestock.status as 'Status' "
-                    + "from livestock, beneficiary where "
-                    + "livestock.fk_bene_id_livestock = beneficiary.bene_id";
+            String sql = "Select * from far";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FarModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
             return null;
         }
         return rs;
     }
     
-    public static void saveLS(int id, String ls, String classification,
-            int heads, int age, String exp, String remarks)
+    public static void saveFar(int id, int dis_id, String during,
+            String date, String type, int qty, double cost, String provider)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Insert into livestock values (0,?,?,?,?,?,?,?,'Held')";
+            String sql = "Insert into far values (0,?,?,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id);
-            stmt.setString(2, ls);
-            stmt.setString(3, classification);
-            stmt.setInt(4, heads);
-            stmt.setInt(5, age);
-            stmt.setString(6, exp);
-            stmt.setString(7, remarks);
+            stmt.setInt(2, dis_id);
+            stmt.setString(3, date);
+            stmt.setString(4, during);
+            stmt.setString(5, type);
+            stmt.setInt(6, qty);
+            stmt.setDouble(7, cost);
+            stmt.setString(8, provider);
             stmt.execute();
         }catch (SQLException ex) {
-            Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FarModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Please check inputs" + ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
         finally
@@ -88,18 +80,18 @@ public class LSModel
             } catch (SQLException ex) 
             {
                 JOptionPane.showMessageDialog(null, "Cannot close connection to DB!");
-                Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FarModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
-    public static void updateLS(int id, int bene_id, String ls, 
+    public static void updateFar(int id, int bene_id, String ls, 
             String cl, int heads, int age, String exp, String remarks)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Update livestock set fk_bene_id_livestock = ? , livestock_raised = ? , "
+            String sql = "Update far set fk_bene_id_far = ? , far_raised = ? , "
                     + "classification = ? , heads = ? , age = ?, exp = ?, "
                     + "remarks = ? where ls_id = '"+id+"'";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -113,7 +105,7 @@ public class LSModel
             stmt.execute();
         }
         catch (SQLException ex) {
-            Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FarModel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
         }
         finally
@@ -123,10 +115,8 @@ public class LSModel
             } catch (SQLException ex) 
             {
                 JOptionPane.showMessageDialog(null, "Cannot close connection of DB!");
-                Logger.getLogger(LSModel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FarModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
-    
 }

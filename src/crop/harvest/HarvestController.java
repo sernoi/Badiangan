@@ -1,6 +1,5 @@
 package crop.harvest;
 import crop.CropController;
-import crop.CropModel;
 import crop.CropPanel;
 import java.awt.CardLayout;
 import java.awt.Point;

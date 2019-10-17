@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
 
 public class RegModel 
 {
-    public static void deleteLS(String id)
+    public static void deleteReg(String id)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Delete from livestock where ls_id = '"+id+"'";
+            String sql = "Delete from registration where reg_id = '"+id+"'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.execute();
             //JOptionPane.showMessageDialog(null,"Subscriber Deleted!");
@@ -36,21 +36,22 @@ public class RegModel
             }
         }
     }
-        public static ResultSet getAllLS()
+        public static ResultSet getAllReg()
     {
         ResultSet rs = null;
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            //String sql = "Select * from livestock";
-            String sql = "SELECT livestock.ls_id as 'ID', "
+            //String sql = "Select * from registration";
+            String sql = "SELECT registration.reg_id as 'ID', "
+                    + "CONCAT_WS(' ', admin.fname, admin.mname, admin.lname) as 'Admin', "
                     + "CONCAT_WS(' ', beneficiary.fname, beneficiary.mname, beneficiary.lname) as 'Beneficiary', "
-                    + "livestock.livestock_raised as 'Livestock Raised', "
-                    + "livestock.classification as 'Classification', livestock.heads as 'No. of Heads', "
-                    + "livestock.age as 'Age in Months', livestock.exp as 'Exp Disposal Date', "
-                    + "livestock.remarks as 'Remarks' "
-                    + "from livestock, beneficiary where "
-                    + "livestock.fk_bene_id_livestock = beneficiary.bene_id";
+                    + "registration.walkin_status as 'Walk in Stat', "
+                    + "registration.case as 'Case', "
+                    + "registration.date as 'Reg Date' "
+                    + "from registration, beneficiary, admin where "
+                    + "registration.fk_bene_id_registration = beneficiary.bene_id "
+                    + "and registration.fk_admin_id_registration = admin.admin_id";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
         } catch (SQLException ex) {
@@ -61,21 +62,19 @@ public class RegModel
         return rs;
     }
     
-    public static void saveLS(int id, String ls, String classification,
-            int heads, int age, String exp, String remarks)
+    public static void saveReg(int adminID, int beneID, String stat,
+            String caseReg, String date)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Insert into livestock values (0,?,?,?,?,?,?,?)";
+            String sql = "Insert into registration values (0,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, id);
-            stmt.setString(2, ls);
-            stmt.setString(3, classification);
-            stmt.setInt(4, heads);
-            stmt.setInt(5, age);
-            stmt.setString(6, exp);
-            stmt.setString(7, remarks);
+            stmt.setInt(1, adminID);
+            stmt.setInt(2, beneID);
+            stmt.setString(3, stat);
+            stmt.setString(4, caseReg);
+            stmt.setString(5, date);
             stmt.execute();
         }catch (SQLException ex) {
             Logger.getLogger(RegModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,40 +91,4 @@ public class RegModel
             }
         }
     }
-    
-    public static void updateLS(int id, int bene_id, String ls, 
-            String cl, int heads, int age, String exp, String remarks)
-    {
-        Connection conn = null;
-        try {
-            conn = DB.getConnection();
-            String sql = "Update livestock set fk_bene_id_livestock = ? , livestock_raised = ? , "
-                    + "classification = ? , heads = ? , age = ?, exp = ?, "
-                    + "remarks = ? where ls_id = '"+id+"'";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, bene_id);
-            stmt.setString(2, ls);
-            stmt.setString(3, cl);
-            stmt.setInt(4, heads);
-            stmt.setInt(5, age);
-            stmt.setString(6, exp);
-            stmt.setString(7, remarks);
-            stmt.execute();
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(RegModel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex);
-        }
-        finally
-        {
-            try {
-                conn.close();
-            } catch (SQLException ex) 
-            {
-                JOptionPane.showMessageDialog(null, "Cannot close connection of DB!");
-                Logger.getLogger(RegModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
 }

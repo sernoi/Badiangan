@@ -1,5 +1,6 @@
 package crop.harvest;
 
+import crop.CropModel;
 import db.DB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -126,6 +127,31 @@ public class HarvestModel
         }
     }
     
+    public static void updateCropHarvested(int id)
+    {
+        Connection conn = null;
+        try {
+            conn = DB.getConnection();
+            String sql = "Update crop set status = 'Harvested' "
+                    + "where crop_id = '"+id+"'";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.execute();
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        finally
+        {
+            try {
+                conn.close();
+            } catch (SQLException ex) 
+            {
+                JOptionPane.showMessageDialog(null, "Cannot close connection of DB!");
+                Logger.getLogger(CropModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     public static ArrayList<Integer> getCropsID()
     {
         ArrayList<Integer> crop = new ArrayList<Integer>();

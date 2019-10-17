@@ -1,0 +1,253 @@
+package far;
+import livestock.*;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
+import javax.swing.table.TableCellEditor;
+import livestock.disposal.DisposalModel;
+import net.proteanit.sql.DbUtils;
+import util.Alter;
+import util.BeneCBBHandler;
+import util.DisasterCBBHandler;
+import util.SearchModel;
+
+public class FarController
+{
+    FarPanel fp;
+    public FarController(FarPanel fp)
+    {
+        this.fp = fp;
+        this.fp.allListener(new Action(), new PopUp(), new Mouse(), 
+                new BeneCBBHandler(fp.beneCBB), new DisasterCBBHandler(fp.disCBB));
+        
+        displayAllFar();
+    }
+    void addFar()
+    {
+        fp.addDialog.setTitle("Add FAR");
+        fp.addDialog.setModal(true);
+        fp.addDialog.pack();
+        fp.addDialog.setLocationRelativeTo(null);
+        fp.addDialog.setVisible(true);
+        clearFields();
+    }
+    void clearFields()
+    {
+        JTextField text = (JTextField) fp.beneCBB.getEditor().getEditorComponent();
+        text.setText("");
+        JTextField text1 = (JTextField) fp.disCBB.getEditor().getEditorComponent();
+        text1.setText("");
+        fp.providerTF.setText("");
+        fp.qtySpin.setValue(0);
+        fp.costSpin.setValue(0);
+        fp.expDC.setDate(new Date());
+    }
+    void deleteFar()
+    {
+        int dataRow = fp.table.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            String id = fp.table.getValueAt(dataRow,0).toString();
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog (fp, "Would You Like to "
+                    + "delete FAR: " + id + "?","Warning",dialogButton);
+            if(dialogResult == JOptionPane.YES_OPTION)
+            {
+                FarModel.deleteFar(id);
+                displayAllFar();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(fp, "Please select a FAR to delete.");
+        }
+    }  
+    void displayAllFar()
+    {
+        ResultSet rs = FarModel.getAllFar();
+        fp.table.setModel(DbUtils.resultSetToTableModel(rs));
+        // this is to disable editing in the jtable
+        for (Class c: Arrays.asList(Object.class, Number.class, Boolean.class))
+        {
+            TableCellEditor ce = fp.table.getDefaultEditor(c);
+            if (ce instanceof DefaultCellEditor)
+            {
+                ((DefaultCellEditor) ce).setClickCountToStart(Integer.MAX_VALUE);
+            }
+        }
+        fp.table.getColumnModel().getColumn(0).setMinWidth(0);
+        fp.table.getColumnModel().getColumn(0).setMaxWidth(50);
+        fp.table.getColumnModel().getColumn(0).setPreferredWidth(25);
+        new SearchModel(fp, fp.table, fp.searchTF, rs);
+    }
+    void editFar()
+    {
+//        int dataRow = fp.table.getSelectedRow();
+//        if(dataRow >= 0)
+//        {
+//            fp.idLbl.setText(fp.table.getValueAt(dataRow,0).toString());
+//            fp.lsTF1.setText(fp.table.getValueAt(dataRow,2).toString());
+//            fp.classificationTF1.setText(fp.table.getValueAt(dataRow,3).toString());
+//            fp.headsSpin1.setValue(Alter.toInt(fp.table.getValueAt(dataRow,4).toString()));
+//            fp.ageSpin1.setValue(Alter.toInt(fp.table.getValueAt(dataRow,5).toString()));
+//            
+//            try 
+//            {
+//                Date date;
+//                date = new SimpleDateFormat("yyyy-MM-dd").parse(fp.table.getValueAt(dataRow,6).toString());
+//                fp.expDC1.setDate(date); //dob
+//            } catch (ParseException ex) {
+//                Logger.getLogger(FarController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            
+//            fp.remarksTA1.setText(fp.table.getValueAt(dataRow,7).toString());
+//            fp.editDialog.setTitle("Edit FAR");
+//            fp.editDialog.setModal(true);
+//            fp.editDialog.pack();
+//            fp.editDialog.setLocationRelativeTo(fp);
+//            fp.editDialog.setVisible(true);
+//        }
+//        else
+//        {
+//            JOptionPane.showMessageDialog(fp, "Please select FAR to edit.");
+//        }
+    }
+    void saveFar()
+    {
+        
+        fp.addDialog.dispose();
+        displayAllFar();
+    }
+    void updateFar()
+    {
+
+    }
+    void viewFar()
+    {
+        int dataRow = fp.table.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            JOptionPane.showMessageDialog(fp,
+                    "ID: " + (fp.table.getValueAt(dataRow,0).toString()) + "\n"
+                            + "Beneficiary: " + (fp.table.getValueAt(dataRow,1).toString()) + "\n"
+                                    + "FAR Raised: " + (fp.table.getValueAt(dataRow,2).toString()) + "\n"
+                                            + "Area: " + (fp.table.getValueAt(dataRow,3).toString()) + "\n"
+                                                    + "Variety: " + (fp.table.getValueAt(dataRow,4).toString()) + "\n"
+                                                            + "Classification: " + (fp.table.getValueAt(dataRow,5).toString()) + "\n"
+                                                                    + "Exp Harvest Date: " + (fp.table.getValueAt(dataRow,6).toString()) + "\n"
+                                                                            + "Remarks: " + (fp.table.getValueAt(dataRow,7).toString()),
+                    "FAR Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(fp, "Please select FAR to edit.");
+        }
+    }
+
+    class Action implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == fp.addBtn)
+            {
+                addFar();
+            }
+            if(e.getSource() == fp.okBtn)
+            {
+                saveFar();
+            }
+            if(e.getSource() == fp.editBtn)
+            {
+                editFar();
+            }
+            if(e.getSource() == fp.deleteBtn)
+            {
+                deleteFar();
+            }
+            if(e.getSource() == fp.cancelBtn)
+            {
+                fp.addDialog.dispose();
+            }
+            if(e.getSource() == fp.viewMenuItem)
+            {
+                viewFar();
+            }
+            if(e.getSource() == fp.editMenuItem)
+            {
+                editFar();
+            }
+            if(e.getSource() == fp.addMenuItem)
+            {
+                addFar();
+            }
+            if(e.getSource() == fp.deleteMenuItem)
+            {
+                deleteFar();
+            }
+        }
+    }
+    
+    class Mouse extends MouseAdapter
+    {
+        @Override
+        public void mouseReleased(MouseEvent e) 
+        {      
+            int r = fp.table.rowAtPoint(e.getPoint());
+            if (r >= 0 && r < fp.table.getRowCount()) {
+                fp.table.setRowSelectionInterval(r, r);
+            } else {
+                fp.table.clearSelection();
+            }
+
+            int rowindex = fp.table.getSelectedRow();
+            if (rowindex < 0)
+                return;
+            if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
+                JPopupMenu popup = new JPopupMenu();
+                popup.show(fp, e.getX(), e.getY());
+                fp.table.setComponentPopupMenu(fp.popUpMenu);
+            }
+        }
+    }
+    
+    class PopUp implements PopupMenuListener
+    {
+        @Override
+        public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+            SwingUtilities.invokeLater(() -> {
+                int rowAtPoint = fp.table.rowAtPoint(SwingUtilities.
+                        convertPoint(fp.popUpMenu, new Point(0, 0), fp.table));
+                if (rowAtPoint > -1) {
+                    fp.table.setRowSelectionInterval(rowAtPoint, rowAtPoint);
+                }
+            });
+        }
+        
+        @Override
+        public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+            
+        }
+        
+        @Override
+        public void popupMenuCanceled(PopupMenuEvent e) {
+            
+        }
+    }
+}
