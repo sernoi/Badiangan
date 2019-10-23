@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.event.MouseInputListener;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
@@ -39,6 +40,7 @@ public class MapController
         this.bp = bp;
         this.mpp.allListener(new Action(), new Mouse());
         
+        initMap();
         initMarker();
     }
     public MapController(MapPanel mpp, BenePanel bp, double locLong, double locLat)
@@ -47,6 +49,7 @@ public class MapController
         this.bp = bp;
         this.mpp.allListener(new Action(), new Mouse());
         
+        initMap();
         setMarker(new GeoPosition(locLat,locLong));
     }
     void initMap()
@@ -91,19 +94,21 @@ public class MapController
             @Override
              public void mouseDragged(MouseEvent e)
              {
-                //System.out.println(mapViewer.getCenterPosition().getLatitude());
+                System.out.println(mapViewer.getCenterPosition().getLatitude());
                 //high 11.038957490552914
                 //low 10.972735371100471
                 
-                //System.out.println(mapViewer.getCenterPosition().getLongitude());
+                System.out.println(mapViewer.getCenterPosition().getLongitude());
                 //right 122.6109795349121
-                //left 122.51605079345703
-                if(mapViewer.getCenterPosition().getLatitude() >= 11.038957490552914 ||
-                   mapViewer.getCenterPosition().getLatitude() <= 10.972735371100471 ||
-                   mapViewer.getCenterPosition().getLongitude() >= 122.6109795349121 ||
-                   mapViewer.getCenterPosition().getLongitude() <= 122.51605079345703)
+                //left 122.40
+                if(mapViewer.getCenterPosition().getLatitude() >= 11.1030 ||
+                   mapViewer.getCenterPosition().getLatitude() <= 10.8220 ||
+                   mapViewer.getCenterPosition().getLongitude() >= 122.7024 ||
+                   mapViewer.getCenterPosition().getLongitude() <= 122.3373)
                 {
-                    //JOptionPane.showMessageDialog(null,"Lapaw");
+                    JOptionPane.showMessageDialog(null,"You are out of bounds...\n Returning to the center");
+                    mapViewer.setZoom(6);
+                    mapViewer.setAddressLocation(badiangan);
                 }
              }
              
@@ -111,7 +116,6 @@ public class MapController
     }
     void initMarker()
     {
-        initMap();
         mapViewer.addMouseListener(new MapClickListener(mapViewer) {
             @Override
             public void mapClicked(GeoPosition gp) {
@@ -130,8 +134,8 @@ public class MapController
         //JDialog mapDialog = new JDialog();
         mpp.mapDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         mpp.mapDialog.setModal(true);
-        mpp.mapDialog.setPreferredSize(new Dimension(1000, 700));
-        mpp.mapDialog.setSize(new Dimension(1000, 700));
+        mpp.mapDialog.setPreferredSize(new Dimension(1200, 700));
+        mpp.mapDialog.setSize(new Dimension(1200, 700));
         mpp.mapPanel.add(mapViewer);
         mpp.mapDialog.setLocationRelativeTo(null);
         mpp.mapDialog.setTitle("Map Dialog");
@@ -143,8 +147,6 @@ public class MapController
         mpp.saveBtn.setVisible(false);
         mpp.longLbl.setText("" + gp.getLongitude());
         mpp.latLbl.setText("" + gp.getLatitude());
-        
-        initMap();
         
         Set<MyWaypoint> wp = new HashSet<MyWaypoint>(Arrays.asList(
         new MyWaypoint("B", Color.ORANGE, gp)));
@@ -158,8 +160,8 @@ public class MapController
         //JDialog mapDialog = new JDialog();
         mpp.mapDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         mpp.mapDialog.setModal(true);
-        mpp.mapDialog.setPreferredSize(new Dimension(1000, 700));
-        mpp.mapDialog.setSize(new Dimension(1000, 700));
+        mpp.mapDialog.setPreferredSize(new Dimension(1200, 700));
+        mpp.mapDialog.setSize(new Dimension(1200, 700));
         mpp.mapPanel.add(mapViewer);
         mpp.mapDialog.setLocationRelativeTo(null);
         mpp.mapDialog.setTitle("Map Dialog");

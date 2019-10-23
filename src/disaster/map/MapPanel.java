@@ -60,7 +60,8 @@ public class MapPanel extends javax.swing.JPanel{
 
         saveBtn.setText("Save Location");
 
-        radSpinner.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
+        radSpinner.setModel(new javax.swing.SpinnerNumberModel());
+        radSpinner.setValue(1);
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Radius:");
