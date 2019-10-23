@@ -4,6 +4,7 @@ import login.LoginController;
 import login.LoginFrame;
 public class Start 
 {
+    //Start of the Program
     public static void main(String[] args)
     {
         initLookAndFeel();
