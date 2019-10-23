@@ -3,9 +3,7 @@ package beneficiary;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowListener;
 import java.util.Date;
 import javax.swing.event.PopupMenuListener;
 
@@ -266,6 +264,7 @@ public class BenePanel extends javax.swing.JPanel {
         editBeneMenuItem = new javax.swing.JMenuItem();
         addBeneMenuItem = new javax.swing.JMenuItem();
         deleteBeneMenuItem = new javax.swing.JMenuItem();
+        viewMapMenuItem = new javax.swing.JMenuItem();
         membersPopMenu = new javax.swing.JPopupMenu();
         viewMemberMenuItem = new javax.swing.JMenuItem();
         editMemberMenuItem = new javax.swing.JMenuItem();
@@ -1612,7 +1611,7 @@ public class BenePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okEditMemberBtn)
@@ -2155,7 +2154,7 @@ public class BenePanel extends javax.swing.JPanel {
         jLabel79.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel79.setText("Number:");
 
-        ageEditLSSpin.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
+        ageEditLSSpin.setModel(new javax.swing.SpinnerNumberModel());
 
         headsEditLSSpin.setModel(new javax.swing.SpinnerNumberModel());
 
@@ -2280,6 +2279,9 @@ public class BenePanel extends javax.swing.JPanel {
 
         deleteBeneMenuItem.setText("Delete");
         benePopMenu.add(deleteBeneMenuItem);
+
+        viewMapMenuItem.setText("View in Map");
+        benePopMenu.add(viewMapMenuItem);
 
         viewMemberMenuItem.setText("View Member");
         membersPopMenu.add(viewMemberMenuItem);
@@ -2415,30 +2417,18 @@ public class BenePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     public void allListener(
+            ActionListener a,
             //Bene Args
-            PopupMenuListener pop0, MouseListener tablePop0, ActionListener menu1bene,
-            ActionListener menu2bene, ActionListener menu3bene, ActionListener menu4bene,
-            ActionListener add, ActionListener save, ActionListener cancel0a, 
-            ActionListener edit, ActionListener update, ActionListener cancel0b,
-            ActionListener delete, 
+            PopupMenuListener pop0, MouseListener tablePop0,
            
             //Member Args
-            PopupMenuListener pop1, MouseListener tablePop1, ActionListener menu1a,
-            ActionListener menu2a, ActionListener menu3a, ActionListener menu4a,
-            ActionListener ok1a, ActionListener cancel1a, WindowListener close1a,
-            ActionListener ok1b, ActionListener cancel1b, WindowListener close1b,
+            PopupMenuListener pop1, MouseListener tablePop1, 
             
             //Crop Args
-            PopupMenuListener pop2, MouseListener tablePop2, ActionListener menu1b,
-            ActionListener menu2b, ActionListener menu3b, ActionListener menu4b,
-            ActionListener ok2a, ActionListener cancel2a, WindowListener close2a,
-            ActionListener ok2b, ActionListener cancel2b, WindowListener close2b,
+            PopupMenuListener pop2, MouseListener tablePop2, 
             
             //Livestock Args
-            PopupMenuListener pop3, MouseListener tablePop3, ActionListener menu1c,
-            ActionListener menu2c, ActionListener menu3c, ActionListener menu4c,
-            ActionListener ok3a, ActionListener cancel3a, WindowListener close3a,
-            ActionListener ok3b, ActionListener cancel3b, WindowListener close3b,
+            PopupMenuListener pop3, MouseListener tablePop3,
             
             //farmer arg
             ItemListener farm
@@ -2447,59 +2437,57 @@ public class BenePanel extends javax.swing.JPanel {
         //Bene Listeners
         benePopMenu.addPopupMenuListener(pop0);
         beneTable.addMouseListener(tablePop0);
-        viewBeneMenuItem.addActionListener(menu1bene);
-        editBeneMenuItem.addActionListener(menu2bene);
-        addBeneMenuItem.addActionListener(menu3bene);
-        deleteBeneMenuItem.addActionListener(menu4bene);
-        addBeneBtn.addActionListener(add);
-        saveBeneBtn.addActionListener(save);
-        cancelBeneBtn.addActionListener(cancel0a);
-        editBeneBtn.addActionListener(edit);
-        updateBeneBtn.addActionListener(update);
-        cancelBeneBtn1.addActionListener(cancel0b);
-        deleteBeneBtn.addActionListener(delete);
+        viewBeneMenuItem.addActionListener(a);
+        editBeneMenuItem.addActionListener(a);
+        addBeneMenuItem.addActionListener(a);
+        deleteBeneMenuItem.addActionListener(a);
+        viewMapMenuItem.addActionListener(a);
+        addBeneBtn.addActionListener(a);
+        saveBeneBtn.addActionListener(a);
+        cancelBeneBtn.addActionListener(a);
+        editBeneBtn.addActionListener(a);
+        updateBeneBtn.addActionListener(a);
+        cancelBeneBtn1.addActionListener(a);
+        deleteBeneBtn.addActionListener(a);
+        locBtn.addActionListener(a);
+        locBtn1.addActionListener(a);
+        
         
         //Members Listeners
         membersPopMenu.addPopupMenuListener(pop1);
         membersTable.addMouseListener(tablePop1);
-        viewMemberMenuItem.addActionListener(menu1a);
-        editMemberMenuItem.addActionListener(menu2a);
-        addMemberMenuItem.addActionListener(menu3a);
-        deleteMemberMenuItem.addActionListener(menu4a);
-        okAddMemberBtn.addActionListener(ok1a);
-        cancelAddMemberBtn.addActionListener(cancel1a);
-        addMemberDialog.addWindowListener(close1a);
-        okEditMemberBtn.addActionListener(ok1b);
-        cancelEditMemberBtn.addActionListener(cancel1b);
-        editMemberDialog.addWindowListener(close1b);
+        viewMemberMenuItem.addActionListener(a);
+        editMemberMenuItem.addActionListener(a);
+        addMemberMenuItem.addActionListener(a);
+        deleteMemberMenuItem.addActionListener(a);
+        okAddMemberBtn.addActionListener(a);
+        cancelAddMemberBtn.addActionListener(a);
+        okEditMemberBtn.addActionListener(a);
+        cancelEditMemberBtn.addActionListener(a);
         
         //Crop Listeners
         cropPopMenu.addPopupMenuListener(pop2);
         cropTable.addMouseListener(tablePop2);
-        viewCropMenuItem.addActionListener(menu1b);
-        editCropMenuItem.addActionListener(menu2b);
-        addCropMenuItem.addActionListener(menu3b);
-        deleteCropMenuItem.addActionListener(menu4b);
-        okAddCropBtn.addActionListener(ok2a);
-        cancelAddCropBtn.addActionListener(cancel2a);
-        addCropDialog.addWindowListener(close2a);
-        okEditCropBtn.addActionListener(ok2b);
-        cancelEditCropBtn.addActionListener(cancel2b);
-        editCropDialog.addWindowListener(close2b);
+        viewCropMenuItem.addActionListener(a);
+        editCropMenuItem.addActionListener(a);
+        addCropMenuItem.addActionListener(a);
+        deleteCropMenuItem.addActionListener(a);
+        okAddCropBtn.addActionListener(a);
+        cancelAddCropBtn.addActionListener(a);
+        okEditCropBtn.addActionListener(a);
+        cancelEditCropBtn.addActionListener(a);
         
         //Livestock Listeners
         livestockPopMenu.addPopupMenuListener(pop3);
         livestockTable.addMouseListener(tablePop3);
-        viewLSMenuItem.addActionListener(menu1c);
-        editLSMenuItem.addActionListener(menu2c);
-        addLSMenuItem.addActionListener(menu3c);
-        deleteLSMenuItem.addActionListener(menu4c);
-        okAddLSBtn.addActionListener(ok3a);
-        cancelAddLSBtn.addActionListener(cancel3a);
-        addLSDialog.addWindowListener(close3a);
-        okEditLSBtn.addActionListener(ok3b);
-        cancelEditLSBtn.addActionListener(cancel3b);
-        editLSDialog.addWindowListener(close3b);
+        viewLSMenuItem.addActionListener(a);
+        editLSMenuItem.addActionListener(a);
+        addLSMenuItem.addActionListener(a);
+        deleteLSMenuItem.addActionListener(a);
+        okAddLSBtn.addActionListener(a);
+        cancelAddLSBtn.addActionListener(a);
+        okEditLSBtn.addActionListener(a);
+        cancelEditLSBtn.addActionListener(a);
         
         //checkbox farmer listener
         farmerCB.addItemListener(farm);
@@ -2780,6 +2768,7 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JMenuItem viewBeneMenuItem;
     public javax.swing.JMenuItem viewCropMenuItem;
     public javax.swing.JMenuItem viewLSMenuItem;
+    public javax.swing.JMenuItem viewMapMenuItem;
     public javax.swing.JMenuItem viewMemberMenuItem;
     public javax.swing.JRadioButton walkinNoRB;
     public javax.swing.ButtonGroup walkinRBG;

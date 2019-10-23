@@ -35,13 +35,23 @@ public class FarModel
             }
         }
     }
-        public static ResultSet getAllFar()
+    public static ResultSet getAllFar()
     {
         ResultSet rs = null;
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Select * from far";
+            String sql = "SELECT far.far_id as 'ID', "
+                    + "CONCAT_WS(' ', beneficiary.fname, beneficiary.mname, beneficiary.lname) as 'Beneficiary', "
+                    + "far.fk_dis_id_far as 'Disaster ID', "
+                    + "far.during as 'During', "
+                    + "far.date as 'Date', "
+                    + "far.type as 'Type', "
+                    + "far.qty as 'Quantity', "
+                    + "far.cost as 'Cost', "
+                    + "far.provider as 'Provider' "
+                    + "from far, beneficiary where "
+                    + "far.fk_bene_id_far = beneficiary.bene_id ";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
         } catch (SQLException ex) {
@@ -52,18 +62,26 @@ public class FarModel
         return rs;
     }
     
-    public static void saveFar(int id, int dis_id, String during,
+    public static void saveFar(int beneID, Object disID, String during,
             String date, String type, int qty, double cost, String provider)
     {
+        
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Insert into far values (0,?,?,?,?,?,?,?)";
+            String sql = "Insert into far values (0,?,?,?,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, id);
-            stmt.setInt(2, dis_id);
-            stmt.setString(3, date);
-            stmt.setString(4, during);
+            stmt.setInt(1, beneID);
+            if(disID == null)
+            {
+                stmt.setObject(2, disID);
+            }
+            else
+            {
+                stmt.setInt(2,(int) disID);
+            }
+            stmt.setString(3, during);
+            stmt.setString(4, date);
             stmt.setString(5, type);
             stmt.setInt(6, qty);
             stmt.setDouble(7, cost);

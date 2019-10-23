@@ -173,7 +173,7 @@ public class CropController
                 cp.formTF.getText(),
                 Alter.getInt(cp.qtySpin),
                 Alter.getDouble(cp.profitSpin),
-                Alter.gatVal(cp.dateDC),
+                Alter.gatDate(cp.dateDC),
                 cp.remarksTA2.getText());
         
         HarvestModel.updateCropHarvested(Integer.parseInt(cp.idHLbl.getText()));

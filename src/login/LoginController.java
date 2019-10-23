@@ -55,6 +55,9 @@ public class LoginController
     {
         String[] name = new String[4];
         name = LoginModel.loginAdmin(lf.unTF.getText(), lf.pwPF.getText());
+        String pos, dept;
+        pos = name[0];
+        dept = name[1];
         if(name[0] != null && name[1] != null && name[2] != null && name[3] != null)
         {
             MainFrame mf = new MainFrame();
@@ -62,13 +65,46 @@ public class LoginController
             t.setTime();
             mf.fnameLbl.setText(name[2]);
             mf.adminIDTF.setText(name[3]);
+            switch(getToken(pos,dept))
+            {
+                //MSWDO
+                case 1:
+                    mf.cropsMenu.setVisible(false);
+                    mf.lsMenu.setVisible(false);
+                    break;  
+            }
+            
             mf.setExtendedState(JFrame.MAXIMIZED_BOTH); 
             mf.setVisible(true);
             lf.setVisible(false);
-        }
+}
         else
         {
             JOptionPane.showMessageDialog(null, "Wrong username or password!","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public int getToken(String pos, String dept)
+    {
+        if(dept.equals("MSWDO"))
+        {
+            return 1;
+        }
+        else if(dept.equals("MAO"))
+        {
+            return 2;
+        }
+        else if(dept.equals("MDRRMO"))
+        {
+            return 3;
+        }
+        else if(dept.equals("MPDO"))
+        {
+            return 4;
+        }
+        else
+        {
+            return 0;
         }
     }
 }

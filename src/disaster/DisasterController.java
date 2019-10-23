@@ -1,5 +1,6 @@
 package disaster;
-import crop.*;
+import disaster.map.MapController;
+import disaster.map.MapPanel;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -76,6 +77,11 @@ public class DisasterController
         disp.table.setModel(DbUtils.resultSetToTableModel(rs));
         new SearchModel(disp, disp.table, disp.searchTF, rs);
     }
+    void openMapToGetLoc()
+    {
+        MapPanel mpp = new MapPanel();
+        new MapController(mpp,disp);
+    }
     void editDisaster()
     {
         int dataRow = disp.table.getSelectedRow();
@@ -114,7 +120,7 @@ public class DisasterController
         DisasterModel.saveDisaster(
                 Alter.getString(disp.typeCBB),
                 disp.nameTF.getText(),
-                Alter.gatVal(disp.dateDC),
+                Alter.gatDate(disp.dateDC),
                 Alter.getDouble(disp.longSpin),
                 Alter.getDouble(disp.latSpin),
                 Alter.getDouble(disp.radSpin),
@@ -191,6 +197,10 @@ public class DisasterController
             if(e.getSource() == disp.deleteMenuItem)
             {
                 deleteDisaster();
+            }
+            if(e.getSource() == disp.getLocBtn)
+            {
+                openMapToGetLoc();
             }
         }
     }

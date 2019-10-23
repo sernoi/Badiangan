@@ -76,7 +76,6 @@ public class DisasterPanel extends javax.swing.JPanel {
         editMenuItem = new javax.swing.JMenuItem();
         addMenuItem = new javax.swing.JMenuItem();
         deleteMenuItem = new javax.swing.JMenuItem();
-        harvestMenuItem = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         searchTF = new javax.swing.JTextField();
         addBtn = new javax.swing.JButton();
@@ -477,9 +476,6 @@ public class DisasterPanel extends javax.swing.JPanel {
         deleteMenuItem.setText("Delete");
         popUpMenu.add(deleteMenuItem);
 
-        harvestMenuItem.setText("Harvest");
-        popUpMenu.add(harvestMenuItem);
-
         jPanel1.setBackground(new java.awt.Color(69, 73, 84));
 
         addBtn.setBackground(new java.awt.Color(51, 255, 255));
@@ -583,7 +579,7 @@ public class DisasterPanel extends javax.swing.JPanel {
         editMenuItem.addActionListener(a);
         addMenuItem.addActionListener(a);
         deleteMenuItem.addActionListener(a);
-        harvestMenuItem.addActionListener(a);
+        getLocBtn.addActionListener(a);
 
         
         //PopUpMenu Listener
@@ -608,7 +604,6 @@ public class DisasterPanel extends javax.swing.JPanel {
     public javax.swing.JMenuItem editMenuItem;
     public javax.swing.JButton getLocBtn;
     public javax.swing.JButton getLocBtn1;
-    public javax.swing.JMenuItem harvestMenuItem;
     public javax.swing.JLabel idLbl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

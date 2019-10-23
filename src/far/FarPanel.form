@@ -96,7 +96,7 @@
                                           <Component id="costSpin" alignment="0" pref="165" max="32767" attributes="0"/>
                                           <Component id="qtySpin" alignment="0" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="expDC" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Component id="dateDC" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
@@ -128,7 +128,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel58" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
-                              <Component id="expDC" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="dateDC" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -233,12 +233,12 @@
                     <Property name="text" type="java.lang.String" value="Date:"/>
                   </Properties>
                 </Component>
-                <Component class="com.toedter.calendar.JDateChooser" name="expDC">
+                <Component class="com.toedter.calendar.JDateChooser" name="dateDC">
                   <Properties>
                     <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="expDC.setDate(new Date());"/>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="dateDC.setDate(new Date());"/>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
@@ -307,43 +307,382 @@
                 <Component class="javax.swing.JComboBox" name="typeCBB">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="31">
-                        <StringItem index="0" value="Bioterrorism"/>
-                        <StringItem index="1" value="Civil Unrest"/>
-                        <StringItem index="2" value="Cold Wave"/>
-                        <StringItem index="3" value="Drought"/>
-                        <StringItem index="4" value="Earthquake"/>
-                        <StringItem index="5" value="Epidemic"/>
-                        <StringItem index="6" value="Extratropical Cyclone"/>
-                        <StringItem index="7" value="Famine"/>
-                        <StringItem index="8" value="Fire(Urban)"/>
-                        <StringItem index="9" value="Fire(Wild)"/>
-                        <StringItem index="10" value="Flash Flood"/>
-                        <StringItem index="11" value="Flood"/>
-                        <StringItem index="12" value="Hazardous Material Spills"/>
-                        <StringItem index="13" value="Heat Wave"/>
-                        <StringItem index="14" value="Insect Infestation"/>
-                        <StringItem index="15" value="Land Slide"/>
-                        <StringItem index="16" value="Massacre"/>
-                        <StringItem index="17" value="Mud Slide"/>
-                        <StringItem index="18" value="Nuclear Radiation Accidents"/>
-                        <StringItem index="19" value="Power Failure"/>
-                        <StringItem index="20" value="Riot"/>
-                        <StringItem index="21" value="Severe Local Storm"/>
-                        <StringItem index="22" value="Snow Avalanche"/>
-                        <StringItem index="23" value="Storm Surge"/>
-                        <StringItem index="24" value="Structural Failures and Collapses"/>
-                        <StringItem index="25" value="Technological Disaster"/>
-                        <StringItem index="26" value="Tropical Cyclone"/>
-                        <StringItem index="27" value="Tsunami"/>
-                        <StringItem index="28" value="Volcano"/>
-                        <StringItem index="29" value="War"/>
-                        <StringItem index="30" value="Wild Fire"/>
+                      <StringArray count="10">
+                        <StringItem index="0" value="Cash"/>
+                        <StringItem index="1" value="Check"/>
+                        <StringItem index="2" value="Clothing"/>
+                        <StringItem index="3" value="Construction Materials"/>
+                        <StringItem index="4" value="Crop"/>
+                        <StringItem index="5" value="Food"/>
+                        <StringItem index="6" value="Gift"/>
+                        <StringItem index="7" value="Household Supplies"/>
+                        <StringItem index="8" value="Livestock"/>
+                        <StringItem index="9" value="Water"/>
                       </StringArray>
                     </Property>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JDialog" name="editDialog">
+      <Properties>
+        <Property name="defaultCloseOperation" type="int" value="2"/>
+        <Property name="title" type="java.lang.String" value="Add Crop/Tree"/>
+        <Property name="resizable" type="boolean" value="false"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="jPanel8" alignment="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="jPanel8" alignment="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="jPanel8">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="54" green="49" red="45" type="rgb"/>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel9" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel9" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jPanel9">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="54" green="49" red="45" type="rgb"/>
+                </Property>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder justification="2" title="Edit FAR Info">
+                      <Color PropertyName="color" blue="ff" green="ff" red="ff" type="rgb"/>
+                    </TitledBorder>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="124" max="32767" attributes="0"/>
+                          <Component id="okBtn1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="cancelBtn1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jLabel56" pref="73" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jLabel61" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel55" alignment="0" pref="67" max="32767" attributes="0"/>
+                                          <Component id="jLabel53" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel60" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel59" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="jLabel54" alignment="0" pref="67" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="providerTF1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="disCBB1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="typeCBB1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="beneCBB1" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="costSpin1" alignment="0" pref="165" max="32767" attributes="0"/>
+                                          <Component id="qtySpin1" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Component id="dateDC1" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="idLbl" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="idLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="beneCBB1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel56" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="disCBB1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel61" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel60" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="dateDC1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel53" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="typeCBB1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel55" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="qtySpin1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel59" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="costSpin1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="providerTF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel54" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="okBtn1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cancelBtn1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabel53">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="Type:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="providerTF1">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel54">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="Provider:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel55">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="Quantity:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="okBtn1">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="33" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="OK"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="cancelBtn1">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="33" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Cancel"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel59">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="Cost:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel60">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="Date:"/>
+                  </Properties>
+                </Component>
+                <Component class="com.toedter.calendar.JDateChooser" name="dateDC1">
+                  <Properties>
+                    <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="dateDC.setDate(new Date());"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="beneCBB1">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Beneficiary Name"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel56">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="Beneficiary:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSpinner" name="qtySpin1">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                      <SpinnerModel initial="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JSpinner" name="costSpin1">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                      <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="1.0" type="number"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="disCBB1">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Beneficiary Name"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel61">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="4"/>
+                    <Property name="text" type="java.lang.String" value="During:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="typeCBB1">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="10">
+                        <StringItem index="0" value="Cash"/>
+                        <StringItem index="1" value="Check"/>
+                        <StringItem index="2" value="Clothing"/>
+                        <StringItem index="3" value="Construction Materials"/>
+                        <StringItem index="4" value="Crop"/>
+                        <StringItem index="5" value="Food"/>
+                        <StringItem index="6" value="Gift"/>
+                        <StringItem index="7" value="Household Supplies"/>
+                        <StringItem index="8" value="Livestock"/>
+                        <StringItem index="9" value="Water"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel2">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="ID:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="idLbl">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -388,14 +727,6 @@
         <MenuItem class="javax.swing.JMenuItem" name="deleteMenuItem">
           <Properties>
             <Property name="text" type="java.lang.String" value="Delete"/>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-          </AuxValues>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="disposeMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Dispose"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

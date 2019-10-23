@@ -55,10 +55,10 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
+        beneMenu = new javax.swing.JMenuItem();
+        fmMenu = new javax.swing.JMenuItem();
+        cropsMenu = new javax.swing.JMenuItem();
+        lsMenu = new javax.swing.JMenuItem();
         manageMenu = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -168,41 +168,41 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1.setForeground(new java.awt.Color(0, 0, 0));
         jMenu1.setText("Beneficiary");
 
-        jMenuItem4.setForeground(new java.awt.Color(0, 0, 0));
-        jMenuItem4.setText("Beneficiaries");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        beneMenu.setForeground(new java.awt.Color(0, 0, 0));
+        beneMenu.setText("Beneficiaries");
+        beneMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                beneMenuActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
+        jMenu1.add(beneMenu);
 
-        jMenuItem10.setForeground(new java.awt.Color(0, 0, 0));
-        jMenuItem10.setText("Family Members");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        fmMenu.setForeground(new java.awt.Color(0, 0, 0));
+        fmMenu.setText("Family Members");
+        fmMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                fmMenuActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem10);
+        jMenu1.add(fmMenu);
 
-        jMenuItem11.setForeground(new java.awt.Color(0, 0, 0));
-        jMenuItem11.setText("Crops/Trees");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        cropsMenu.setForeground(new java.awt.Color(0, 0, 0));
+        cropsMenu.setText("Crops/Trees");
+        cropsMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                cropsMenuActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem11);
+        jMenu1.add(cropsMenu);
 
-        jMenuItem12.setForeground(new java.awt.Color(0, 0, 0));
-        jMenuItem12.setText("Livestocks");
-        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+        lsMenu.setForeground(new java.awt.Color(0, 0, 0));
+        lsMenu.setText("Livestocks");
+        lsMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem12ActionPerformed(evt);
+                lsMenuActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem12);
+        jMenu1.add(lsMenu);
 
         MenuBar.add(jMenu1);
 
@@ -315,13 +315,13 @@ public class MainFrame extends javax.swing.JFrame {
         cl.show(mainPanel, "AdminPanel");      
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void beneMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_beneMenuActionPerformed
         BenePanel bp = new BenePanel();
         new BeneController(bp,this);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(bp,"BenePanel");
         cl.show(mainPanel, "BenePanel");    
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_beneMenuActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         System.exit(0);
@@ -339,29 +339,29 @@ public class MainFrame extends javax.swing.JFrame {
         cl.show(mainPanel, "RegPanel");  
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void fmMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fmMenuActionPerformed
         FMemberPanel fmp = new FMemberPanel();
         new FMemberController(fmp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(fmp,"FMemberPanel");
         cl.show(mainPanel, "FMemberPanel");  
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    }//GEN-LAST:event_fmMenuActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+    private void cropsMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cropsMenuActionPerformed
         CropPanel cp = new CropPanel();
         new CropController(cp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(cp,"CropPanel");
         cl.show(mainPanel, "CropPanel");   
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    }//GEN-LAST:event_cropsMenuActionPerformed
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+    private void lsMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lsMenuActionPerformed
         LSPanel lsp = new LSPanel();
         new LSController(lsp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(lsp,"LSPanel");
         cl.show(mainPanel, "LSPanel");  
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
+    }//GEN-LAST:event_lsMenuActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         HarvestPanel hp = new HarvestPanel();
@@ -399,33 +399,33 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel DateTimePanel;
     private javax.swing.JMenuBar MenuBar;
     public javax.swing.JLabel adminIDTF;
+    public javax.swing.JMenuItem beneMenu;
+    public javax.swing.JMenuItem cropsMenu;
     public javax.swing.JLabel dateLabel;
-    private javax.swing.JMenu fileMenu;
+    public javax.swing.JMenu fileMenu;
+    public javax.swing.JMenuItem fmMenu;
     public javax.swing.JLabel fnameLbl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    public javax.swing.JMenu jMenu1;
+    public javax.swing.JMenu jMenu2;
+    public javax.swing.JMenuItem jMenuItem1;
+    public javax.swing.JMenuItem jMenuItem13;
+    public javax.swing.JMenuItem jMenuItem14;
+    public javax.swing.JMenuItem jMenuItem15;
+    public javax.swing.JMenuItem jMenuItem2;
+    public javax.swing.JMenuItem jMenuItem3;
+    public javax.swing.JMenuItem jMenuItem5;
+    public javax.swing.JMenuItem jMenuItem6;
+    public javax.swing.JMenuItem jMenuItem7;
+    public javax.swing.JMenuItem jMenuItem8;
+    public javax.swing.JMenuItem jMenuItem9;
+    public javax.swing.JMenuItem lsMenu;
     private javax.swing.JPanel mainPanel;
     public javax.swing.JMenu manageMenu;
     public javax.swing.JLabel realTimeLabel;
-    private javax.swing.JMenu reportMenu;
+    public javax.swing.JMenu reportMenu;
     private javax.swing.JLabel timeLabel;
     // End of variables declaration//GEN-END:variables
 }

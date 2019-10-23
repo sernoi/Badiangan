@@ -1,5 +1,4 @@
 package far;
-import livestock.*;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +20,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.TableCellEditor;
-import livestock.disposal.DisposalModel;
 import net.proteanit.sql.DbUtils;
 import util.Alter;
 import util.BeneCBBHandler;
@@ -35,7 +33,10 @@ public class FarController
     {
         this.fp = fp;
         this.fp.allListener(new Action(), new PopUp(), new Mouse(), 
-                new BeneCBBHandler(fp.beneCBB), new DisasterCBBHandler(fp.disCBB));
+                new BeneCBBHandler(fp.beneCBB), 
+                new DisasterCBBHandler(fp.disCBB),
+                new BeneCBBHandler(fp.beneCBB1), 
+                new DisasterCBBHandler(fp.disCBB1));
         
         displayAllFar();
     }
@@ -57,7 +58,16 @@ public class FarController
         fp.providerTF.setText("");
         fp.qtySpin.setValue(0);
         fp.costSpin.setValue(0);
-        fp.expDC.setDate(new Date());
+        fp.dateDC.setDate(new Date());
+        
+        JTextField text2 = (JTextField) fp.beneCBB1.getEditor().getEditorComponent();
+        text2.setText("");
+        JTextField text3 = (JTextField) fp.disCBB1.getEditor().getEditorComponent();
+        text3.setText("");
+        fp.providerTF1.setText("");
+        fp.qtySpin1.setValue(0);
+        fp.costSpin1.setValue(0);
+        fp.dateDC1.setDate(new Date());
     }
     void deleteFar()
     {
@@ -99,39 +109,54 @@ public class FarController
     }
     void editFar()
     {
-//        int dataRow = fp.table.getSelectedRow();
-//        if(dataRow >= 0)
-//        {
-//            fp.idLbl.setText(fp.table.getValueAt(dataRow,0).toString());
-//            fp.lsTF1.setText(fp.table.getValueAt(dataRow,2).toString());
-//            fp.classificationTF1.setText(fp.table.getValueAt(dataRow,3).toString());
-//            fp.headsSpin1.setValue(Alter.toInt(fp.table.getValueAt(dataRow,4).toString()));
-//            fp.ageSpin1.setValue(Alter.toInt(fp.table.getValueAt(dataRow,5).toString()));
-//            
-//            try 
-//            {
-//                Date date;
-//                date = new SimpleDateFormat("yyyy-MM-dd").parse(fp.table.getValueAt(dataRow,6).toString());
-//                fp.expDC1.setDate(date); //dob
-//            } catch (ParseException ex) {
-//                Logger.getLogger(FarController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            
-//            fp.remarksTA1.setText(fp.table.getValueAt(dataRow,7).toString());
-//            fp.editDialog.setTitle("Edit FAR");
-//            fp.editDialog.setModal(true);
-//            fp.editDialog.pack();
-//            fp.editDialog.setLocationRelativeTo(fp);
-//            fp.editDialog.setVisible(true);
-//        }
-//        else
-//        {
-//            JOptionPane.showMessageDialog(fp, "Please select FAR to edit.");
-//        }
+        clearFields();
+        int dataRow = fp.table.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            fp.idLbl.setText(fp.table.getValueAt(dataRow,0).toString());
+            
+            try 
+            {
+                Date date;
+                date = new SimpleDateFormat("yyyy-MM-dd").parse(fp.table.getValueAt(dataRow,4).toString());
+                fp.dateDC1.setDate(date); //dob
+            } catch (ParseException ex) {
+                Logger.getLogger(FarController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            fp.typeCBB1.setSelectedItem(fp.table.getValueAt(dataRow,5).toString());
+            fp.qtySpin1.setValue(Integer.parseInt(fp.table.getValueAt(dataRow,6).toString()));
+            fp.costSpin1.setValue(Double.parseDouble(fp.table.getValueAt(dataRow,7).toString()));
+            fp.providerTF1.setText(fp.table.getValueAt(dataRow,8).toString());
+            fp.editDialog.setTitle("Edit FAR");
+            fp.editDialog.setModal(true);
+            fp.editDialog.pack();
+            fp.editDialog.setLocationRelativeTo(null);
+            fp.editDialog.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(fp, "Please select FAR to edit.");
+        }
     }
     void saveFar()
     {
-        
+        Object dis_id = null;
+        JTextField text = (JTextField) fp.beneCBB.getEditor().getEditorComponent();
+        String str = text.getText();
+        JTextField text1 = (JTextField) fp.disCBB.getEditor().getEditorComponent();
+        String str1 = text1.getText();
+        if(str1.contains(":"))
+        {
+            dis_id = Integer.parseInt(str1.substring(str1.indexOf(":") + 1,str1.indexOf(")")));
+            str1 = str1.substring(str1.indexOf(")") + 2);
+        }
+        FarModel.saveFar(
+        Integer.parseInt(str.substring(str.indexOf(":") + 1,str.indexOf(")"))),
+        dis_id,
+        str1, Alter.gatDate(fp.dateDC), 
+        Alter.getString(fp.typeCBB), Alter.getInt(fp.qtySpin),
+        Alter.getDouble(fp.costSpin), fp.providerTF.getText());
         fp.addDialog.dispose();
         displayAllFar();
     }
@@ -146,13 +171,14 @@ public class FarController
         {
             JOptionPane.showMessageDialog(fp,
                     "ID: " + (fp.table.getValueAt(dataRow,0).toString()) + "\n"
-                            + "Beneficiary: " + (fp.table.getValueAt(dataRow,1).toString()) + "\n"
-                                    + "FAR Raised: " + (fp.table.getValueAt(dataRow,2).toString()) + "\n"
-                                            + "Area: " + (fp.table.getValueAt(dataRow,3).toString()) + "\n"
-                                                    + "Variety: " + (fp.table.getValueAt(dataRow,4).toString()) + "\n"
-                                                            + "Classification: " + (fp.table.getValueAt(dataRow,5).toString()) + "\n"
-                                                                    + "Exp Harvest Date: " + (fp.table.getValueAt(dataRow,6).toString()) + "\n"
-                                                                            + "Remarks: " + (fp.table.getValueAt(dataRow,7).toString()),
+                    + "Beneficiary: " + (fp.table.getValueAt(dataRow,1).toString()) + "\n"
+                    + "Disaster ID: " + (fp.table.getValueAt(dataRow,2) == null ? "" : fp.table.getValueAt(dataRow,2).toString()) + "\n"
+                    + "During: " + (fp.table.getValueAt(dataRow,3).toString()) + "\n"
+                    + "Date: " + (fp.table.getValueAt(dataRow,4).toString()) + "\n"
+                    + "type: " + (fp.table.getValueAt(dataRow,5).toString()) + "\n"
+                    + "Quantity: " + (fp.table.getValueAt(dataRow,6).toString()) + "\n"
+                    + "Cost: " + (fp.table.getValueAt(dataRow,7).toString()) + "\n"
+                    + "Provider: " + (fp.table.getValueAt(dataRow,8).toString()),
                     "FAR Info", JOptionPane.INFORMATION_MESSAGE);
         }
         else
@@ -184,6 +210,10 @@ public class FarController
             if(e.getSource() == fp.cancelBtn)
             {
                 fp.addDialog.dispose();
+            }
+            if(e.getSource() == fp.cancelBtn1)
+            {
+                fp.editDialog.dispose();
             }
             if(e.getSource() == fp.viewMenuItem)
             {

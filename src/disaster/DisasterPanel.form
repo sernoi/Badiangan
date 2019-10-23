@@ -848,14 +848,6 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="harvestMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Harvest"/>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-          </AuxValues>
-        </MenuItem>
       </SubComponents>
     </Container>
   </NonVisualComponents>

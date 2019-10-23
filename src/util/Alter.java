@@ -22,7 +22,7 @@ public class Alter
         return Double.parseDouble(spin.getValue().toString());
     }
     
-    public static String gatVal(JDateChooser dc)
+    public static String gatDate(JDateChooser dc)
     {
         return ((JTextField)dc.getDateEditor().getUiComponent()).getText();
     }

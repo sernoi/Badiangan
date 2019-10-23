@@ -1,4 +1,6 @@
 package beneficiary;
+import beneficiary.map.MapController;
+import beneficiary.map.MapPanel;
 import crop.CropModel;
 import fmember.FMemberModel;
 import java.awt.Point;
@@ -8,8 +10,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.sql.ResultSet;
 import java.text.DateFormat;
@@ -44,44 +44,31 @@ public class BeneController
     {
         this.bp = bp;
         this.mf = mf;
-  
+        
         this.bp.allListener(
+                new Action(),
                 //Bene Classes
-                new BenePopUpMenu(), new BenePopUpMenu(), new ViewBeneClass(), 
-                new EditBeneClass(), new OpenAddBeneClass(), new DeleteBeneClass(),
-                new OpenAddBeneClass(), new SaveBeneClass(), new CloseAddBeneDialogClass(), 
-                new EditBeneClass(), new UpdateBeneClass(),new CloseEditBeneDialogClass(), new DeleteBeneClass(),
+                new BenePopUpMenu(), 
+                new BenePopUpMenu(),
                 
                 //Members Classes
-                new MemberPopUpMenu(), new MemberPopUpMenu(), new ViewMemberClass(), 
-                new EditMemberClass(), new OpenAddMemberClass(), new DeleteMemberClass(),
-                new OkAddMemberClass(), new CloseAddMemberDialogClass(),
-                new CloseAddMemberDialogClass(),
-                new OkEditMemberClass(), new CloseEditMemberDialogClass(),
-                new CloseEditMemberDialogClass(),
+                new MemberPopUpMenu(), 
+                new MemberPopUpMenu(), 
                 
                 //Crop Classes
-                new CropPopUpMenu(), new CropPopUpMenu(), new ViewCropClass(), 
-                new EditCropClass(), new OpenAddCropClass(), new DeleteCropClass(),
-                new OkAddCropClass(), new CloseAddCropDialogClass(),
-                new CloseAddCropDialogClass(),
-                new OkEditCropClass(), new CloseEditCropDialogClass(),
-                new CloseEditCropDialogClass(),
+                new CropPopUpMenu(), 
+                new CropPopUpMenu(), 
                 
                 //Livestock Classes
-                new LivestockPopUpMenu(), new LivestockPopUpMenu(), new ViewLSClass(), 
-                new EditLSClass(), new OpenAddLSClass(), new DeleteLSClass(),
-                new OkAddLSClass(), new CloseAddLSDialogClass(),
-                new CloseAddLSDialogClass(),
-                new OkEditLSClass(), new CloseEditLSDialogClass(),
-                new CloseEditLSDialogClass(),
+                new LivestockPopUpMenu(), 
+                new LivestockPopUpMenu(),
                 
                 //farmer Class
-                new FarmerCBClass()
+                new FarmerCHBClass()
         );
 
         initRBG();
-        jDateChooserInit();
+        initJDateChooser();
         displayAllBene();
     }
     void clearAddBeneFields()
@@ -189,12 +176,255 @@ public class BeneController
         bp.occEditMemberTF.setText("");
         bp.remarksEditMemberTA.setText("");
     }
+    void deleteBene()
+    {
+        int dataRow = bp.beneTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            String beneID = bp.beneTable.getValueAt(dataRow,0).toString();
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to "
+                    + "Delete beneficiary: " + beneID + "?","Warning",dialogButton);
+            if(dialogResult == JOptionPane.YES_OPTION)
+            {
+                BeneModel.deleteBene(beneID);
+                displayAllBene();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp,
+                    "Please select a beneficiary to delete.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    void deleteCrop()
+    {
+        int dataRow = bp.cropTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            String cropID = bp.cropTable.getValueAt(dataRow,0).toString();
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to "
+                    + "Delete crop: " + cropID + "?","Warning",dialogButton);
+            if(dialogResult == JOptionPane.YES_OPTION)
+            {
+                int row = bp.cropTable.getSelectedRows()[0];
+                DefaultTableModel model = (DefaultTableModel) bp.cropTable.getModel();
+                model.removeRow(row);
+                for(int index = row ;index<model.getRowCount();index++){
+                    model.setValueAt(index+1, index, 0); //setValueAt(data,row,column)
+                }
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "Please select a crop to delete.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    void deleteLS()
+    {
+        int dataRow = bp.livestockTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            String livestockID = bp.livestockTable.getValueAt(dataRow,0).toString();
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to "
+                    + "Delete livestock: " + livestockID + "?","Warning",dialogButton);
+            if(dialogResult == JOptionPane.YES_OPTION)
+            {
+                int row = bp.livestockTable.getSelectedRows()[0];
+                DefaultTableModel model = (DefaultTableModel) bp.livestockTable.getModel();
+                model.removeRow(row);
+                for(int index = row ;index<model.getRowCount();index++){
+                    model.setValueAt(index+1, index, 0); //setValueAt(data,row,column)
+                }
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "Please select a livestock to delete.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    void deleteMember()
+    {
+        int dataRow = bp.membersTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            String memberID = bp.membersTable.getValueAt(dataRow,0).toString();
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to "
+                    + "Delete family member: " + memberID + "?","Warning",dialogButton);
+            if(dialogResult == JOptionPane.YES_OPTION)
+            {
+                int row = bp.membersTable.getSelectedRows()[0];
+                DefaultTableModel model = (DefaultTableModel) bp.membersTable.getModel();
+                model.removeRow(row);
+                for(int index = row ;index<model.getRowCount();index++){
+                    model.setValueAt(index+1, index, 0); //setValueAt(data,row,column)
+                }
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "Please select a family member to delete.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
     void displayAllBene()
     {
-        //this is to load all the schedules in the database upon selecting the Event Scheduler in the menu bar
         ResultSet rs = BeneModel.getAllBene();
         bp.beneTable.setModel(DbUtils.resultSetToTableModel(rs));
         new SearchModel(bp, bp.beneTable, bp.searchTF, rs);
+    }
+    void editBene()
+    {
+        int dataRow = bp.beneTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            bp.beneIdLbl1.setText(bp.beneTable.getValueAt(dataRow,0).toString());
+            bp.fNameTF1.setText(bp.beneTable.getValueAt(dataRow,1).toString()); //fname
+            bp.mNameTF1.setText(bp.beneTable.getValueAt(dataRow,2).toString()); //mname
+            bp.lNameTF1.setText(bp.beneTable.getValueAt(dataRow,3).toString()); //lname
+            bp.sexMaleRB1.setSelected(true);
+            
+            try {
+                Date date;
+                date = new SimpleDateFormat("yyyy-MM-dd").parse(bp.beneTable.getValueAt(dataRow,5).toString());
+                bp.dobDC1.setDate(date); //dob
+            } catch (ParseException ex) {
+                Logger.getLogger(BeneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            bp.brgyCB1.setModel(new DefaultComboBoxModel(BrgyModel.getBrgy().toArray()));
+            bp.brgyCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,6).toString());
+            bp.codeCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,7).toString());//code
+            bp.fourpsYesRB1.setSelected(true);
+            bp.indigentYesRB1.setSelected(true);
+            bp.heaCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,10).toString()); //hea
+            bp.ethnicityTF1.setText(bp.beneTable.getValueAt(dataRow,11).toString());//ehtnicity
+            bp.netIncomeSpin1.setValue(Double.parseDouble(bp.beneTable.getValueAt(dataRow,12).toString())); //income
+            bp.occTF1.setText(bp.beneTable.getValueAt(dataRow,13).toString()); //occ
+            bp.healthCondCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,14).toString()); //healthCond
+            bp.houseStatCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,15).toString());//houseStat
+            bp.houseCondCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,16).toString());//houseCond
+            bp.contactNumTF1.setText(bp.beneTable.getValueAt(dataRow,17).toString());
+            bp.longLatLbl1.setText(
+                    bp.beneTable.getValueAt(dataRow,18).toString() + "," +
+                            bp.beneTable.getValueAt(dataRow,19).toString()
+            );
+            
+            bp.editBeneDialog.setTitle("Edit Beneficiary");
+            bp.editBeneDialog.setModal(true);
+            bp.editBeneDialog.pack();
+            bp.editBeneDialog.setLocationRelativeTo(null);
+            bp.editBeneDialog.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp,
+                    "Please select a beneficiary to edit.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    void editCrop()
+    {
+        int dataRow = bp.cropTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            bp.numberEditCropLbl.setText(bp.cropTable.getValueAt(dataRow,0).toString());
+            bp.cropEditCropTF.setText(bp.cropTable.getValueAt(dataRow,1).toString());
+            bp.areaEditCropTF.setText(bp.cropTable.getValueAt(dataRow,2).toString());
+            bp.varietyEditCropTF.setText(bp.cropTable.getValueAt(dataRow,3).toString());
+            bp.classificationEditCropTF.setText(bp.cropTable.getValueAt(dataRow,4).toString());
+            bp.remarksEditCropTA.setText(bp.cropTable.getValueAt(dataRow,6).toString());
+            bp.editCropDialog.setTitle("Edit Crop/Tree");
+            bp.editCropDialog.setModal(true);
+            bp.editCropDialog.pack();
+            bp.editCropDialog.setLocationRelativeTo(null);
+            bp.editCropDialog.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "Please select a crop to edit.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    void editLS()
+    {
+        int dataRow = bp.livestockTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            bp.numberEditLSLbl.setText(bp.livestockTable.getValueAt(dataRow,0).toString());
+            bp.livestockEditLSTF.setText(bp.livestockTable.getValueAt(dataRow,1).toString());
+            bp.classificationEditLSTF.setText(bp.livestockTable.getValueAt(dataRow,2).toString());
+            bp.headsEditLSSpin.setValue(Integer.parseInt(bp.livestockTable.getValueAt(dataRow,3).toString()));
+            bp.ageEditLSSpin.setValue(Integer.parseInt(bp.livestockTable.getValueAt(dataRow,4).toString()));
+            bp.remarksEditLSTA.setText(bp.livestockTable.getValueAt(dataRow,6).toString());
+            bp.editLSDialog.setTitle("Edit Livestock");
+            bp.editLSDialog.setModal(true);
+            bp.editLSDialog.pack();
+            bp.editLSDialog.setLocationRelativeTo(null);
+            bp.editLSDialog.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "Please select a livestock to edit.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    void editMember()
+    {
+        int dataRow = bp.membersTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            bp.numEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,0).toString());
+            bp.fnameEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,1).toString());
+            bp.mnameEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,2).toString());
+            bp.lnameEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,3).toString());
+            bp.relEditMemberCB.setSelectedItem(bp.membersTable.getValueAt(dataRow,4).toString());
+            bp.ageEditMemberSpin.setValue(Integer.valueOf(bp.membersTable.getValueAt(dataRow,5).toString()));
+            bp.maleEditMemberRB.setSelected(true);
+            bp.heaEditMemberCB.setSelectedItem(bp.membersTable.getValueAt(dataRow,7).toString());
+            bp.occEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,8).toString());
+            bp.remarksEditMemberTA.setText(bp.membersTable.getValueAt(dataRow,9).toString());
+            bp.editMemberDialog.setTitle("Edit Family Member");
+            bp.editMemberDialog.setModal(true);
+            bp.editMemberDialog.pack();
+            bp.editMemberDialog.setLocationRelativeTo(null);
+            bp.editMemberDialog.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "Please select a family member to edit.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    void initJDateChooser()
+    {
+        bp.dobDC.getDateEditor().addPropertyChangeListener("date", (PropertyChangeEvent e) -> {
+            DateTime birthDate = new DateTime(((JTextField)bp.dobDC.getDateEditor().getUiComponent()).getText());
+            DateTime now = new DateTime();
+            Period period = new Period(birthDate, now);
+            int years = period.getYears();
+            bp.ageLbl.setText("" + years);
+        });
+        
+        bp.dobDC1.getDateEditor().addPropertyChangeListener("date", (PropertyChangeEvent e) -> {
+            DateTime birthDate = new DateTime(((JTextField)bp.dobDC1.getDateEditor().getUiComponent()).getText());
+            DateTime now = new DateTime();
+            Period period = new Period(birthDate, now);
+            int years = period.getYears();
+            bp.ageLbl1.setText("" + years);
+        });
     }
     void initRBG()
     {
@@ -237,25 +467,189 @@ public class BeneController
         bp.sexRBGEditMember.add(bp.femaleEditMemberRB);
         bp.maleEditMemberRB.setSelected(true);
     }
-    void jDateChooserInit()
+    void okAddCrop()
     {
-        bp.dobDC.getDateEditor().addPropertyChangeListener("date", (PropertyChangeEvent e) -> {
-            DateTime birthDate = new DateTime(((JTextField)bp.dobDC.getDateEditor().getUiComponent()).getText());
-            DateTime now = new DateTime();
-            Period period = new Period(birthDate, now);
-            int years = period.getYears();
-            bp.ageLbl.setText("" + years);
-        });
-        
-        bp.dobDC1.getDateEditor().addPropertyChangeListener("date", (PropertyChangeEvent e) -> {
-            DateTime birthDate = new DateTime(((JTextField)bp.dobDC1.getDateEditor().getUiComponent()).getText());
-            DateTime now = new DateTime();
-            Period period = new Period(birthDate, now);
-            int years = period.getYears();
-            bp.ageLbl1.setText("" + years);
-        });
+        DefaultTableModel model = (DefaultTableModel) bp.cropTable.getModel();
+        model.addRow(new Object[]{
+            bp.cropTable.getRowCount() + 1, bp.cropAddCropTF.getText(),
+            bp.areaAddCropTF.getText(), bp.varietyAddCropTF.getText(),
+            bp.classificationAddCropTF.getText(),
+            ((JTextField)bp.expHarvestAddCropDC.getDateEditor().getUiComponent()).getText(),
+            bp.remarksAddCropTA.getText()});
+        clearAddCropFields();
+        bp.addCropDialog.dispose();
     }
-    void saveCropstoDB()
+    void okAddLS()
+    {
+        DefaultTableModel model = (DefaultTableModel) bp.livestockTable.getModel();
+        model.addRow(new Object[]{
+            bp.livestockTable.getRowCount() + 1, bp.livestockAddLSTF.getText(),
+            bp.classificationAddLSTF.getText(), bp.headsAddLSSpin.getValue().toString(),
+            bp.ageAddLSSpin.getValue().toString(),
+            ((JTextField)bp.expDisposalAddLSDC.getDateEditor().getUiComponent()).getText(),
+            bp.remarksAddLSTA.getText()});
+        clearAddLSFields();
+        bp.addLSDialog.dispose();
+    }
+    void okAddMember()
+    {
+        DefaultTableModel model = (DefaultTableModel) bp.membersTable.getModel();
+        model.addRow(new Object[]{
+            bp.membersTable.getRowCount() + 1, bp.fnameAddMemberTF.getText(),
+            bp.mnameAddMemberTF.getText(), bp.lnameAddMemberTF.getText(),
+            bp.relAddMemberCB.getSelectedItem().toString(), bp.ageAddMemberSpin.getValue().toString(),
+            bp.maleAddMemberRB.isSelected() ? "Male" : "Female",
+            bp.heaAddMemberCB.getSelectedItem().toString(), bp.occAddMemberTF.getText(),
+            bp.remarksAddMemberTA.getText()});
+        clearAddMemberFields();
+        bp.addMemberDialog.dispose();
+    }
+    void okEditCrop()
+    {
+        DefaultTableModel model = (DefaultTableModel) bp.cropTable.getModel();
+        model.removeRow(Integer.parseInt(bp.numberEditCropLbl.getText()) - 1);
+        model.insertRow(Integer.parseInt(bp.numberEditCropLbl.getText()) - 1, new Object[]{
+            bp.numberEditCropLbl.getText(), bp.cropEditCropTF.getText(),
+            bp.areaEditCropTF.getText(), bp.varietyEditCropTF.getText(),
+            bp.classificationEditCropTF.getText(),
+            ((JTextField)bp.expHarvestAddCropDC.getDateEditor().getUiComponent()).getText(),
+            bp.remarksEditCropTA.getText()});
+        clearEditCropFields();
+        bp.editCropDialog.dispose();
+    }
+    void okEditLS()
+    {
+        DefaultTableModel model = (DefaultTableModel) bp.livestockTable.getModel();
+        model.removeRow(Integer.parseInt(bp.numberEditLSLbl.getText()) - 1);
+        model.insertRow(Integer.parseInt(bp.numberEditLSLbl.getText()) - 1, new Object[]{
+            bp.numberEditLSLbl.getText(), bp.livestockEditLSTF.getText(),
+            bp.classificationEditLSTF.getText(), Alter.getInt(bp.headsEditLSSpin),
+            bp.ageEditLSSpin.getValue().toString(),
+            ((JTextField)bp.expDisposalAddLSDC.getDateEditor().getUiComponent()).getText(),
+            bp.remarksEditLSTA.getText()});
+        clearEditLSFields();
+        bp.editLSDialog.dispose();
+    }
+    void okEditMember()
+    {
+        DefaultTableModel model = (DefaultTableModel) bp.membersTable.getModel();
+        model.removeRow(Integer.parseInt(bp.numEditMemberTF.getText()) - 1);
+        model.insertRow(Integer.parseInt(bp.numEditMemberTF.getText()) - 1, new Object[]{
+            bp.numEditMemberTF.getText(), bp.fnameEditMemberTF.getText(),
+            bp.mnameEditMemberTF.getText(), bp.lnameEditMemberTF.getText(),
+            bp.relEditMemberCB.getSelectedItem().toString(),
+            bp.ageEditMemberSpin.getValue().toString(),
+            bp.maleEditMemberRB.isSelected() ? "Male" : "Female",
+            bp.heaEditMemberCB.getSelectedItem().toString(), bp.occEditMemberTF.getText(),
+            bp.remarksEditMemberTA.getText()});
+        clearEditMemberFields();
+        bp.editMemberDialog.dispose();
+    }
+    void openAddBeneDialog()
+    {
+        Date date = new Date();
+        bp.dobDC.setDate(date);
+        bp.brgyCB.setModel(new DefaultComboBoxModel(BrgyModel.getBrgy().toArray()));
+        //bp.beneIdLbl.setText("" + (BeneModel.getIdOfLatestBene() + 1));
+        bp.addBeneDialog.setTitle("Add Beneficiary:" + (BeneModel.getIdOfLatestBene() + 1));
+        bp.addBeneDialog.setModal(true);
+        bp.addBeneDialog.pack();
+        bp.addBeneDialog.setLocationRelativeTo(null);
+        bp.addBeneDialog.setVisible(true);
+        clearAddBeneFields();
+        clearAddMemberFields();
+        clearAddCropFields();
+        clearAddLSFields();
+    }
+    void openAddCropDialog()
+    {
+        bp.addCropDialog.setTitle("Add Crop/Tree");
+        bp.addCropDialog.setModal(true);
+        bp.addCropDialog.pack();
+        bp.addCropDialog.setLocationRelativeTo(null);
+        bp.addCropDialog.setVisible(true);
+    }
+    void openAddLSDialog()
+    {
+        bp.addLSDialog.setTitle("Add Livestock");
+        bp.addLSDialog.setModal(true);
+        bp.addLSDialog.pack();
+        bp.addLSDialog.setLocationRelativeTo(null);
+        bp.addLSDialog.setVisible(true);
+    }
+    void openAddMemberDialog()
+    {
+        bp.addMemberDialog.setTitle("Add Family Member");
+        bp.addMemberDialog.setModal(true);
+        bp.addMemberDialog.pack();
+        bp.addMemberDialog.setLocationRelativeTo(null);
+        bp.addMemberDialog.setVisible(true);
+    }
+    void openMapToGetLoc()
+    {
+        MapPanel mpp = new MapPanel();
+        new MapController(mpp,bp);
+    }
+    void saveBeneToDB()
+    {
+        try
+        {
+            if(bp.fNameTF.getText().trim().isEmpty() || bp.lNameTF.getText().trim().isEmpty())
+            {
+                JOptionPane.showMessageDialog(null, "First Name and Last Name cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else
+            {
+                String brgyStr = bp.brgyCB.getSelectedItem().toString();
+                String locStr = bp.longLatLbl.getText();
+                String title = bp.addBeneDialog.getTitle();
+                
+                BeneModel.saveBene(
+                        Integer.parseInt(title.substring(title.indexOf(":") + 1)), //beneID
+                        bp.fNameTF.getText(), //fname
+                        bp.mNameTF.getText(), //mname
+                        bp.lNameTF.getText(), //lname
+                        bp.sexMaleRB.isSelected() ? "Male" : "Female", //sex
+                        ((JTextField)bp.dobDC.getDateEditor().getUiComponent()).getText(), //dob
+                        brgyStr,
+                        //Integer.parseInt(brgyStr.substring(0,brgyStr.indexOf(" "))), //brgy
+                        bp.codeCB.getSelectedItem().toString(), //code
+                        bp.fourpsYesRB.isSelected() ? "Yes" : "No", //fourps
+                        bp.indigentYesRB.isSelected() ? "Yes" : "No", //indigent
+                        bp.heaCB.getSelectedItem().toString(), //hea
+                        bp.ethnicityTF.getText(), //ehtnicity
+                        Double.parseDouble(bp.netIncomeSpin.getValue().toString()), //income
+                        bp.occTF.getText(), //occ
+                        bp.healthCondCB.getSelectedItem().toString(), //healthCond
+                        bp.houseStatCB.getSelectedItem().toString(), //houseStat
+                        bp.houseCondCB.getSelectedItem().toString(), //houseCond
+                        bp.contactNumTF.getText(),
+                        Double.parseDouble(locStr.substring(0,locStr.indexOf(","))), //loc_long
+                        Double.parseDouble(locStr.substring(locStr.indexOf(",") + 1, locStr.length()))); //loc_lat
+                
+                saveFMemberToDB();
+                saveCropsToDB();
+                saveLSToDB();
+                
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                Date dateobj = new Date();
+                
+                RegModel.saveReg(
+                        Integer.parseInt(mf.adminIDTF.getText()),
+                        Integer.parseInt(title.substring(title.indexOf(":") + 1)),
+                        bp.walkinYesRB.isSelected() ? "Yes" : "No",
+                        Alter.getString(bp.caseCBB),
+                        df.format(dateobj));
+                JOptionPane.showMessageDialog(null, "Beneficiary Added" , "Success", JOptionPane.INFORMATION_MESSAGE);
+                bp.addBeneDialog.dispose();
+                displayAllBene();
+            }
+        } catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, ex , "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    void saveCropsToDB()
     {
         int dataRow = bp.cropTable.getRowCount();
         if(dataRow > 0)
@@ -275,7 +669,7 @@ public class BeneController
             }
         }
     }
-    void saveFMembertoDB()
+    void saveFMemberToDB()
     {
         int dataRow = bp.membersTable.getRowCount();
         if(dataRow > 0)
@@ -298,7 +692,7 @@ public class BeneController
             }
         }
     }
-    void saveLStoDB()
+    void saveLSToDB()
     {
         int dataRow = bp.livestockTable.getRowCount();
         if(dataRow > 0)
@@ -315,6 +709,340 @@ public class BeneController
                         bp.livestockTable.getValueAt(x,5).toString(), //exp
                         bp.livestockTable.getValueAt(x,6).toString() //rem
                 );
+            }
+        }
+    }
+    void viewBeneInMap()
+    {
+        int dataRow = bp.beneTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            MapPanel mpp = new MapPanel();
+            new MapController(mpp, bp,
+                    Double.parseDouble(bp.beneTable.getValueAt(dataRow,18).toString()),
+                    Double.parseDouble(bp.beneTable.getValueAt(dataRow,19).toString())
+            );
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "Please select a beneficiary to view.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    void editBeneLoc()
+    {
+        MapPanel mpp = new MapPanel();
+        new MapController(mpp, bp 
+        );
+    }
+    void updateBene()
+    {
+        String brgyStr = bp.brgyCB1.getSelectedItem().toString();
+        String locStr = bp.longLatLbl1.getText();
+        
+        BeneModel.updateBene(
+                Integer.parseInt(bp.beneIdLbl1.getText()), //beneID
+                bp.fNameTF1.getText(), //fname
+                bp.mNameTF1.getText(), //mname
+                bp.lNameTF1.getText(), //lname
+                bp.sexMaleRB1.isSelected() ? "Male" : "Female", //sex
+                ((JTextField)bp.dobDC1.getDateEditor().getUiComponent()).getText(), //dob
+                brgyStr,
+                //Integer.parseInt(brgyStr.substring(0,brgyStr.indexOf(" "))), //brgy
+                bp.codeCB1.getSelectedItem().toString(), //code
+                bp.fourpsYesRB1.isSelected() ? "Yes" : "No", //fourps
+                bp.indigentYesRB1.isSelected() ? "Yes" : "No", //indigent
+                bp.heaCB1.getSelectedItem().toString(), //hea
+                bp.ethnicityTF1.getText(), //ehtnicity
+                Double.parseDouble(bp.netIncomeSpin1.getValue().toString()), //income
+                bp.occTF1.getText(), //occ
+                bp.healthCondCB1.getSelectedItem().toString(), //healthCond
+                bp.houseStatCB1.getSelectedItem().toString(), //houseStat
+                bp.houseCondCB1.getSelectedItem().toString(), //houseCond
+                bp.contactNumTF1.getText(),
+                Double.parseDouble(locStr.substring(0,locStr.indexOf(","))), //loc_long
+                Double.parseDouble(locStr.substring(locStr.indexOf(",") + 1, locStr.length()))); //loc_lat
+        
+        bp.editBeneDialog.dispose();
+        displayAllBene();
+    }
+    void viewBene()
+    {
+        int dataRow = bp.beneTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            JOptionPane.showMessageDialog(bp,
+                    "#: " + (bp.beneTable.getValueAt(dataRow,0).toString()) + "\n" +
+                            "First Name: " + (bp.beneTable.getValueAt(dataRow,1).toString()) + "\n" +
+                                    "Middle Name: " + (bp.beneTable.getValueAt(dataRow,2).toString()) + "\n" +
+                                            "Last Name: " + (bp.beneTable.getValueAt(dataRow,3).toString()) + "\n" +
+                                                    "Sex: " + (bp.beneTable.getValueAt(dataRow,4).toString()) + "\n" +
+                                                            "Birth Date: " + (bp.beneTable.getValueAt(dataRow,5).toString()) + "\n" +
+                                                                    "Brgy: " + (bp.beneTable.getValueAt(dataRow,6).toString()) + "\n" +
+                                                                            "Code: " + (bp.beneTable.getValueAt(dataRow,7).toString()) + "\n" +
+                                                                                    "4Ps: " + (bp.beneTable.getValueAt(dataRow,8).toString()) + "\n" +
+                                                                                            "Indigent: " + (bp.beneTable.getValueAt(dataRow,9).toString()) + "\n" +
+                                                                                                    "Highest Educ Att: " + (bp.beneTable.getValueAt(dataRow,10).toString()) + "\n" +
+                                                                                                            "Ethnicity: " + (bp.beneTable.getValueAt(dataRow,11).toString()) + "\n" +
+                                                                                                                    "Net Income: " + (bp.beneTable.getValueAt(dataRow,12).toString()) + "\n" +
+                                                                                                                            "Occupation: " + (bp.beneTable.getValueAt(dataRow,13).toString()) + "\n" +
+                                                                                                                                    "Health Condition: " + (bp.beneTable.getValueAt(dataRow,14).toString()) + "\n" +
+                                                                                                                                            "House Status: " + (bp.beneTable.getValueAt(dataRow,15).toString()) + "\n" +
+                                                                                                                                                    "House Condition: " + (bp.beneTable.getValueAt(dataRow,16).toString()) + "\n" +
+                                                                                                                                                            "Contact Number: " + (bp.beneTable.getValueAt(dataRow,17).toString()) + "\n" +
+                                                                                                                                                                    "Longitude: " + (bp.beneTable.getValueAt(dataRow,18).toString()) + "\n" +
+                                                                                                                                                                            "Latitude: " + (bp.beneTable.getValueAt(dataRow,19).toString()),
+                    "Beneficiary Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp,
+                    "Please select a beneficiary to view.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    void viewCrop()
+    {
+        int dataRow = bp.cropTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "#: " + (bp.cropTable.getValueAt(dataRow,0).toString()) + "\n" +
+                            "Crop/Tree Planted: " + (bp.cropTable.getValueAt(dataRow,1).toString()) + "\n" +
+                                    "Area: " + (bp.cropTable.getValueAt(dataRow,2).toString()) + "\n" +
+                                            "Variety: " + (bp.cropTable.getValueAt(dataRow,3).toString()) + "\n" +
+                                                    "Classification: " + (bp.cropTable.getValueAt(dataRow,4).toString()) + "\n" +
+                                                            "Exp Date of Harvest: " + (bp.cropTable.getValueAt(dataRow,5).toString()) + "\n" +
+                                                                    "Remarks: " + (bp.cropTable.getValueAt(dataRow,6).toString()),
+                    "Crop/Tree Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "Please select a crop to view.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    void viewLS()
+    {
+        int dataRow = bp.livestockTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "#: " + (bp.livestockTable.getValueAt(dataRow,0).toString()) + "\n" +
+                            "Livestock Raised: " + (bp.livestockTable.getValueAt(dataRow,1).toString()) + "\n" +
+                                    "Classification: " + (bp.livestockTable.getValueAt(dataRow,2).toString()) + "\n" +
+                                            "Number of Heads: " + (bp.livestockTable.getValueAt(dataRow,3).toString()) + "\n" +
+                                                    "Age in Months: " + (bp.livestockTable.getValueAt(dataRow,4).toString()) + "\n" +
+                                                            "Exp Date of Disposal: " + (bp.livestockTable.getValueAt(dataRow,5).toString()) + "\n" +
+                                                                    "Remarks: " + (bp.livestockTable.getValueAt(dataRow,6).toString()),
+                    "Livestock Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "Please select a livestock to view.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    void viewMember()
+    {
+        int dataRow = bp.membersTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "#: " + (bp.membersTable.getValueAt(dataRow,0).toString()) + "\n" +
+                            "First Name: " + (bp.membersTable.getValueAt(dataRow,1).toString()) + "\n" +
+                                    "Middle Name: " + (bp.membersTable.getValueAt(dataRow,2).toString()) + "\n" +
+                                            "Last Name: " + (bp.membersTable.getValueAt(dataRow,3).toString()) + "\n" +
+                                                    "Rel to HOD: " + (bp.membersTable.getValueAt(dataRow,4).toString()) + "\n" +
+                                                            "Age: " + (bp.membersTable.getValueAt(dataRow,5).toString()) + "\n" +
+                                                                    "Sex: " + (bp.membersTable.getValueAt(dataRow,6).toString()) + "\n" +
+                                                                            "Educ: " + (bp.membersTable.getValueAt(dataRow,7).toString()) + "\n" +
+                                                                                    "Occ Skills: " + (bp.membersTable.getValueAt(dataRow,8).toString()) + "\n" +
+                                                                                            "Remarks: " + (bp.membersTable.getValueAt(dataRow,9).toString()),
+                    "Family Member Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "Please select a family member to view.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    class Action implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            //Bene
+            if(e.getSource() == bp.viewBeneMenuItem)
+            {
+                viewBene();
+            }
+            if(e.getSource() == bp.editBeneMenuItem)
+            {
+                clearEditBeneFields();
+                editBene();
+            }
+            if(e.getSource() == bp.addBeneMenuItem)
+            {
+                clearAddBeneFields();
+                openAddBeneDialog();
+            }
+            if(e.getSource() == bp.deleteBeneMenuItem)
+            {
+                deleteBene();
+            }
+            if(e.getSource() == bp.viewMapMenuItem)
+            {
+                viewBeneInMap();
+            }
+            if(e.getSource() == bp.addBeneBtn)
+            {
+                openAddBeneDialog();
+            }
+            if(e.getSource() == bp.saveBeneBtn)
+            {
+                saveBeneToDB();
+            }
+            if(e.getSource() == bp.cancelBeneBtn)
+            {
+                bp.addBeneDialog.dispose();
+            }
+            if(e.getSource() == bp.editBeneBtn)
+            {
+                editBene();
+            }
+            if(e.getSource() == bp.updateBeneBtn)
+            {
+                updateBene();
+            }
+            if(e.getSource() == bp.cancelBeneBtn1)
+            {
+                bp.editBeneDialog.dispose();
+            }
+            if(e.getSource() == bp.deleteBeneBtn)
+            {
+                deleteBene();
+            }
+            if(e.getSource() == bp.locBtn)
+            {
+                openMapToGetLoc();
+            }
+            if(e.getSource() == bp.locBtn1)
+            {
+                openMapToGetLoc();
+            }
+
+            
+            //Members
+            if(e.getSource() == bp.viewMemberMenuItem)
+            {
+                viewMember();
+            }
+            if(e.getSource() == bp.editMemberMenuItem)
+            {
+                clearEditMemberFields();
+                editMember();
+            }
+            if(e.getSource() == bp.addMemberMenuItem)
+            {
+                clearAddMemberFields();
+                openAddMemberDialog();
+            }
+            if(e.getSource() == bp.deleteMemberMenuItem)
+            {
+                deleteMember();
+            }
+            if(e.getSource() == bp.okAddMemberBtn)
+            {
+                okAddMember();
+            }
+            if(e.getSource() == bp.cancelAddMemberBtn)
+            {
+                bp.addMemberDialog.dispose();
+            }
+            if(e.getSource() == bp.okEditMemberBtn)
+            {
+                okEditMember();
+            }
+            if(e.getSource() == bp.cancelEditMemberBtn)
+            {
+                bp.editMemberDialog.dispose();
+            }
+            
+            //Crops
+            if(e.getSource() == bp.viewCropMenuItem)
+            {
+                viewCrop();
+            }
+            if(e.getSource() == bp.editCropMenuItem)
+            {
+                clearEditCropFields();
+                editCrop();
+            }
+            if(e.getSource() == bp.addCropMenuItem)
+            {
+                clearAddCropFields();
+                openAddCropDialog();
+            }
+            if(e.getSource() == bp.deleteCropMenuItem)
+            {
+                deleteCrop();
+            }
+            if(e.getSource() == bp.okAddCropBtn)
+            {
+                okAddCrop();
+            }
+            if(e.getSource() == bp.cancelAddCropBtn)
+            {
+                bp.addCropDialog.dispose();
+            }
+            if(e.getSource() == bp.okEditCropBtn)
+            {
+                okEditCrop();
+            }
+            if(e.getSource() == bp.cancelEditCropBtn)
+            {
+                bp.editCropDialog.dispose();
+            }
+            
+            //Livestock
+            if(e.getSource() == bp.viewLSMenuItem)
+            {
+                viewLS();
+            }
+            if(e.getSource() == bp.editLSMenuItem)
+            {
+                clearEditLSFields();
+                editLS();
+            }
+            if(e.getSource() == bp.addLSMenuItem)
+            {
+                clearAddLSFields();
+                openAddLSDialog();
+            }
+            if(e.getSource() == bp.deleteLSMenuItem)
+            {
+                deleteLS();
+            }
+            if(e.getSource() == bp.okAddLSBtn)
+            {
+                okAddLS();
+            }
+            if(e.getSource() == bp.cancelAddLSBtn)
+            {
+                bp.addLSDialog.dispose();
+            }
+            if(e.getSource() == bp.okEditLSBtn)
+            {
+                okEditLS();
+            }
+            if(e.getSource() == bp.cancelEditLSBtn)
+            {
+                bp.editLSDialog.dispose();
             }
         }
     }
@@ -367,118 +1095,6 @@ public class BeneController
         }
         
     }
-    class CloseAddBeneDialogClass extends WindowAdapter implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            clearAddBeneFields();
-           bp.addBeneDialog.dispose();
-        }
-        
-        @Override
-        public void windowClosing(WindowEvent e){
-            clearAddBeneFields();
-            bp.addBeneDialog.dispose();
-        }
-    }
-    class CloseAddCropDialogClass extends WindowAdapter implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            clearAddCropFields();
-            bp.addCropDialog.dispose();
-        }
-        
-        @Override
-        public void windowClosing(WindowEvent e){
-            clearAddCropFields();
-            bp.addCropDialog.dispose();
-        }
-    }
-    class CloseAddLSDialogClass extends WindowAdapter implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            clearAddLSFields();
-            bp.addLSDialog.dispose();
-        }
-        
-        @Override
-        public void windowClosing(WindowEvent e){
-            clearAddLSFields();
-            bp.addLSDialog.dispose();
-        }
-    }
-    class CloseAddMemberDialogClass extends WindowAdapter implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            clearAddMemberFields();
-            bp.addMemberDialog.dispose();
-        }
-        
-        @Override
-        public void windowClosing(WindowEvent e){
-            clearAddMemberFields();
-            bp.addMemberDialog.dispose();
-        }
-    }
-    class CloseEditBeneDialogClass extends WindowAdapter implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            clearEditBeneFields();
-            bp.editBeneDialog.dispose();
-        }
-
-        @Override
-        public void windowClosing(WindowEvent e){
-            clearEditBeneFields();
-            bp.editBeneDialog.dispose();
-        }
-    }
-    class CloseEditCropDialogClass extends WindowAdapter implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            clearEditCropFields();
-            bp.editCropDialog.dispose();
-        }
-        
-        @Override
-        public void windowClosing(WindowEvent e){
-            clearEditCropFields();
-            bp.editCropDialog.dispose();
-        }
-    }
-    class CloseEditLSDialogClass extends WindowAdapter implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            clearEditLSFields();
-            bp.editLSDialog.dispose();
-        }
-
-        @Override
-        public void windowClosing(WindowEvent e){
-            clearEditLSFields();
-            bp.editLSDialog.dispose();
-        }
-    }
-    class CloseEditMemberDialogClass extends WindowAdapter implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            clearEditMemberFields();
-            bp.editMemberDialog.dispose();
-        }
-        
-        @Override
-        public void windowClosing(WindowEvent e){
-            clearEditMemberFields();
-            bp.editMemberDialog.dispose();
-        }
-    }
     class CropPopUpMenu extends MouseAdapter implements  PopupMenuListener
     {
         
@@ -528,265 +1144,7 @@ public class BeneController
         }
         
     }
-    class DeleteBeneClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            int dataRow = bp.beneTable.getSelectedRow();
-            if(dataRow >= 0) 
-            {
-                String beneID = bp.beneTable.getValueAt(dataRow,0).toString();
-                int dialogButton = JOptionPane.YES_NO_OPTION; 
-                int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to "
-                        + "Delete beneficiary: " + beneID + "?","Warning",dialogButton);
-                if(dialogResult == JOptionPane.YES_OPTION)
-                {
-                    BeneModel.deleteBene(beneID);
-                    displayAllBene();
-                }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp,
-                        "Please select a beneficiary to delete.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    class DeleteCropClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            int dataRow = bp.cropTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                String cropID = bp.cropTable.getValueAt(dataRow,0).toString();
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to "
-                        + "Delete crop: " + cropID + "?","Warning",dialogButton);
-                if(dialogResult == JOptionPane.YES_OPTION)
-                {
-                    int row = bp.cropTable.getSelectedRows()[0];
-                    DefaultTableModel model = (DefaultTableModel) bp.cropTable.getModel();
-                    model.removeRow(row);
-                    for(int index = row ;index<model.getRowCount();index++){
-                        model.setValueAt(index+1, index, 0); //setValueAt(data,row,column)
-                    }
-                }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog,
-                        "Please select a crop to delete.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    class DeleteLSClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            int dataRow = bp.livestockTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                String livestockID = bp.livestockTable.getValueAt(dataRow,0).toString();
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to "
-                        + "Delete livestock: " + livestockID + "?","Warning",dialogButton);
-                if(dialogResult == JOptionPane.YES_OPTION)
-                {
-                    int row = bp.livestockTable.getSelectedRows()[0];
-                    DefaultTableModel model = (DefaultTableModel) bp.livestockTable.getModel();
-                    model.removeRow(row);
-                    for(int index = row ;index<model.getRowCount();index++){
-                        model.setValueAt(index+1, index, 0); //setValueAt(data,row,column)
-                    }
-                }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog,
-                        "Please select a livestock to delete.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    class DeleteMemberClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            int dataRow = bp.membersTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                String memberID = bp.membersTable.getValueAt(dataRow,0).toString();
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to "
-                        + "Delete family member: " + memberID + "?","Warning",dialogButton);
-                if(dialogResult == JOptionPane.YES_OPTION)
-                {
-                    int row = bp.membersTable.getSelectedRows()[0];
-                    DefaultTableModel model = (DefaultTableModel) bp.membersTable.getModel();
-                    model.removeRow(row);
-                    for(int index = row ;index<model.getRowCount();index++){
-                        model.setValueAt(index+1, index, 0); //setValueAt(data,row,column)
-                    }
-                }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog,
-                        "Please select a family member to delete.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    class EditBeneClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) 
-        {
-            int dataRow = bp.beneTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                bp.beneIdLbl1.setText(bp.beneTable.getValueAt(dataRow,0).toString());
-                bp.fNameTF1.setText(bp.beneTable.getValueAt(dataRow,1).toString()); //fname
-                bp.mNameTF1.setText(bp.beneTable.getValueAt(dataRow,2).toString()); //mname
-                bp.lNameTF1.setText(bp.beneTable.getValueAt(dataRow,3).toString()); //lname
-                bp.sexMaleRB1.setSelected(true);
-                
-                try {
-                    Date date;
-                    date = new SimpleDateFormat("yyyy-MM-dd").parse(bp.beneTable.getValueAt(dataRow,5).toString());
-                    bp.dobDC1.setDate(date); //dob
-                } catch (ParseException ex) {
-                    Logger.getLogger(BeneController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                bp.brgyCB1.setModel(new DefaultComboBoxModel(BrgyModel.getBrgy().toArray()));
-                bp.brgyCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,6).toString());
-                bp.codeCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,7).toString());//code
-                bp.fourpsYesRB1.setSelected(true);
-                bp.indigentYesRB1.setSelected(true);
-                bp.heaCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,10).toString()); //hea
-                bp.ethnicityTF1.setText(bp.beneTable.getValueAt(dataRow,11).toString());//ehtnicity
-                bp.netIncomeSpin1.setValue(Double.parseDouble(bp.beneTable.getValueAt(dataRow,12).toString())); //income
-                bp.occTF1.setText(bp.beneTable.getValueAt(dataRow,13).toString()); //occ
-                bp.healthCondCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,14).toString()); //healthCond
-                bp.houseStatCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,15).toString());//houseStat
-                bp.houseCondCB1.setSelectedItem(bp.beneTable.getValueAt(dataRow,16).toString());//houseCond
-                bp.contactNumTF1.setText(bp.beneTable.getValueAt(dataRow,17).toString());
-                bp.longLatLbl1.setText(
-                        bp.beneTable.getValueAt(dataRow,18).toString() + "," + 
-                        bp.beneTable.getValueAt(dataRow,19).toString()       
-                );
-
-                bp.editBeneDialog.setTitle("Edit Beneficiary");
-                bp.editBeneDialog.setModal(true);
-                bp.editBeneDialog.pack();
-                bp.editBeneDialog.setLocationRelativeTo(null);
-                bp.editBeneDialog.setVisible(true);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp, 
-                        "Please select a beneficiary to edit.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    class EditCropClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) 
-        {
-            int dataRow = bp.cropTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                bp.numberEditCropLbl.setText(bp.cropTable.getValueAt(dataRow,0).toString());
-                bp.cropEditCropTF.setText(bp.cropTable.getValueAt(dataRow,1).toString());
-                bp.areaEditCropTF.setText(bp.cropTable.getValueAt(dataRow,2).toString());
-                bp.varietyEditCropTF.setText(bp.cropTable.getValueAt(dataRow,3).toString());
-                bp.classificationEditCropTF.setText(bp.cropTable.getValueAt(dataRow,4).toString());
-                bp.remarksEditCropTA.setText(bp.cropTable.getValueAt(dataRow,6).toString());
-                bp.editCropDialog.setTitle("Edit Crop/Tree");
-                bp.editCropDialog.setModal(true);
-                bp.editCropDialog.pack();
-                bp.editCropDialog.setLocationRelativeTo(null);
-                bp.editCropDialog.setVisible(true);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog, 
-                        "Please select a crop to edit.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    class EditLSClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) 
-        {
-            int dataRow = bp.livestockTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                bp.numberEditLSLbl.setText(bp.livestockTable.getValueAt(dataRow,0).toString());
-                bp.livestockEditLSTF.setText(bp.livestockTable.getValueAt(dataRow,1).toString());
-                bp.classificationEditLSTF.setText(bp.livestockTable.getValueAt(dataRow,2).toString());
-                bp.headsEditLSSpin.setValue(bp.livestockTable.getValueAt(dataRow,3).toString());
-                bp.ageEditLSSpin.setValue(Integer.parseInt(bp.livestockTable.getValueAt(dataRow,4).toString()));
-                bp.remarksEditLSTA.setText(bp.livestockTable.getValueAt(dataRow,6).toString());
-                bp.editLSDialog.setTitle("Edit Livestock");
-                bp.editLSDialog.setModal(true);
-                bp.editLSDialog.pack();
-                bp.editLSDialog.setLocationRelativeTo(null);
-                bp.editLSDialog.setVisible(true);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog, 
-                        "Please select a livestock to edit.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    class EditMemberClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) 
-        {
-            int dataRow = bp.membersTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                bp.numEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,0).toString());
-                bp.fnameEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,1).toString());
-                bp.mnameEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,2).toString());
-                bp.lnameEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,3).toString());
-                bp.relEditMemberCB.setSelectedItem(bp.membersTable.getValueAt(dataRow,4).toString());
-                bp.ageEditMemberSpin.setValue(Integer.valueOf(bp.membersTable.getValueAt(dataRow,5).toString()));
-                bp.maleEditMemberRB.setSelected(true);
-                bp.heaEditMemberCB.setSelectedItem(bp.membersTable.getValueAt(dataRow,7).toString());
-                bp.occEditMemberTF.setText(bp.membersTable.getValueAt(dataRow,8).toString());  
-                bp.remarksEditMemberTA.setText(bp.membersTable.getValueAt(dataRow,9).toString());
-                bp.editMemberDialog.setTitle("Edit Family Member");
-                bp.editMemberDialog.setModal(true);
-                bp.editMemberDialog.pack();
-                bp.editMemberDialog.setLocationRelativeTo(null);
-                bp.editMemberDialog.setVisible(true);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog,
-                        "Please select a family member to edit.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    class FarmerCBClass implements ItemListener
+    class FarmerCHBClass implements ItemListener
     {
         @Override
         public void itemStateChanged(ItemEvent e) {
@@ -796,7 +1154,7 @@ public class BeneController
                 bp.occTF.setText("Farmer");
                 
                 bp.cropTable.setFillsViewportHeight(true);
-                bp.livestockTable.setFillsViewportHeight(true);  
+                bp.livestockTable.setFillsViewportHeight(true);
             }
             else
             {
@@ -911,370 +1269,5 @@ public class BeneController
             
         }
         
-    }
-    class OkAddCropClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) { 
-            DefaultTableModel model = (DefaultTableModel) bp.cropTable.getModel();
-            model.addRow(new Object[]{
-                bp.cropTable.getRowCount() + 1, bp.cropAddCropTF.getText(),
-                bp.areaAddCropTF.getText(), bp.varietyAddCropTF.getText(),
-                bp.classificationAddCropTF.getText(),
-                ((JTextField)bp.expHarvestAddCropDC.getDateEditor().getUiComponent()).getText(),
-                bp.remarksAddCropTA.getText()});
-            clearAddCropFields();
-            bp.addCropDialog.dispose();
-        }
-    }
-    class OkAddLSClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            DefaultTableModel model = (DefaultTableModel) bp.livestockTable.getModel();
-            model.addRow(new Object[]{
-                bp.livestockTable.getRowCount() + 1, bp.livestockAddLSTF.getText(),
-                bp.classificationAddLSTF.getText(), bp.headsAddLSSpin.getValue().toString(),
-                bp.ageAddLSSpin.getValue().toString(),
-                ((JTextField)bp.expDisposalAddLSDC.getDateEditor().getUiComponent()).getText(),
-                bp.remarksAddLSTA.getText()});
-            clearAddLSFields();
-            bp.addLSDialog.dispose();
-        }
-    }
-    class OkAddMemberClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            DefaultTableModel model = (DefaultTableModel) bp.membersTable.getModel();
-            model.addRow(new Object[]{
-                bp.membersTable.getRowCount() + 1, bp.fnameAddMemberTF.getText(),
-                bp.mnameAddMemberTF.getText(), bp.lnameAddMemberTF.getText(),
-                bp.relAddMemberCB.getSelectedItem().toString(), bp.ageAddMemberSpin.getValue().toString(),
-                bp.maleAddMemberRB.isSelected() ? "Male" : "Female",
-                bp.heaAddMemberCB.getSelectedItem().toString(), bp.occAddMemberTF.getText(),
-                bp.remarksAddMemberTA.getText()});
-            clearAddMemberFields();
-            bp.addMemberDialog.dispose();
-        }
-    }
-    class OkEditCropClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            DefaultTableModel model = (DefaultTableModel) bp.cropTable.getModel();
-            model.removeRow(Integer.parseInt(bp.numberEditCropLbl.getText()) - 1);
-            model.insertRow(Integer.parseInt(bp.numberEditCropLbl.getText()) - 1, new Object[]{
-                bp.numberEditCropLbl.getText(), bp.cropEditCropTF.getText(),
-                bp.areaEditCropTF.getText(), bp.varietyEditCropTF.getText(),
-                bp.classificationEditCropTF.getText(),
-                ((JTextField)bp.expHarvestAddCropDC.getDateEditor().getUiComponent()).getText(),
-                bp.remarksEditCropTA.getText()});
-            clearEditCropFields();
-            bp.editCropDialog.dispose();
-        }
-    }
-    class OkEditLSClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            DefaultTableModel model = (DefaultTableModel) bp.livestockTable.getModel();
-            model.removeRow(Integer.parseInt(bp.numberEditLSLbl.getText()) - 1);
-            model.insertRow(Integer.parseInt(bp.numberEditLSLbl.getText()) - 1, new Object[]{
-                bp.numberEditLSLbl.getText(), bp.livestockEditLSTF.getText(),
-                bp.classificationEditLSTF.getText(), Alter.getInt(bp.headsEditLSSpin),
-                bp.ageEditLSSpin.getValue().toString(),
-                ((JTextField)bp.expDisposalAddLSDC.getDateEditor().getUiComponent()).getText(),
-                bp.remarksEditLSTA.getText()});
-            clearEditLSFields();
-            bp.editLSDialog.dispose();
-        }
-    }
-    class OkEditMemberClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            DefaultTableModel model = (DefaultTableModel) bp.membersTable.getModel();
-            model.removeRow(Integer.parseInt(bp.numEditMemberTF.getText()) - 1);
-            model.insertRow(Integer.parseInt(bp.numEditMemberTF.getText()) - 1, new Object[]{
-                bp.numEditMemberTF.getText(), bp.fnameEditMemberTF.getText(),
-                bp.mnameEditMemberTF.getText(), bp.lnameEditMemberTF.getText(),
-                bp.relEditMemberCB.getSelectedItem().toString(),
-                bp.ageEditMemberSpin.getValue().toString(),
-                bp.maleEditMemberRB.isSelected() ? "Male" : "Female",
-                bp.heaEditMemberCB.getSelectedItem().toString(), bp.occEditMemberTF.getText(),
-                bp.remarksEditMemberTA.getText()});
-            clearEditMemberFields();
-            bp.editMemberDialog.dispose();
-        }
-    }
-    class OpenAddBeneClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            Date date = new Date();
-            bp.dobDC.setDate(date);
-            bp.brgyCB.setModel(new DefaultComboBoxModel(BrgyModel.getBrgy().toArray()));
-            //bp.beneIdLbl.setText("" + (BeneModel.getIdOfLatestBene() + 1));
-            bp.addBeneDialog.setTitle("Add Beneficiary:" + (BeneModel.getIdOfLatestBene() + 1));
-            bp.addBeneDialog.setModal(true);
-            bp.addBeneDialog.pack();
-            bp.addBeneDialog.setLocationRelativeTo(null);
-            bp.addBeneDialog.setVisible(true);
-            clearAddBeneFields();
-            clearAddMemberFields();
-            clearAddCropFields();
-            clearAddLSFields();
-        }
-    }
-    class OpenAddCropClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) 
-        {
-            bp.addCropDialog.setTitle("Add Crop/Tree");
-            bp.addCropDialog.setModal(true);
-            bp.addCropDialog.pack();
-            bp.addCropDialog.setLocationRelativeTo(null);
-            bp.addCropDialog.setVisible(true);
-        }
-    }
-    class OpenAddLSClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) 
-        {
-            bp.addLSDialog.setTitle("Add Livestock");
-            bp.addLSDialog.setModal(true);
-            bp.addLSDialog.pack();
-            bp.addLSDialog.setLocationRelativeTo(null);
-            bp.addLSDialog.setVisible(true);
-        }
-    }
-    class OpenAddMemberClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            bp.addMemberDialog.setTitle("Add Family Member");
-            bp.addMemberDialog.setModal(true);
-            bp.addMemberDialog.pack();
-            bp.addMemberDialog.setLocationRelativeTo(null);
-            bp.addMemberDialog.setVisible(true);
-        }
-    }
-    class SaveBeneClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            try
-            {           
-                if(bp.fNameTF.getText().trim().isEmpty() || bp.lNameTF.getText().trim().isEmpty()) 
-                {
-                    JOptionPane.showMessageDialog(null, "First Name and Last Name cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                else
-                {
-                    String brgyStr = bp.brgyCB.getSelectedItem().toString();
-                    String locStr = bp.longLatLbl.getText();
-                    String title = bp.addBeneDialog.getTitle();
-
-                    BeneModel.saveBene(
-                            Integer.parseInt(title.substring(title.indexOf(":") + 1)), //beneID
-                            bp.fNameTF.getText(), //fname
-                            bp.mNameTF.getText(), //mname
-                            bp.lNameTF.getText(), //lname
-                            bp.sexMaleRB.isSelected() ? "Male" : "Female", //sex
-                            ((JTextField)bp.dobDC.getDateEditor().getUiComponent()).getText(), //dob
-                            brgyStr,
-                            //Integer.parseInt(brgyStr.substring(0,brgyStr.indexOf(" "))), //brgy
-                            bp.codeCB.getSelectedItem().toString(), //code
-                            bp.fourpsYesRB.isSelected() ? "Yes" : "No", //fourps
-                            bp.indigentYesRB.isSelected() ? "Yes" : "No", //indigent
-                            bp.heaCB.getSelectedItem().toString(), //hea
-                            bp.ethnicityTF.getText(), //ehtnicity
-                            Double.parseDouble(bp.netIncomeSpin.getValue().toString()), //income
-                            bp.occTF.getText(), //occ
-                            bp.healthCondCB.getSelectedItem().toString(), //healthCond
-                            bp.houseStatCB.getSelectedItem().toString(), //houseStat
-                            bp.houseCondCB.getSelectedItem().toString(), //houseCond
-                            bp.contactNumTF.getText(),
-                            Double.parseDouble(locStr.substring(0,locStr.indexOf(","))), //loc_long
-                            Double.parseDouble(locStr.substring(locStr.indexOf(",") + 1, locStr.length()))); //loc_lat
-
-                    saveFMembertoDB();
-                    saveCropstoDB();
-                    saveLStoDB();
-                    
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                    Date dateobj = new Date();
-
-                    RegModel.saveReg(
-                            Integer.parseInt(mf.adminIDTF.getText()), 
-                            Integer.parseInt(title.substring(title.indexOf(":") + 1)), 
-                            bp.walkinYesRB.isSelected() ? "Yes" : "No", 
-                            Alter.getString(bp.caseCBB), 
-                            df.format(dateobj));
-                    JOptionPane.showMessageDialog(null, "Beneficiary Added" , "Success", JOptionPane.INFORMATION_MESSAGE);
-                    bp.addBeneDialog.dispose();
-                    displayAllBene();
-                }
-            } catch(Exception ex) 
-            {
-                JOptionPane.showMessageDialog(null, ex , "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-    class UpdateBeneClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String brgyStr = bp.brgyCB1.getSelectedItem().toString();
-            String locStr = bp.longLatLbl1.getText();
-            
-            BeneModel.updateBene(
-                    Integer.parseInt(bp.beneIdLbl1.getText()), //beneID
-                    bp.fNameTF1.getText(), //fname
-                    bp.mNameTF1.getText(), //mname
-                    bp.lNameTF1.getText(), //lname
-                    bp.sexMaleRB1.isSelected() ? "Male" : "Female", //sex
-                    ((JTextField)bp.dobDC1.getDateEditor().getUiComponent()).getText(), //dob
-                    brgyStr,
-                    //Integer.parseInt(brgyStr.substring(0,brgyStr.indexOf(" "))), //brgy
-                    bp.codeCB1.getSelectedItem().toString(), //code
-                    bp.fourpsYesRB1.isSelected() ? "Yes" : "No", //fourps
-                    bp.indigentYesRB1.isSelected() ? "Yes" : "No", //indigent
-                    bp.heaCB1.getSelectedItem().toString(), //hea
-                    bp.ethnicityTF1.getText(), //ehtnicity
-                    Double.parseDouble(bp.netIncomeSpin1.getValue().toString()), //income
-                    bp.occTF1.getText(), //occ
-                    bp.healthCondCB1.getSelectedItem().toString(), //healthCond
-                    bp.houseStatCB1.getSelectedItem().toString(), //houseStat
-                    bp.houseCondCB1.getSelectedItem().toString(), //houseCond
-                    bp.contactNumTF1.getText(),
-                    Double.parseDouble(locStr.substring(0,locStr.indexOf(","))), //loc_long
-                    Double.parseDouble(locStr.substring(locStr.indexOf(",") + 1, locStr.length()))); //loc_lat
-            
-            bp.editBeneDialog.dispose();
-            displayAllBene();
-        }
-    }
-    class ViewBeneClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int dataRow = bp.beneTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                JOptionPane.showMessageDialog(bp,
-                        "#: " + (bp.beneTable.getValueAt(dataRow,0).toString()) + "\n" +
-                                "First Name: " + (bp.beneTable.getValueAt(dataRow,1).toString()) + "\n" +
-                                        "Middle Name: " + (bp.beneTable.getValueAt(dataRow,2).toString()) + "\n" +
-                                                "Last Name: " + (bp.beneTable.getValueAt(dataRow,3).toString()) + "\n" +
-                                                        "Sex: " + (bp.beneTable.getValueAt(dataRow,4).toString()) + "\n" +
-                                                                "Birth Date: " + (bp.beneTable.getValueAt(dataRow,5).toString()) + "\n" +
-                                                                        "Brgy: " + (bp.beneTable.getValueAt(dataRow,6).toString()) + "\n" +
-                                                                                "Code: " + (bp.beneTable.getValueAt(dataRow,7).toString()) + "\n" +
-                                                                                        "4Ps: " + (bp.beneTable.getValueAt(dataRow,8).toString()) + "\n" +
-                                                                                                "Indigent: " + (bp.beneTable.getValueAt(dataRow,9).toString()) + "\n" +
-                                                                                                        "Highest Educ Att: " + (bp.beneTable.getValueAt(dataRow,10).toString()) + "\n" +
-                                                                                                                "Ethnicity: " + (bp.beneTable.getValueAt(dataRow,11).toString()) + "\n" +
-                                                                                                                        "Net Income: " + (bp.beneTable.getValueAt(dataRow,12).toString()) + "\n" +
-                                                                                                                                "Occupation: " + (bp.beneTable.getValueAt(dataRow,13).toString()) + "\n" +
-                                                                                                                                        "Health Condition: " + (bp.beneTable.getValueAt(dataRow,14).toString()) + "\n" +
-                                                                                                                                                "House Status: " + (bp.beneTable.getValueAt(dataRow,15).toString()) + "\n" +
-                                                                                                                                                        "House Condition: " + (bp.beneTable.getValueAt(dataRow,16).toString()) + "\n" +
-                                                                                                                                                                "Contact Number: " + (bp.beneTable.getValueAt(dataRow,17).toString()) + "\n" +
-                                                                                                                                                                        "Longitude: " + (bp.beneTable.getValueAt(dataRow,18).toString()) + "\n" +
-                                                                                                                                                                                "Latitude: " + (bp.beneTable.getValueAt(dataRow,19).toString()),
-                        "Beneficiary Info", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp,
-                        "Please select a beneficiary to view.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    class ViewCropClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int dataRow = bp.cropTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog,
-                        "#: " + (bp.cropTable.getValueAt(dataRow,0).toString()) + "\n" +
-                                "Crop/Tree Planted: " + (bp.cropTable.getValueAt(dataRow,1).toString()) + "\n" +
-                                        "Area: " + (bp.cropTable.getValueAt(dataRow,2).toString()) + "\n" +
-                                                "Variety: " + (bp.cropTable.getValueAt(dataRow,3).toString()) + "\n" +
-                                                        "Classification: " + (bp.cropTable.getValueAt(dataRow,4).toString()) + "\n" +
-                                                                "Exp Date of Harvest: " + (bp.cropTable.getValueAt(dataRow,5).toString()) + "\n" +
-                                                                        "Remarks: " + (bp.cropTable.getValueAt(dataRow,6).toString()),
-                        "Crop/Tree Info", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog,
-                        "Please select a crop to view.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    class ViewLSClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int dataRow = bp.livestockTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog,
-                        "#: " + (bp.livestockTable.getValueAt(dataRow,0).toString()) + "\n" +
-                                "Livestock Raised: " + (bp.livestockTable.getValueAt(dataRow,1).toString()) + "\n" +
-                                        "Classification: " + (bp.livestockTable.getValueAt(dataRow,2).toString()) + "\n" +
-                                                "Number of Heads: " + (bp.livestockTable.getValueAt(dataRow,3).toString()) + "\n" +
-                                                        "Age in Months: " + (bp.livestockTable.getValueAt(dataRow,4).toString()) + "\n" +
-                                                                "Exp Date of Disposal: " + (bp.livestockTable.getValueAt(dataRow,5).toString()) + "\n" +
-                                                                        "Remarks: " + (bp.livestockTable.getValueAt(dataRow,6).toString()),
-                        "Livestock Info", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog,
-                        "Please select a livestock to view.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    class ViewMemberClass implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int dataRow = bp.membersTable.getSelectedRow();
-            if(dataRow >= 0)
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog,
-                        "#: " + (bp.membersTable.getValueAt(dataRow,0).toString()) + "\n" +
-                                "First Name: " + (bp.membersTable.getValueAt(dataRow,1).toString()) + "\n" +
-                                        "Middle Name: " + (bp.membersTable.getValueAt(dataRow,2).toString()) + "\n" +
-                                                "Last Name: " + (bp.membersTable.getValueAt(dataRow,3).toString()) + "\n" +
-                                                        "Rel to HOD: " + (bp.membersTable.getValueAt(dataRow,4).toString()) + "\n" +
-                                                                "Age: " + (bp.membersTable.getValueAt(dataRow,5).toString()) + "\n" +
-                                                                        "Sex: " + (bp.membersTable.getValueAt(dataRow,6).toString()) + "\n" +
-                                                                                "Educ: " + (bp.membersTable.getValueAt(dataRow,7).toString()) + "\n" +
-                                                                                        "Occ Skills: " + (bp.membersTable.getValueAt(dataRow,8).toString()) + "\n" +
-                                                                                                "Remarks: " + (bp.membersTable.getValueAt(dataRow,9).toString()),
-                        "Family Member Info", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(bp.addBeneDialog,
-                        "Please select a family member to view.", "No Item Selected",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
     }
 }

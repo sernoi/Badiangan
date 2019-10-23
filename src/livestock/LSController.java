@@ -214,7 +214,7 @@ public class LSController
         DisposalModel.saveDisposal(
                 Integer.parseInt(lsp.idLSLbl.getText()),
                 Alter.getDouble(lsp.profitSpin),
-                Alter.gatVal(lsp.dateDC),
+                Alter.gatDate(lsp.dateDC),
                 lsp.remarksTA2.getText());
         
         DisposalModel.updateLSDisposed(Integer.parseInt(lsp.idLSLbl.getText()));
