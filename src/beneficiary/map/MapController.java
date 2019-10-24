@@ -6,125 +6,88 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.event.MouseInputListener;
 import org.jxmapviewer.JXMapViewer;
-import org.jxmapviewer.OSMTileFactoryInfo;
-import org.jxmapviewer.input.CenterMapListener;
 import org.jxmapviewer.input.MapClickListener;
-import org.jxmapviewer.input.PanKeyListener;
-import org.jxmapviewer.input.PanMouseInputListener;
-import org.jxmapviewer.input.ZoomMouseWheelListenerCenter;
-import org.jxmapviewer.viewer.DefaultTileFactory;
+import org.jxmapviewer.painter.CompoundPainter;
+import org.jxmapviewer.painter.Painter;
+import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.TileFactory;
-import org.jxmapviewer.viewer.TileFactoryInfo;
+import org.jxmapviewer.viewer.Waypoint;
 import org.jxmapviewer.viewer.WaypointPainter;
 import util.maputil.FancyWaypointRenderer;
+import util.maputil.MapGenerate;
 import util.maputil.MyWaypoint;
 
 public class MapController
 {
-    MapPanel mpp;
     BenePanel bp;
-    JXMapViewer mapViewer;
+    MapPanel mpp;
+    //JXMapViewer mapViewer;
     public MapController(MapPanel mpp, BenePanel bp)
     {
         this.mpp = mpp;
         this.bp = bp;
         this.mpp.allListener(new Action(), new Mouse());
         
-        initMap();
-        initMarker();
+        JXMapViewer mapViewer = MapGenerate.generateMap();
+        initMarker(mapViewer);
     }
+    
     public MapController(MapPanel mpp, BenePanel bp, double locLong, double locLat)
     {
         this.mpp = mpp;
         this.bp = bp;
         this.mpp.allListener(new Action(), new Mouse());
         
-        initMap();
-        setMarker(new GeoPosition(locLat,locLong));
+        JXMapViewer mapViewer = MapGenerate.generateMap();
+        setMarker(mapViewer, new GeoPosition(locLat,locLong));
     }
-    void initMap()
+    
+    void initMarker(JXMapViewer mapViewer)
     {
-        GeoPosition badiangan = new GeoPosition(10.9938,122.5418);
-        //TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:F:/Theses/Badiangan/Project/Badiangan/tiles/tiles.zip!");
-        TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:tiles/tiles.zip!");
-        TileFactory tileFactory = new DefaultTileFactory(info);
+//        mapViewer.addMouseListener(new MapClickListener(mapViewer) {
+//            @Override
+//            public void mapClicked(GeoPosition gp) {
+//                Set<MyWaypoint> wp = new HashSet<MyWaypoint>(Arrays.asList(
+//                new MyWaypoint("B", Color.ORANGE, gp)));
+//                WaypointPainter<MyWaypoint> wpr = new WaypointPainter<MyWaypoint>();
+//                wpr.setWaypoints(wp);
+//                wpr.setRenderer(new FancyWaypointRenderer());
+//                mapViewer.setOverlayPainter(wpr);
+//                
+//                mpp.longLbl.setText("" + gp.getLongitude());
+//                mpp.latLbl.setText("" + gp.getLatitude());
+//            }
+//        });
         
-        // Setup JXMapViewer
-        mapViewer = new JXMapViewer();
-        mapViewer.setTileFactory(tileFactory);
-
-        // Set the focus
-        mapViewer.setZoom(6);
-        mapViewer.setAddressLocation(badiangan);
-        mapViewer.setCenterPosition(badiangan);
-        mapViewer.setRestrictOutsidePanning(true);
-
-        // Add interactions
-        MouseInputListener mia = new PanMouseInputListener(mapViewer);
-        mapViewer.addMouseListener(mia);
-        mapViewer.addMouseMotionListener(mia);
-        mapViewer.addMouseListener(new CenterMapListener(mapViewer));
-        mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCenter(mapViewer));
-        mapViewer.addKeyListener(new PanKeyListener(mapViewer));
-
-        mapViewer.addMouseWheelListener(new MouseWheelListener() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                System.out.println(mapViewer.getZoom());
-               if(mapViewer.getZoom() > 6 )
-               {
-                   mapViewer.setZoom(6);
-                   mapViewer.setAddressLocation(badiangan);
-               }
-            }
-        });
+        Painter<JXMapViewer> origOverLay = (Painter<JXMapViewer>) mapViewer.getOverlayPainter();
+        List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
         
-        mapViewer.addMouseMotionListener(new MouseAdapter()
-        {
-            @Override
-             public void mouseDragged(MouseEvent e)
-             {
-                System.out.println(mapViewer.getCenterPosition().getLatitude());
-                //high 11.038957490552914
-                //low 10.972735371100471
-                
-                System.out.println(mapViewer.getCenterPosition().getLongitude());
-                //right 122.6109795349121
-                //left 122.40
-                if(mapViewer.getCenterPosition().getLatitude() >= 11.1030 ||
-                   mapViewer.getCenterPosition().getLatitude() <= 10.8220 ||
-                   mapViewer.getCenterPosition().getLongitude() >= 122.7024 ||
-                   mapViewer.getCenterPosition().getLongitude() <= 122.3373)
-                {
-                    JOptionPane.showMessageDialog(null,"You are out of bounds...\n Returning to the center");
-                    mapViewer.setZoom(6);
-                    mapViewer.setAddressLocation(badiangan);
-                }
-             }
-             
-        });
-    }
-    void initMarker()
-    {
         mapViewer.addMouseListener(new MapClickListener(mapViewer) {
             @Override
             public void mapClicked(GeoPosition gp) {
-                Set<MyWaypoint> wp = new HashSet<MyWaypoint>(Arrays.asList(
+                Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>(Arrays.asList(
                 new MyWaypoint("B", Color.ORANGE, gp)));
-                WaypointPainter<MyWaypoint> wpr = new WaypointPainter<MyWaypoint>();
-                wpr.setWaypoints(wp);
-                wpr.setRenderer(new FancyWaypointRenderer());
-                mapViewer.setOverlayPainter(wpr);
+
+                // Create a waypoint painter that takes all the waypoints
+                WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
+                waypointPainter.setWaypoints(waypoints);
+                waypointPainter.setRenderer(new FancyWaypointRenderer());
+
+                // Create a compound painter that uses both the route-painter and the waypoint-painter
+                painters.clear();
+                painters.add(origOverLay);
+                painters.add(waypointPainter);
+                
+
+                CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+                mapViewer.setOverlayPainter(painter);
                 
                 mpp.longLbl.setText("" + gp.getLongitude());
                 mpp.latLbl.setText("" + gp.getLatitude());
@@ -142,14 +105,21 @@ public class MapController
         mpp.mapDialog.pack();
         mpp.mapDialog.setVisible(true);
     }
-    void setMarker(GeoPosition gp)
+    
+    void saveLoc()
+    {
+        bp.longLatLbl.setText(mpp.longLbl.getText() + "," + mpp.latLbl.getText());
+        bp.longLatLbl1.setText(mpp.longLbl.getText() + "," + mpp.latLbl.getText());
+        mpp.mapDialog.dispose();
+    }
+    void setMarker(JXMapViewer mapViewer, GeoPosition gp)
     {
         mpp.saveBtn.setVisible(false);
         mpp.longLbl.setText("" + gp.getLongitude());
         mpp.latLbl.setText("" + gp.getLatitude());
         
         Set<MyWaypoint> wp = new HashSet<MyWaypoint>(Arrays.asList(
-        new MyWaypoint("B", Color.ORANGE, gp)));
+                new MyWaypoint("B", Color.ORANGE, gp)));
         WaypointPainter<MyWaypoint> wpr = new WaypointPainter<MyWaypoint>();
         wpr.setWaypoints(wp);
         wpr.setRenderer(new FancyWaypointRenderer());
@@ -167,12 +137,6 @@ public class MapController
         mpp.mapDialog.setTitle("Map Dialog");
         mpp.mapDialog.pack();
         mpp.mapDialog.setVisible(true);
-    }
-    void saveLoc()
-    {
-        bp.longLatLbl.setText(mpp.longLbl.getText() + "," + mpp.latLbl.getText());
-        bp.longLatLbl1.setText(mpp.longLbl.getText() + "," + mpp.latLbl.getText());
-        mpp.mapDialog.dispose();
     }
     
     class Action implements ActionListener

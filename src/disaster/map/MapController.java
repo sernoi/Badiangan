@@ -33,6 +33,7 @@ import org.jxmapviewer.viewer.TileFactory;
 import org.jxmapviewer.viewer.TileFactoryInfo;
 import org.jxmapviewer.viewer.WaypointPainter;
 import util.maputil.FancyWaypointRenderer;
+import util.maputil.MapGenerate;
 import util.maputil.MyWaypoint;
 
 public class MapController
@@ -54,8 +55,8 @@ public class MapController
         this.bp = bp;
         this.mpp.allListener(new Action(), new Mouse());
         
-        initMap();
-        initMarker();
+        JXMapViewer mapViewer = MapGenerate.generateMap();
+        initMarker(mapViewer);
     }
     public MapController(MapPanel mpp, DisasterPanel bp, double locLong, double locLat)
     {
@@ -64,74 +65,10 @@ public class MapController
         this.bp = bp;
         this.mpp.allListener(new Action(), new Mouse());
         
-        initMap();
-        setMarker(new GeoPosition(locLat,locLong));
+        JXMapViewer mapViewer = MapGenerate.generateMap();
+        setMarker(mapViewer, new GeoPosition(locLat,locLong));
     }
-    void initMap()
-    {
-        GeoPosition badiangan = new GeoPosition(10.9938,122.5418);
-        TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:tiles/tiles.zip!");
-        TileFactory tileFactory = new DefaultTileFactory(info);
-        
-        // Setup JXMapViewer
-        mapViewer = new JXMapViewer();
-        mapViewer.setTileFactory(tileFactory);
-
-        // Set the focus
-        mapViewer.setZoom(6);
-        mapViewer.setAddressLocation(badiangan);
-        mapViewer.setCenterPosition(badiangan);
-        mapViewer.setRestrictOutsidePanning(true);
-
-        // Add interactions
-        MouseInputListener mia = new PanMouseInputListener(mapViewer);
-        mapViewer.addMouseListener(mia);
-        mapViewer.addMouseMotionListener(mia);
-        mapViewer.addMouseListener(new CenterMapListener(mapViewer));
-        mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCenter(mapViewer));
-        mapViewer.addKeyListener(new PanKeyListener(mapViewer));
-
-        mapViewer.addMouseWheelListener(new MouseWheelListener() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                System.out.println(mapViewer.getZoom());
-               if(mapViewer.getZoom() > 6 )
-               {
-                   mapViewer.setZoom(6);
-                   mapViewer.setAddressLocation(badiangan);
-               }
-            }
-        });
-        
-        mapViewer.addMouseMotionListener(new MouseAdapter()
-        {
-            @Override
-             public void mouseDragged(MouseEvent e)
-             {
-                //System.out.println(mapViewer.getCenterPosition().getLatitude());
-                //high 11.038957490552914
-                //low 10.972735371100471
-                
-                //System.out.println(mapViewer.getCenterPosition().getLongitude());
-                //right 122.6109795349121
-                //left 122.51605079345703
-                if(mapViewer.getCenterPosition().getLatitude() >= 11.1030 ||
-                   mapViewer.getCenterPosition().getLatitude() <= 10.8220 ||
-                   mapViewer.getCenterPosition().getLongitude() >= 122.7024 ||
-                   mapViewer.getCenterPosition().getLongitude() <= 122.3373)
-                {
-                    JOptionPane.showMessageDialog(null,"You are out of bounds...\n Returning to the center");
-                    mapViewer.setZoom(6);
-                    mapViewer.setAddressLocation(badiangan);
-                }
-             }
-             
-        });
-        //TODO circle overlay 
-    }
-
-
-    void initMarker()
+    void initMarker(JXMapViewer mapViewer)
     {   
         mapViewer.addMouseListener(new MapClickListener(mapViewer) {
             @Override
@@ -190,7 +127,7 @@ public class MapController
         mpp.mapDialog.setVisible(true);
     }
     
-    void setMarker(GeoPosition gp)
+    void setMarker(JXMapViewer mapViewer, GeoPosition gp)
     {
         mpp.saveBtn.setVisible(false);
         mpp.longLbl.setText("" + gp.getLongitude());
