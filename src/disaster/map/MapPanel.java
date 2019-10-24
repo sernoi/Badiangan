@@ -60,7 +60,7 @@ public class MapPanel extends javax.swing.JPanel{
 
         saveBtn.setText("Save Location");
 
-        radSpinner.setModel(new javax.swing.SpinnerNumberModel());
+        radSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
         radSpinner.setValue(1);
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -156,7 +156,7 @@ public class MapPanel extends javax.swing.JPanel{
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void allListener(ActionListener a, MouseAdapter m)
+    public void allListener(ActionListener a)
     {
         saveBtn.addActionListener(a);
     }

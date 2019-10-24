@@ -20,7 +20,7 @@ import org.jxmapviewer.painter.Painter;
  */
 public class RoutePainter implements Painter<JXMapViewer>
 {
-    private Color color = Color.RED;
+    private Color color = Color.BLUE;
     private boolean antiAlias = true;
 
     private List<GeoPosition> track;

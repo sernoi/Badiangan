@@ -35,7 +35,7 @@ public class MapGenerate
 {
     public static JXMapViewer generateMap()
     {
-        
+        int zoomVal = 7;
         final JXMapViewer mapViewer = new JXMapViewer();
         GeoPosition badiangan = new GeoPosition(10.999783, 122.526848);
         //TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:F:/Theses/Badiangan/Project/Badiangan/tiles/tiles.zip!");
@@ -46,7 +46,7 @@ public class MapGenerate
         mapViewer.setTileFactory(tileFactory);
 
         // Set the focus
-        mapViewer.setZoom(6);
+        mapViewer.setZoom(zoomVal);
         mapViewer.setAddressLocation(badiangan);
         mapViewer.setCenterPosition(badiangan);
 
@@ -119,16 +119,16 @@ public class MapGenerate
         MouseInputListener mia = new PanMouseInputListener(mapViewer);
         mapViewer.addMouseListener(mia);
         mapViewer.addMouseMotionListener(mia);
-        mapViewer.addMouseListener(new CenterMapListener(mapViewer));
+        //mapViewer.addMouseListener(new CenterMapListener(mapViewer));
         mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCenter(mapViewer));
         mapViewer.addKeyListener(new PanKeyListener(mapViewer));
 
         mapViewer.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-               if(mapViewer.getZoom() > 6 )
+               if(mapViewer.getZoom() > zoomVal )
                {
-                   mapViewer.setZoom(6);
+                   mapViewer.setZoom(zoomVal);
                    mapViewer.setAddressLocation(badiangan);
                }
             }
@@ -152,7 +152,7 @@ public class MapGenerate
                    mapViewer.getCenterPosition().getLongitude() <= 122.3373)
                 {
                     JOptionPane.showMessageDialog(null,"You are out of bounds...\n Returning to the center");
-                    mapViewer.setZoom(6);
+                    mapViewer.setZoom(zoomVal);
                     mapViewer.setAddressLocation(badiangan);
                 }
              }
