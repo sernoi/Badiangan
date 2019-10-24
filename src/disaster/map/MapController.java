@@ -8,31 +8,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.MouseInputListener;
 import org.jxmapviewer.JXMapViewer;
-import org.jxmapviewer.OSMTileFactoryInfo;
-import org.jxmapviewer.input.CenterMapListener;
 import org.jxmapviewer.input.MapClickListener;
-import org.jxmapviewer.input.PanKeyListener;
-import org.jxmapviewer.input.PanMouseInputListener;
-import org.jxmapviewer.input.ZoomMouseWheelListenerCenter;
+import org.jxmapviewer.painter.CompoundPainter;
 import org.jxmapviewer.painter.Painter;
-import org.jxmapviewer.viewer.DefaultTileFactory;
 import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.TileFactory;
-import org.jxmapviewer.viewer.TileFactoryInfo;
 import org.jxmapviewer.viewer.WaypointPainter;
 import util.maputil.FancyWaypointRenderer;
+import util.maputil.MapDimension;
 import util.maputil.MapGenerate;
 import util.maputil.MyWaypoint;
 
@@ -70,6 +62,9 @@ public class MapController
     }
     void initMarker(JXMapViewer mapViewer)
     {   
+        Painter<JXMapViewer> origOverLay = (Painter<JXMapViewer>) mapViewer.getOverlayPainter();
+        List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
+        
         mapViewer.addMouseListener(new MapClickListener(mapViewer) {
             @Override
             public void mapClicked(GeoPosition gp) {
@@ -85,11 +80,16 @@ public class MapController
                     { 
                         int val = Integer.parseInt(mpp.radSpinner.getValue().toString());
                         g.setPaint(disColor);
-                        g.fillOval(sx - (ovalW * val)/2, sy - (ovalH * val)/2, ovalW * val, ovalH * val);
+                        g.fillOval(sx - (MapDimension.ovalW * val)/2, sy - (MapDimension.ovalH * val)/2, MapDimension.ovalW * val, MapDimension.ovalH * val);
                         mpp.radSpinner.setEnabled(true);
                     } 
                 };
-                mapViewer.setOverlayPainter(ovalOverlay);
+                painters.clear();
+                painters.add(ovalOverlay);
+                painters.add(origOverLay);
+                CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+                mapViewer.setOverlayPainter(painter);
+                
                 mpp.latLbl.setText("" + gp.getLatitude());
                 mpp.longLbl.setText("" + gp.getLongitude());
             }
@@ -107,19 +107,23 @@ public class MapController
                     public void paint(Graphics2D g, JXMapViewer map, int w, int h) 
                     { 
                         g.setPaint(disColor);
-                        g.fillOval(sx - (ovalW * val)/2 , sy - (ovalH * val)/2, ovalW * val, ovalH * val);
+                        g.fillOval(sx - (MapDimension.ovalW * val)/2 , sy - (MapDimension.ovalH * val)/2, MapDimension.ovalW * val, MapDimension.ovalH * val);
                         mpp.radSpinner.setEnabled(true);
                     } 
                 };
-                mapViewer.setOverlayPainter(ovalOverlay);
+                painters.clear();
+                painters.add(ovalOverlay);
+                painters.add(origOverLay);
+                CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+                mapViewer.setOverlayPainter(painter);
             }
         });
         
         //JDialog mapDialog = new JDialog();
         mpp.mapDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         mpp.mapDialog.setModal(true);
-        mpp.mapDialog.setPreferredSize(new Dimension(1200, 700));
-        mpp.mapDialog.setSize(new Dimension(1200, 700));
+        mpp.mapDialog.setPreferredSize(new Dimension(MapDimension.W, MapDimension.H));
+        mpp.mapDialog.setSize(new Dimension(MapDimension.W, MapDimension.H));
         mpp.mapPanel.add(mapViewer);
         mpp.mapDialog.setLocationRelativeTo(null);
         mpp.mapDialog.setTitle("Map Dialog");
@@ -145,8 +149,8 @@ public class MapController
         //JDialog mapDialog = new JDialog();
         mpp.mapDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         mpp.mapDialog.setModal(true);
-        mpp.mapDialog.setPreferredSize(new Dimension(1200, 700));
-        mpp.mapDialog.setSize(new Dimension(1200, 700));
+        mpp.mapDialog.setPreferredSize(new Dimension(MapDimension.W, MapDimension.H));
+        mpp.mapDialog.setSize(new Dimension(MapDimension.W, MapDimension.H));
         mpp.mapPanel.add(mapViewer);
         mpp.mapDialog.setLocationRelativeTo(null);
         mpp.mapDialog.setTitle("Map Dialog");

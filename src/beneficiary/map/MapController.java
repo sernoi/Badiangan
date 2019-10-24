@@ -16,11 +16,10 @@ import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.input.MapClickListener;
 import org.jxmapviewer.painter.CompoundPainter;
 import org.jxmapviewer.painter.Painter;
-import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.Waypoint;
 import org.jxmapviewer.viewer.WaypointPainter;
 import util.maputil.FancyWaypointRenderer;
+import util.maputil.MapDimension;
 import util.maputil.MapGenerate;
 import util.maputil.MyWaypoint;
 
@@ -29,7 +28,7 @@ public class MapController
     BenePanel bp;
     MapPanel mpp;
     //JXMapViewer mapViewer;
-    public MapController(MapPanel mpp, BenePanel bp)
+    public MapController(MapPanel mpp, BenePanel bp) 
     {
         this.mpp = mpp;
         this.bp = bp;
@@ -48,24 +47,8 @@ public class MapController
         JXMapViewer mapViewer = MapGenerate.generateMap();
         setMarker(mapViewer, new GeoPosition(locLat,locLong));
     }
-    
     void initMarker(JXMapViewer mapViewer)
     {
-//        mapViewer.addMouseListener(new MapClickListener(mapViewer) {
-//            @Override
-//            public void mapClicked(GeoPosition gp) {
-//                Set<MyWaypoint> wp = new HashSet<MyWaypoint>(Arrays.asList(
-//                new MyWaypoint("B", Color.ORANGE, gp)));
-//                WaypointPainter<MyWaypoint> wpr = new WaypointPainter<MyWaypoint>();
-//                wpr.setWaypoints(wp);
-//                wpr.setRenderer(new FancyWaypointRenderer());
-//                mapViewer.setOverlayPainter(wpr);
-//                
-//                mpp.longLbl.setText("" + gp.getLongitude());
-//                mpp.latLbl.setText("" + gp.getLatitude());
-//            }
-//        });
-        
         Painter<JXMapViewer> origOverLay = (Painter<JXMapViewer>) mapViewer.getOverlayPainter();
         List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
         
@@ -85,7 +68,6 @@ public class MapController
                 painters.add(origOverLay);
                 painters.add(waypointPainter);
                 
-
                 CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
                 mapViewer.setOverlayPainter(painter);
                 
@@ -97,8 +79,8 @@ public class MapController
         //JDialog mapDialog = new JDialog();
         mpp.mapDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         mpp.mapDialog.setModal(true);
-        mpp.mapDialog.setPreferredSize(new Dimension(1200, 700));
-        mpp.mapDialog.setSize(new Dimension(1200, 700));
+        mpp.mapDialog.setPreferredSize(new Dimension(MapDimension.W, MapDimension.H));
+        mpp.mapDialog.setSize(new Dimension(MapDimension.W, MapDimension.H));
         mpp.mapPanel.add(mapViewer);
         mpp.mapDialog.setLocationRelativeTo(null);
         mpp.mapDialog.setTitle("Map Dialog");
@@ -130,8 +112,8 @@ public class MapController
         //JDialog mapDialog = new JDialog();
         mpp.mapDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         mpp.mapDialog.setModal(true);
-        mpp.mapDialog.setPreferredSize(new Dimension(1200, 700));
-        mpp.mapDialog.setSize(new Dimension(1200, 700));
+        mpp.mapDialog.setPreferredSize(new Dimension(MapDimension.W, MapDimension.H));
+        mpp.mapDialog.setSize(new Dimension(MapDimension.W, MapDimension.H));
         mpp.mapPanel.add(mapViewer);
         mpp.mapDialog.setLocationRelativeTo(null);
         mpp.mapDialog.setTitle("Map Dialog");

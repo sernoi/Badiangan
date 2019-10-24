@@ -11,9 +11,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.event.MouseInputListener;
 import org.jxmapviewer.JXMapViewer;
@@ -25,12 +23,9 @@ import org.jxmapviewer.input.ZoomMouseWheelListenerCenter;
 import org.jxmapviewer.painter.CompoundPainter;
 import org.jxmapviewer.painter.Painter;
 import org.jxmapviewer.viewer.DefaultTileFactory;
-import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.TileFactory;
 import org.jxmapviewer.viewer.TileFactoryInfo;
-import org.jxmapviewer.viewer.Waypoint;
-import org.jxmapviewer.viewer.WaypointPainter;
 
 /**
  *
@@ -40,8 +35,9 @@ public class MapGenerate
 {
     public static JXMapViewer generateMap()
     {
+        
         final JXMapViewer mapViewer = new JXMapViewer();
-        GeoPosition badiangan = new GeoPosition(10.9938,122.5418);
+        GeoPosition badiangan = new GeoPosition(10.999783, 122.526848);
         //TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:F:/Theses/Badiangan/Project/Badiangan/tiles/tiles.zip!");
         TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:tiles/tiles.zip!");
         TileFactory tileFactory = new DefaultTileFactory(info);
@@ -162,7 +158,7 @@ public class MapGenerate
              }
              
         });
-        //set zoom
+        
         return mapViewer;
     }
 }
