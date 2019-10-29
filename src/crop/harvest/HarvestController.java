@@ -27,6 +27,7 @@ import javax.swing.event.PopupMenuListener;
 import javax.swing.table.TableCellEditor;
 import net.proteanit.sql.DbUtils;
 import util.Alter;
+import util.MyPrinter;
 import util.SearchModel;
 
 public class HarvestController
@@ -202,6 +203,10 @@ public class HarvestController
             if(e.getSource() == hp.deleteMenuItem)
             {
                 deleteHarvest();
+            }
+            if(e.getSource() == hp.printBtn)
+            {
+                MyPrinter.printNow(hp.table, "Crop/Tree Harvest");
             }
         }
     }

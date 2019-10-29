@@ -8,11 +8,9 @@ import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,11 +20,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
-import javax.swing.table.TableCellEditor;
 import livestock.LSController;
 import livestock.LSPanel;
 import net.proteanit.sql.DbUtils;
 import util.Alter;
+import util.MyPrinter;
 import util.SearchModel;
 
 public class DisposalController
@@ -188,6 +186,10 @@ public class DisposalController
             if(e.getSource() == dp.deleteMenuItem)
             {
                 deleteDisposal();
+            }
+            if(e.getSource() == dp.printBtn)
+            {
+                MyPrinter.printNow(dp.table, "Livestock Disposal");
             }
         }
     }

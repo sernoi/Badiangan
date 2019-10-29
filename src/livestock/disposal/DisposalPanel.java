@@ -54,6 +54,7 @@ public class DisposalPanel extends javax.swing.JPanel {
         deleteBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel80 = new javax.swing.JLabel();
+        printBtn = new javax.swing.JButton();
 
         editDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editDialog.setTitle("Add Crop/Tree");
@@ -248,6 +249,9 @@ public class DisposalPanel extends javax.swing.JPanel {
         jLabel80.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel80.setText("Livestock Disposal");
 
+        printBtn.setBackground(new java.awt.Color(51, 255, 255));
+        printBtn.setText("Print");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -255,7 +259,7 @@ public class DisposalPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1080, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1158, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -263,6 +267,8 @@ public class DisposalPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel80, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(printBtn)
+                        .addGap(18, 18, 18)
                         .addComponent(addBtn)
                         .addGap(18, 18, 18)
                         .addComponent(editBtn)
@@ -280,7 +286,8 @@ public class DisposalPanel extends javax.swing.JPanel {
                     .addComponent(deleteBtn)
                     .addComponent(addBtn)
                     .addComponent(editBtn)
-                    .addComponent(jLabel80, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel80, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(printBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addContainerGap())
@@ -311,6 +318,7 @@ public class DisposalPanel extends javax.swing.JPanel {
         editMenuItem.addActionListener(a);
         addMenuItem.addActionListener(a);
         deleteMenuItem.addActionListener(a);
+        printBtn.addActionListener(a);
         
         //PopUpMenu Listener
         popUpMenu.addPopupMenuListener(p);
@@ -345,6 +353,7 @@ public class DisposalPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane9;
     public javax.swing.JButton okBtn;
     public javax.swing.JPopupMenu popUpMenu;
+    public javax.swing.JButton printBtn;
     public javax.swing.JSpinner profitSpin;
     public javax.swing.JTextArea remarksTA;
     public javax.swing.JTextField searchTF;

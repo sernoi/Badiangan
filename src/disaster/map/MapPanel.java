@@ -5,6 +5,7 @@
  */
 package disaster.map;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
@@ -19,6 +20,7 @@ public class MapPanel extends javax.swing.JPanel{
      */
     public MapPanel() {
         initComponents();
+        mapDialog.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/title.png")));
     }
 
     /**

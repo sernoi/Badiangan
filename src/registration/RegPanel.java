@@ -33,6 +33,7 @@ public class RegPanel extends javax.swing.JPanel {
         table = new javax.swing.JTable();
         deleteBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        printBtn = new javax.swing.JButton();
 
         viewMenuItem.setText("View");
         popUpMenu.add(viewMenuItem);
@@ -74,6 +75,9 @@ public class RegPanel extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Search");
 
+        printBtn.setBackground(new java.awt.Color(51, 255, 255));
+        printBtn.setText("Print");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -81,13 +85,15 @@ public class RegPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1125, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel80, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel80, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(printBtn)
                         .addGap(18, 18, 18)
                         .addComponent(deleteBtn)))
                 .addContainerGap())
@@ -100,7 +106,8 @@ public class RegPanel extends javax.swing.JPanel {
                     .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(deleteBtn)
-                    .addComponent(jLabel80))
+                    .addComponent(jLabel80)
+                    .addComponent(printBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addContainerGap())
@@ -125,6 +132,7 @@ public class RegPanel extends javax.swing.JPanel {
         deleteBtn.addActionListener(a);
         viewMenuItem.addActionListener(a);
         deleteMenuItem.addActionListener(a);
+        printBtn.addActionListener(a);
         
         //PopUpMenu Listener
         popUpMenu.addPopupMenuListener(p);
@@ -141,6 +149,7 @@ public class RegPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JPopupMenu popUpMenu;
+    public javax.swing.JButton printBtn;
     public javax.swing.JTextField searchTF;
     public javax.swing.JTable table;
     public javax.swing.JMenuItem viewMenuItem;

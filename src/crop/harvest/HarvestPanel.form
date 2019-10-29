@@ -413,7 +413,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" pref="1080" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="1310" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -421,6 +421,8 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel80" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="printBtn" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="addBtn" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="editBtn" min="-2" max="-2" attributes="0"/>
@@ -443,6 +445,7 @@
                       <Component id="addBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="editBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel80" alignment="3" max="32767" attributes="0"/>
+                      <Component id="printBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="393" max="32767" attributes="0"/>
@@ -565,6 +568,17 @@
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Crops/Tree Harvest"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="printBtn">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="33" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Print"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

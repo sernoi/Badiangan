@@ -98,7 +98,6 @@ public class MapController
             waypoints.add(new MyWaypoint("B" + beneList.get(x), Color.YELLOW, 
                     new GeoPosition(latDbl, longDbl)));
         }
-        //TODO bug when scrolling
         // Create a waypoint painter that takes all the waypoints
         WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
         waypointPainter.setWaypoints(waypoints);
@@ -121,7 +120,6 @@ public class MapController
             waypoints.add(new MyWaypoint("E" + evacList.get(x), Color.YELLOW, 
                     new GeoPosition(latDbl, longDbl)));
         }
-        //TODO bug when scrolling
         // Create a waypoint painter that takes all the waypoints
         WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
         waypointPainter.setWaypoints(waypoints);

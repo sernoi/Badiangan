@@ -3,6 +3,10 @@
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
     <Container class="javax.swing.JDialog" name="mapDialog">
+      <Properties>
+        <Property name="title" type="java.lang.String" value="Map Dialog"/>
+        <Property name="resizable" type="boolean" value="false"/>
+      </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>

@@ -5,15 +5,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
+import java.text.MessageFormat;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import net.proteanit.sql.DbUtils;
-import util.Alter;
+import util.MyPrinter;
 import util.SearchModel;
 
 public class RegController
@@ -71,7 +71,7 @@ public class RegController
             JOptionPane.showMessageDialog(rp, "Please select a registration to view.");
         }
     }
-
+    
     class Action implements ActionListener
     {
         @Override
@@ -87,6 +87,10 @@ public class RegController
             if(e.getSource() == rp.deleteBtn)
             {
                 deleteReg();
+            }
+            if(e.getSource() == rp.printBtn)
+            {
+                MyPrinter.printNow(rp.table, "Registration");
             }
         }
     }

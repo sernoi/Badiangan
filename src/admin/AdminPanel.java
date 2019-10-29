@@ -1,6 +1,7 @@
 
 package admin;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -85,10 +86,11 @@ public class AdminPanel extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
 
         addAdminDialog.setBackground(new java.awt.Color(51, 51, 51));
+        addAdminDialog.setResizable(false);
 
         addAdminPanel.setBackground(new java.awt.Color(69, 73, 84));
 
-        departmentCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MSWDO", "MDRRMO", "MAO", "MPDO" }));
+        departmentCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MSWDO", "MDRRMO", "MAO", "MPDO", "VIEWER" }));
         departmentCB.setBorder(null);
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -226,11 +228,14 @@ public class AdminPanel extends javax.swing.JPanel {
             .addComponent(addAdminPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        addAdminDialog.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/title.png")));
+
         editAdminDialog.setBackground(new java.awt.Color(51, 51, 51));
+        editAdminDialog.setResizable(false);
 
         addAdminPanel1.setBackground(new java.awt.Color(69, 73, 84));
 
-        departmentCB1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MSWDO", "MDRRMO", "MAO", "MPDO" }));
+        departmentCB1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MSWDO", "MDRRMO", "MAO", "MPDO", "VIEWER" }));
         departmentCB1.setBorder(null);
 
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));

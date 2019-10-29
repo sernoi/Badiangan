@@ -66,13 +66,13 @@ public class LoginController
         }
         //flag = false;
         lf.loginBtn.setEnabled(true);
-        System.out.println("End"+worker.getState());
+        //System.out.println("End"+worker.getState());
         worker.stop();
     }
     
     public void startLogin()
     {  
-        System.out.println("Start"+worker.getState());
+        //System.out.println("Start"+worker.getState());
         if(worker.getState() == NEW)
         {
             worker.start();

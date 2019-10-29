@@ -24,6 +24,7 @@ import net.proteanit.sql.DbUtils;
 import util.Alter;
 import util.BeneCBBHandler;
 import util.DisasterCBBHandler;
+import util.MyPrinter;
 import util.SearchModel;
 
 public class FarController
@@ -230,6 +231,10 @@ public class FarController
             if(e.getSource() == fp.deleteMenuItem)
             {
                 deleteFar();
+            }
+            if(e.getSource() == fp.printBtn)
+            {
+                MyPrinter.printNow(fp.table, "Family Assistance Record");
             }
         }
     }

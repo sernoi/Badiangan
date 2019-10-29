@@ -19,6 +19,7 @@ import far.FarPanel;
 import fmember.FMemberController;
 import fmember.FMemberPanel;
 import java.awt.CardLayout;
+import java.awt.Toolkit;
 import livestock.LSController;
 import livestock.LSPanel;
 import livestock.disposal.DisposalController;
@@ -55,7 +56,7 @@ public class MainFrame extends javax.swing.JFrame {
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(mp,"MapPanel");
         cl.show(mainPanel, "MapPanel");  
-        //setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/agfa_icon.jpg")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/title.png")));
 
     }
     @SuppressWarnings("unchecked")
@@ -490,6 +491,10 @@ public class MainFrame extends javax.swing.JFrame {
         {
             return 4;
         }
+        else if(dept.equals("VIEWER"))
+        {
+            return 5;
+        }
         else
         {
             return 0;
@@ -532,6 +537,14 @@ public class MainFrame extends javax.swing.JFrame {
                 beneMenu.setVisible(false);
                 manageMenu.setVisible(false);
                 disasterMenu.setVisible(false);
+                break; 
+            //MPDO
+            case 5:
+                removeAllDeleteBtn();
+                beneMenu.setVisible(false);
+                disasterMenu.setVisible(false);
+                manageMenu.setVisible(false);
+                reportMenu.setVisible(false);
                 break; 
         }
     }

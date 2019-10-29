@@ -5,6 +5,7 @@
  */
 package beneficiary.map;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
@@ -19,6 +20,7 @@ public class MapPanel extends javax.swing.JPanel{
      */
     public MapPanel() {
         initComponents();
+        mapDialog.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/title.png")));
     }
 
     /**
@@ -38,6 +40,9 @@ public class MapPanel extends javax.swing.JPanel{
         jLabel3 = new javax.swing.JLabel();
         longLbl = new javax.swing.JLabel();
         saveBtn = new javax.swing.JButton();
+
+        mapDialog.setTitle("Map Dialog");
+        mapDialog.setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(69, 73, 84));
 

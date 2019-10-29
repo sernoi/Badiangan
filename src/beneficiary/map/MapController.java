@@ -2,6 +2,7 @@ package beneficiary.map;
 import beneficiary.BenePanel;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -103,7 +104,7 @@ public class MapController
         Painter<JXMapViewer> origOverLay = (Painter<JXMapViewer>) mapViewer.getOverlayPainter();
         List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
         Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>(Arrays.asList(
-        new MyWaypoint("B", Color.ORANGE, gp)));
+        new MyWaypoint("", Color.ORANGE, gp)));
 
         // Create a waypoint painter that takes all the waypoints
         WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
@@ -119,12 +120,13 @@ public class MapController
         mapViewer.setOverlayPainter(painter);
         
         //JDialog mapDialog = new JDialog();
+        mpp.mapDialog.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/title.png")));
         mpp.mapDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         mpp.mapDialog.setModal(true);
         mpp.mapDialog.setPreferredSize(new Dimension(MapDimension.W, MapDimension.H));
         mpp.mapDialog.setSize(new Dimension(MapDimension.W, MapDimension.H));
         mpp.mapPanel.add(mapViewer);
-        mpp.mapDialog.setLocationRelativeTo(null);
+        mpp.mapDialog.setLocationRelativeTo(mpp);
         mpp.mapDialog.setTitle("Map Dialog");
         mpp.mapDialog.pack();
         mpp.mapDialog.setVisible(true);
