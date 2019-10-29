@@ -11,7 +11,7 @@ package util.maputil;
  */
 public class MapDimension 
 {
-    public static final int W = 1000;
+    public static final int W = 1200;
     public static final int H = 700;
     public static final int ovalW = 10;
     public static final int ovalH = 10;

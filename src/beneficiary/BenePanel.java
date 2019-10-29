@@ -48,7 +48,7 @@ public class BenePanel extends javax.swing.JPanel {
         jLabel26 = new javax.swing.JLabel();
         brgyCB = new javax.swing.JComboBox<>();
         locBtn = new javax.swing.JButton();
-        longLatLbl = new javax.swing.JLabel();
+        latLongLbl = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
@@ -488,13 +488,13 @@ public class BenePanel extends javax.swing.JPanel {
         locBtn.setForeground(java.awt.Color.black);
         locBtn.setText("Get");
 
-        longLatLbl.setForeground(java.awt.Color.white);
-        longLatLbl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        longLatLbl.setText("0,0");
+        latLongLbl.setForeground(java.awt.Color.white);
+        latLongLbl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        latLongLbl.setText("0,0");
 
         jLabel25.setForeground(java.awt.Color.white);
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel25.setText("Location (Long, Lat):");
+        jLabel25.setText("Location (Lat, Long):");
 
         jLabel32.setForeground(new java.awt.Color(255, 255, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -664,7 +664,7 @@ public class BenePanel extends javax.swing.JPanel {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(locBtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(longLatLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(latLongLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(contactNumTF)
@@ -791,7 +791,7 @@ public class BenePanel extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(locBtn)
-                        .addComponent(longLatLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(latLongLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(4, 4, 4)))
@@ -929,7 +929,7 @@ public class BenePanel extends javax.swing.JPanel {
 
         jLabel87.setForeground(java.awt.Color.white);
         jLabel87.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel87.setText("Location (Long, Lat):");
+        jLabel87.setText("Location (Lat, Long):");
 
         jLabel88.setForeground(new java.awt.Color(255, 255, 255));
         jLabel88.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -2711,6 +2711,7 @@ public class BenePanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane9;
     public javax.swing.JTextField lNameTF;
     public javax.swing.JTextField lNameTF1;
+    public javax.swing.JLabel latLongLbl;
     public javax.swing.JTextField livestockAddLSTF;
     public javax.swing.JTextField livestockEditLSTF;
     public javax.swing.JPopupMenu livestockPopMenu;
@@ -2719,7 +2720,6 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JTextField lnameEditMemberTF;
     public javax.swing.JButton locBtn;
     public javax.swing.JButton locBtn1;
-    public javax.swing.JLabel longLatLbl;
     public javax.swing.JLabel longLatLbl1;
     public javax.swing.JTextField mNameTF;
     public javax.swing.JTextField mNameTF1;

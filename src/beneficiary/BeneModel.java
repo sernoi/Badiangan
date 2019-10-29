@@ -50,7 +50,7 @@ public class BeneModel
                     + "ethnicity as 'Ethnicity', net_income as 'Net Income', occ as 'Occupation', "
                     + "health_condition as 'Health Condition', house_status as 'House Status',"
                     + "house_condition as 'House Condition', contact_num as 'Contact #',"
-                    + "loc_long as 'Longitude', loc_lat as 'Latitude' "
+                    + "loc_lat as 'Latitude', loc_long as 'Longitude' "
                     + "from beneficiary";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
@@ -91,7 +91,7 @@ public class BeneModel
             String lName, String sex, String dob, String brgy, String code,
             String fourPs, String indigency, String hea, String ethnicity,
             double netIncome, String occ, String healthCond, String houseStat,
-            String houseCond, String contactNum, double locLong, double locLat)
+            String houseCond, String contactNum, double locLat, double locLong)
     {
         Connection conn = null;
         try {
@@ -117,8 +117,8 @@ public class BeneModel
             stmt.setString(15, houseStat);
             stmt.setString(16, houseCond);
             stmt.setString(17, contactNum);
-            stmt.setDouble(18, locLong);
-            stmt.setDouble(19, locLat);
+            stmt.setDouble(18, locLat);
+            stmt.setDouble(19, locLong);
             stmt.execute();
         }catch (SQLException ex) {
             Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -140,7 +140,7 @@ public class BeneModel
             String lName, String sex, String dob, String brgy, String code,
             String fourPs, String indigency, String hea, String ethnicity,
             double netIncome, String occ, String healthCond, String houseStat,
-            String houseCond, String contactNum, double locLong, double locLat)
+            String houseCond, String contactNum, double locLat, double locLong)
     {
         Connection conn = null;
         try {
@@ -152,7 +152,7 @@ public class BeneModel
                     + "code = ?, fourps = ?, ip = ?, hea = ?, "
                     + "ethnicity = ?, net_income = ?, occ = ?, health_condition = ?, "
                     + "house_status = ?, house_condition = ?, contact_num = ?, "
-                    + "loc_long = ?, loc_lat = ?"
+                    + "loc_lat = ?, loc_long = ?"
                     + " where bene_id = "+beneId+"";
 //            String sql = "Insert into beneficiary values (?,?,?,?,?,?,"
 //                    + "(Select brgy_id from brgy where name = '"+brgy+"'),"
@@ -174,8 +174,8 @@ public class BeneModel
             stmt.setString(14, houseStat);
             stmt.setString(15, houseCond);
             stmt.setString(16, contactNum);
-            stmt.setDouble(17, locLong);
-            stmt.setDouble(18, locLat);
+            stmt.setDouble(17, locLat);
+            stmt.setDouble(18, locLong);
             stmt.execute();
             JOptionPane.showMessageDialog(null,"Beneficiary Updated!");
         }catch (SQLException ex) {

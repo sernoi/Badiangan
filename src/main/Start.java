@@ -11,6 +11,7 @@ public class Start
         LoginFrame lf = new LoginFrame();
         lf.setVisible(true);
         new LoginController(lf);
+        
     }
     
     static void initLookAndFeel()

@@ -601,7 +601,7 @@ public class BeneController
             else
             {
                 String brgyStr = bp.brgyCB.getSelectedItem().toString();
-                String locStr = bp.longLatLbl.getText();
+                String locStr = bp.latLongLbl.getText();
                 String title = bp.addBeneDialog.getTitle();
                 
                 BeneModel.saveBene(

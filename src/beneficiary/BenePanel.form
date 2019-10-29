@@ -496,7 +496,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="locBtn" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="longLatLbl" max="32767" attributes="0"/>
+                                          <Component id="latLongLbl" max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -656,7 +656,7 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="locBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="longLatLbl" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="latLongLbl" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel25" max="32767" attributes="0"/>
@@ -897,7 +897,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="longLatLbl">
+                <Component class="javax.swing.JLabel" name="latLongLbl">
                   <Properties>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -915,7 +915,7 @@
                       <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="4"/>
-                    <Property name="text" type="java.lang.String" value="Location (Long, Lat):"/>
+                    <Property name="text" type="java.lang.String" value="Location (Lat, Long):"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -1893,7 +1893,7 @@
                       <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="4"/>
-                    <Property name="text" type="java.lang.String" value="Location (Long, Lat):"/>
+                    <Property name="text" type="java.lang.String" value="Location (Lat, Long):"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.event.MouseInputListener;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
-import org.jxmapviewer.input.CenterMapListener;
 import org.jxmapviewer.input.PanKeyListener;
 import org.jxmapviewer.input.PanMouseInputListener;
 import org.jxmapviewer.input.ZoomMouseWheelListenerCenter;
@@ -35,7 +34,7 @@ public class MapGenerate
 {
     public static JXMapViewer generateMap()
     {
-        int zoomVal = 7;
+        int zoomVal = 6;
         final JXMapViewer mapViewer = new JXMapViewer();
         GeoPosition badiangan = new GeoPosition(10.999783, 122.526848);
         //TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:F:/Theses/Badiangan/Project/Badiangan/tiles/tiles.zip!");

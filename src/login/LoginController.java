@@ -3,8 +3,10 @@ package login;
 import main.MainFrame;
 import util.Timer;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import static java.lang.Thread.State.NEW;
+import static java.lang.Thread.State.TERMINATED;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -13,98 +15,84 @@ public class LoginController
     String adminName;
     String adminPos;
     LoginFrame lf;
+    int progVal = 0;
+    boolean flag = true;
+    MainFrame mf;
+    
+    public Worker worker = new Worker();
     
     public LoginController(LoginFrame lf)
     { 
         this.lf = lf;
-        //this.lf.loginListener(new LoginClass());
         
         this.lf.loginBtn.addActionListener((ActionEvent e) -> {
-            loginNow();
+            startLogin();
         });
         
-        this.lf.pwPF.addKeyListener(new KeyListener() 
+        this.lf.pwPF.addKeyListener(new KeyAdapter() 
         {
-        public void actionPerformed(KeyEvent evt) 
-            {
-                System.out.println("Handled by anonymous class listener");
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER)
                 {
-                    loginNow();
+                    startLogin();
                 }
             }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
         });
-        
     }
 
     public void loginNow() 
     {
+        lf.loginBtn.setEnabled(false);
         String[] name = new String[4];
         name = LoginModel.loginAdmin(lf.unTF.getText(), lf.pwPF.getText());
-        String pos, dept;
-        pos = name[0];
-        dept = name[1];
         if(name[0] != null && name[1] != null && name[2] != null && name[3] != null)
         {
-            MainFrame mf = new MainFrame();
+            mf = new MainFrame();
             Timer t = new Timer(mf);
             t.setTime();
+            mf.deptLbl.setText(name[1]);
             mf.fnameLbl.setText(name[2]);
             mf.adminIDTF.setText(name[3]);
-            switch(getToken(pos,dept))
-            {
-                //MSWDO
-                case 1:
-                    mf.cropsMenu.setVisible(false);
-                    mf.lsMenu.setVisible(false);
-                    break;  
-            }
-            
             mf.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-            mf.setVisible(true);
+            //setting up the user config based on the dept
+            mf.setConfig();
             lf.setVisible(false);
-}
+            mf.setVisible(true);
+        }
         else
         {
             JOptionPane.showMessageDialog(null, "Wrong username or password!","Error",JOptionPane.ERROR_MESSAGE);
         }
+        //flag = false;
+        lf.loginBtn.setEnabled(true);
+        System.out.println("End"+worker.getState());
+        worker.stop();
     }
     
-    public int getToken(String pos, String dept)
-    {
-        if(dept.equals("MSWDO"))
+    public void startLogin()
+    {  
+        System.out.println("Start"+worker.getState());
+        if(worker.getState() == NEW)
         {
-            return 1;
+            worker.start();
         }
-        else if(dept.equals("MAO"))
+        else if(worker.getState() == TERMINATED)
         {
-            return 2;
-        }
-        else if(dept.equals("MDRRMO"))
-        {
-            return 3;
-        }
-        else if(dept.equals("MPDO"))
-        {
-            return 4;
+            worker.run();
         }
         else
         {
-            return 0;
+            worker.run();
+        }
+    }
+    
+    class Worker extends Thread 
+    {
+        @Override
+        public void run() 
+        {
+            loginNow();
         }
     }
 }

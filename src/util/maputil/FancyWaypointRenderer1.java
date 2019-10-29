@@ -29,9 +29,9 @@ import org.jxmapviewer.viewer.WaypointRenderer;
  * A fancy waypoint painter
  * @author Martin Steiger
  */
-public class FancyWaypointRenderer implements WaypointRenderer<MyWaypoint>
+public class FancyWaypointRenderer1 implements WaypointRenderer<MyWaypoint>
 {
-    private static final Log log = LogFactory.getLog(FancyWaypointRenderer.class);
+    private static final Log log = LogFactory.getLog(FancyWaypointRenderer1.class);
 
     private final Map<Color, BufferedImage> map = new HashMap<Color, BufferedImage>();
 
@@ -42,7 +42,7 @@ public class FancyWaypointRenderer implements WaypointRenderer<MyWaypoint>
     /**
      * Uses a default waypoint image
      */
-    public FancyWaypointRenderer()
+    public FancyWaypointRenderer1()
     {
         URL resource = getClass().getResource("man_small.png");
 
