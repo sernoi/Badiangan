@@ -38,7 +38,8 @@ public class MapGenerate
         final JXMapViewer mapViewer = new JXMapViewer();
         GeoPosition badiangan = new GeoPosition(10.999783, 122.526848);
         //TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:F:/Theses/Badiangan/Project/Badiangan/tiles/tiles.zip!");
-        TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:/tiles/tiles.zip!");
+        //TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:/tiles/tiles.zip!");
+        TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:tiles/tiles.zip!");
         //TileFactoryInfo info = new OSMTileFactoryInfo();
         TileFactory tileFactory = new DefaultTileFactory(info);
         
