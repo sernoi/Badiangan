@@ -1,8 +1,7 @@
-package beneficiary.map;
-import beneficiary.BenePanel;
+package hazard.map;
+import hazard.HazardPanel;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,30 +19,32 @@ import org.jxmapviewer.painter.Painter;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.WaypointPainter;
 import util.maputil.FancyWaypointRenderer;
+import util.maputil.FancyWaypointRenderer1;
+import util.maputil.FancyWaypointRenderer2;
 import util.maputil.MapDimension;
 import util.maputil.MapGenerate;
 import util.maputil.MyWaypoint;
 
 public class MapController
 {
-    BenePanel bp;
+    HazardPanel hazp;
     MapPanel mpp;
     //JXMapViewer mapViewer;
-    public MapController(MapPanel mpp, BenePanel bp) 
+    public MapController(MapPanel mpp, HazardPanel hazp) 
     {
         this.mpp = mpp;
-        this.bp = bp;
-        this.mpp.allListener(new Action(), new Mouse());
+        this.hazp = hazp;
+        this.mpp.allListener(new Action());
         
         JXMapViewer mapViewer = MapGenerate.generateMap();
         initMarker(mapViewer);
     }
     
-    public MapController(MapPanel mpp, BenePanel bp, double locLat, double locLong)
+    public MapController(MapPanel mpp, HazardPanel hazp, double locLat, double locLong)
     {
         this.mpp = mpp;
-        this.bp = bp;
-        this.mpp.allListener(new Action(), new Mouse());
+        this.hazp = hazp;
+        this.mpp.allListener(new Action());
         
         JXMapViewer mapViewer = MapGenerate.generateMap();
         setMarker(mapViewer, new GeoPosition(locLat,locLong));
@@ -57,12 +58,12 @@ public class MapController
             @Override
             public void mapClicked(GeoPosition gp) {
                 Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>(Arrays.asList(
-                new MyWaypoint("", Color.WHITE, gp)));
+                new MyWaypoint("", Color.ORANGE, gp)));
 
                 // Create a waypoint painter that takes all the waypoints
                 WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
                 waypointPainter.setWaypoints(waypoints);
-                waypointPainter.setRenderer(new FancyWaypointRenderer());
+                waypointPainter.setRenderer(new FancyWaypointRenderer2());
 
                 // Create a compound painter that uses both the route-painter and the waypoint-painter
                 painters.clear();
@@ -72,8 +73,8 @@ public class MapController
                 CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
                 mapViewer.setOverlayPainter(painter);
                 
-                mpp.latLbl.setText("" + gp.getLatitude());
                 mpp.longLbl.setText("" + gp.getLongitude());
+                mpp.latLbl.setText("" + gp.getLatitude());
             }
         });
         
@@ -91,20 +92,23 @@ public class MapController
     
     void saveLoc()
     {
-        bp.latLongLbl.setText(mpp.latLbl.getText() + "," + mpp.longLbl.getText());
-        bp.longLatLbl1.setText(mpp.latLbl.getText() + "," + mpp.longLbl.getText());
+        hazp.latSpin.setValue(Double.parseDouble(mpp.latLbl.getText()));
+        hazp.longSpin.setValue(Double.parseDouble(mpp.longLbl.getText()));
+        hazp.latSpin1.setValue(Double.parseDouble(mpp.latLbl.getText()));
+        hazp.longSpin1.setValue(Double.parseDouble(mpp.longLbl.getText()));
         mpp.mapDialog.dispose();
     }
     void setMarker(JXMapViewer mapViewer, GeoPosition gp)
     {
         mpp.saveBtn.setVisible(false);
-        mpp.latLbl.setText("" + gp.getLatitude());
         mpp.longLbl.setText("" + gp.getLongitude());
+        mpp.latLbl.setText("" + gp.getLatitude());
         
         Painter<JXMapViewer> origOverLay = (Painter<JXMapViewer>) mapViewer.getOverlayPainter();
         List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
+        
         Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>(Arrays.asList(
-        new MyWaypoint("", Color.ORANGE, gp)));
+        new MyWaypoint("B", Color.ORANGE, gp)));
 
         // Create a waypoint painter that takes all the waypoints
         WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
@@ -114,19 +118,19 @@ public class MapController
         // Create a compound painter that uses both the route-painter and the waypoint-painter
         painters.clear();
         painters.add(origOverLay);
-        painters.add(waypointPainter);
+       // painters.add(waypointPainter);
 
         CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
         mapViewer.setOverlayPainter(painter);
         
+        
         //JDialog mapDialog = new JDialog();
-        mpp.mapDialog.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/title.png")));
         mpp.mapDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         mpp.mapDialog.setModal(true);
         mpp.mapDialog.setPreferredSize(new Dimension(MapDimension.W, MapDimension.H));
         mpp.mapDialog.setSize(new Dimension(MapDimension.W, MapDimension.H));
         mpp.mapPanel.add(mapViewer);
-        mpp.mapDialog.setLocationRelativeTo(mpp);
+        mpp.mapDialog.setLocationRelativeTo(null);
         mpp.mapDialog.setTitle("Map Dialog");
         mpp.mapDialog.pack();
         mpp.mapDialog.setVisible(true);
@@ -137,6 +141,10 @@ public class MapController
         @Override
         public void actionPerformed(ActionEvent e) 
         {
+            if(e.getSource() == mpp.saveBtn)
+            {
+                saveLoc();
+            }
             if(e.getSource() == mpp.saveBtn)
             {
                 saveLoc();

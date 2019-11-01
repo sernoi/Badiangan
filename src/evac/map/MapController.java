@@ -19,7 +19,7 @@ import org.jxmapviewer.painter.Painter;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.WaypointPainter;
 import util.maputil.FancyWaypointRenderer;
-import util.maputil.FancyWaypointRenderer2;
+import util.maputil.FancyWaypointRenderer1;
 import util.maputil.MapDimension;
 import util.maputil.MapGenerate;
 import util.maputil.MyWaypoint;
@@ -57,12 +57,12 @@ public class MapController
             @Override
             public void mapClicked(GeoPosition gp) {
                 Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>(Arrays.asList(
-                new MyWaypoint("", Color.ORANGE, gp)));
+                new MyWaypoint("", Color.GREEN, gp)));
 
                 // Create a waypoint painter that takes all the waypoints
                 WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
                 waypointPainter.setWaypoints(waypoints);
-                waypointPainter.setRenderer(new FancyWaypointRenderer2());
+                waypointPainter.setRenderer(new FancyWaypointRenderer1());
 
                 // Create a compound painter that uses both the route-painter and the waypoint-painter
                 painters.clear();
@@ -88,7 +88,6 @@ public class MapController
         mpp.mapDialog.pack();
         mpp.mapDialog.setVisible(true);
     }
-    
     void saveLoc()
     {
         ep.latSpin.setValue(Double.parseDouble(mpp.latLbl.getText()));
@@ -134,7 +133,6 @@ public class MapController
         mpp.mapDialog.pack();
         mpp.mapDialog.setVisible(true);
     }
-    
     class Action implements ActionListener
     {
         @Override
@@ -150,7 +148,6 @@ public class MapController
             }
         }
     }
-    
     class Mouse extends MouseAdapter
     {
         @Override
@@ -159,5 +156,4 @@ public class MapController
            
         }
     }
-    
 }

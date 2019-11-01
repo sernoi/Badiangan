@@ -18,6 +18,8 @@ import far.FarController;
 import far.FarPanel;
 import fmember.FMemberController;
 import fmember.FMemberPanel;
+import hazard.HazardController;
+import hazard.HazardPanel;
 import java.awt.CardLayout;
 import java.awt.Toolkit;
 import livestock.LSController;
@@ -45,6 +47,7 @@ public class MainFrame extends javax.swing.JFrame {
     EvacPanel ep = new EvacPanel();
     MapPanel mp = new MapPanel();
     BrgyPanel brgyp = new BrgyPanel();
+    HazardPanel hazp = new HazardPanel();
     
     public MainFrame() 
     {
@@ -52,10 +55,10 @@ public class MainFrame extends javax.swing.JFrame {
         
 
         mp = new MapPanel();
-        new MapController(mp);
-        CardLayout cl = (CardLayout) (mainPanel.getLayout());
-        mainPanel.add(mp,"MapPanel");
-        cl.show(mainPanel, "MapPanel");  
+        new MapController(mp, this);
+//        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+//        mainPanel.add(mp,"MapPanel");
+//        cl.show(mainPanel, "MapPanel");  
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/title.png")));
 
     }
@@ -91,6 +94,7 @@ public class MainFrame extends javax.swing.JFrame {
         manageMenu = new javax.swing.JMenu();
         adminMenuItem = new javax.swing.JMenuItem();
         brgyMenuItem = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         reportMenu = new javax.swing.JMenu();
         regMenuItem = new javax.swing.JMenuItem();
         farMenuItem = new javax.swing.JMenuItem();
@@ -296,6 +300,15 @@ public class MainFrame extends javax.swing.JFrame {
         });
         manageMenu.add(brgyMenuItem);
 
+        jMenuItem1.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem1.setText("Hazard");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        manageMenu.add(jMenuItem1);
+
         MenuBar.add(manageMenu);
 
         reportMenu.setForeground(new java.awt.Color(0, 0, 0));
@@ -381,10 +394,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void mapMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mapMenuItemActionPerformed
         mp = new MapPanel();
-        new MapController(mp);
-        CardLayout cl = (CardLayout) (mainPanel.getLayout());
-        mainPanel.add(mp,"MapPanel");
-        cl.show(mainPanel, "MapPanel");  
+        new MapController(mp, this);
+//        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+//        mainPanel.add(mp,"MapPanel");
+//        cl.show(mainPanel, "MapPanel");  
     }//GEN-LAST:event_mapMenuItemActionPerformed
 
     private void regMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regMenuItemActionPerformed
@@ -472,6 +485,14 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.add(brgyp,"BrgyPanel");
         cl.show(mainPanel, "BrgyPanel"); 
     }//GEN-LAST:event_brgyMenuItemActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        hazp = new HazardPanel();
+        new HazardController(hazp);
+        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+        mainPanel.add(hazp,"HazardPanel");
+        cl.show(mainPanel, "HazardPanel"); 
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public int getToken(String dept)
     {
@@ -603,9 +624,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenuItem jMenuItem1;
     public javax.swing.JMenuItem logoutMenuItem;
     public javax.swing.JMenuItem lsMenuItem;
-    private javax.swing.JPanel mainPanel;
+    public javax.swing.JPanel mainPanel;
     public javax.swing.JMenu manageMenu;
     public javax.swing.JMenuItem mapMenuItem;
     public javax.swing.JLabel realTimeLabel;

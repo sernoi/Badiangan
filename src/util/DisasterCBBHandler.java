@@ -27,14 +27,12 @@ public class DisasterCBBHandler extends KeyAdapter {
   public DisasterCBBHandler(JComboBox<String> combo) {
     super();
     this.comboBox = combo;
-//    for (int i = 0; i < comboBox.getModel().getSize(); i++) {
-//      list.add((String) comboBox.getItemAt(i));
-//    }
+
     ResultSet rs = null;
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "SELECT CONCAT_WS(' ', Concat(' ','(ID:',dis_id,')'), name ) AS 'name' FROM disaster";
+            String sql = "SELECT CONCAT_WS(' ', Concat('','(ID:',dis_id,')'), name ) AS 'name' FROM disaster";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while(rs.next())
