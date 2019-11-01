@@ -1,21 +1,26 @@
 package disaster.map;
 import disaster.DisasterPanel;
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.swing.JDialog;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -24,75 +29,143 @@ import org.jxmapviewer.input.MapClickListener;
 import org.jxmapviewer.painter.CompoundPainter;
 import org.jxmapviewer.painter.Painter;
 import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.WaypointPainter;
-import util.maputil.FancyWaypointRenderer;
 import util.maputil.MapDimension;
 import util.maputil.MapGenerate;
-import util.maputil.MyWaypoint;
 
 public class MapController
 {
-    MapPanel mpp;
-    DisasterPanel bp;
-    JXMapViewer mapViewer;
-    
-    int sx = 0;
-    int sy = 0;
-    Color disColor;
-    int ovalW = 10;
-    int ovalH = 10;
-    
-    int zoomValue = 7;
+    Color disColor = new Color(255,0,0,100);
+    DisasterPanel dp;
     int index = 0;
-    int zoomMult[] = {10,20,30,40,50,60,70};
+    JXMapViewer mapViewer;
+    MapPanel mpp;
+    Painter<JXMapViewer> origOverLay;
+    List<Painter<JXMapViewer>> painters;
     
-    public MapController(MapPanel mpp, DisasterPanel bp)
+    double sx = 0;
+    double sy = 0;
+    double lt = 0, lg = 0, rad = 0;
+    
+    //innermost -------------------------------------------- outermost
+    int z1 = 32; int z2 = 16; int z3 = 8; int z4 = 4; int z5 = 2; int z6 = 1;
+    int zoomMult = 1;
+    int zoomValue = 7;
+    
+    public MapController(MapPanel mpp, DisasterPanel dp)
     {
-        disColor = new Color(255,0,0,100);
         this.mpp = mpp;
-        this.bp = bp;
+        this.dp = dp;
         this.mpp.allListener(new Action());
         
-        JXMapViewer mapViewer = MapGenerate.generateMap();
-        initMarker(mapViewer);
+        mapViewer = MapGenerate.generateMap();
+        origOverLay = (Painter<JXMapViewer>) mapViewer.getOverlayPainter();
+        painters = new ArrayList<Painter<JXMapViewer>>();
+        initMarker();
     }
-    public MapController(MapPanel mpp, DisasterPanel bp, double locLong, double locLat)
+    public MapController(MapPanel mpp, DisasterPanel dp, double lt, double lg, double rad)
     {
-        disColor = new Color(255,0,0,100);
         this.mpp = mpp;
-        this.bp = bp;
-        this.mpp.allListener(new Action());
-        
-        JXMapViewer mapViewer = MapGenerate.generateMap();
-        setMarker(mapViewer, new GeoPosition(locLat,locLong));
+        this.dp = dp;
+        this.lt = lt;
+        this.lg = lg;
+        this.rad = rad;
+
+        mapViewer = MapGenerate.generateMap();
+        origOverLay = (Painter<JXMapViewer>) mapViewer.getOverlayPainter();
+        painters = new ArrayList<Painter<JXMapViewer>>();
+        setMarker();
     }
-    void initMarker(JXMapViewer mapViewer)
+    void showOval()
+    {
+        int currentZoom = mapViewer.getZoom();
+        switch(currentZoom)
+        {
+            case 1:
+                zoomMult = z1;
+                break;
+            case 2:
+                zoomMult = z2;
+                break;
+            case 3:
+                zoomMult = z3;
+                break;
+            case 4:
+                zoomMult = z4;
+                break;
+            case 5:
+                zoomMult = z5;
+                break;
+            case 6:
+                zoomMult = z6;
+                break;
+        }
+        Point2D pt = mapViewer.convertGeoPositionToPoint(new GeoPosition(
+                Double.parseDouble(mpp.latLbl.getText()),
+                Double.parseDouble(mpp.longLbl.getText())));
+        double val = Double.parseDouble(mpp.radLbl.getText());
+        Painter<JXMapViewer> ovalOverlay = new Painter<JXMapViewer>()
+        {
+            public void paint(Graphics2D g, JXMapViewer map, int w, int h)
+            {
+                myShape(g,
+                        pt.getX() - (MapDimension.ovalW * val)/2 * zoomMult,
+                        pt.getY() - (MapDimension.ovalH * val)/2 * zoomMult,
+                        (MapDimension.ovalW * val) * zoomMult,
+                        (MapDimension.ovalH * val) * zoomMult);
+            }
+        };
+        painters.clear();
+        painters.add(ovalOverlay);
+        painters.add(origOverLay);
+        CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+        mapViewer.setOverlayPainter(painter);
+    }
+    void initMarker()
     {   
-        Painter<JXMapViewer> origOverLay = (Painter<JXMapViewer>) mapViewer.getOverlayPainter();
-        List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
-        
         //Mouse clicked
         mapViewer.addMouseListener(new MapClickListener(mapViewer) {
             @Override
             public void mapClicked(GeoPosition gp) {
+                int currentZoom = mapViewer.getZoom();
+                switch(currentZoom)
+                {
+                    case 1:
+                        zoomMult = z1;
+                        break;
+                    case 2:
+                        zoomMult = z2;
+                        break;
+                    case 3:
+                        zoomMult = z3;
+                        break;
+                    case 4:
+                        zoomMult = z4;
+                        break;
+                    case 5:
+                        zoomMult = z5;
+                        break;
+                    case 6:
+                        zoomMult = z6;
+                        break;    
+                }
                 
                 Point2D worldPos = mapViewer.getTileFactory().geoToPixel(gp, mapViewer.getZoom());
                 Rectangle rect = mapViewer.getViewportBounds();
-                sx = (int) worldPos.getX() - rect.x;
-                sy = (int) worldPos.getY() - rect.y;
+                sx =  worldPos.getX() - rect.x;
+                sy = worldPos.getY() - rect.y;
 
                 Painter<JXMapViewer> ovalOverlay = new Painter<JXMapViewer>() 
                 { 
                     public void paint(Graphics2D g, JXMapViewer map, int w, int h) 
                     { 
-                        int val = Integer.parseInt(mpp.radSpinner.getValue().toString());
-                        g.setPaint(disColor);
-                        g.fillOval(
-                                sx - (MapDimension.ovalW * val)/2, 
-                                sy - (MapDimension.ovalH * val)/2, 
-                                MapDimension.ovalW * val, 
-                                MapDimension.ovalH * val);
-                        mpp.radSpinner.setEnabled(true);
+                        double val = Double.parseDouble(mpp.radSpin.getValue().toString());
+                        myShape(g,
+                                sx - (MapDimension.ovalW * val)/2 * zoomMult,
+                                sy - (MapDimension.ovalH * val)/2 * zoomMult,
+                                (MapDimension.ovalW * val) * zoomMult,
+                                (MapDimension.ovalH * val) * zoomMult);
+                        
+                        //mpp.radSpin.setEnabled(true);
                     } 
                 };
                 painters.clear();
@@ -107,33 +180,54 @@ public class MapController
         });
         
         //Spinner Listener
-        mpp.radSpinner.addChangeListener(new ChangeListener() 
+        mpp.radSpin.addChangeListener(new ChangeListener() 
         {
             @Override
             public void stateChanged(ChangeEvent e) 
             {
+                int currentZoom = mapViewer.getZoom();
+                switch(currentZoom)
+                {
+                    case 1:
+                        zoomMult = z1;
+                        break;
+                    case 2:
+                        zoomMult = z2;
+                        break;
+                    case 3:
+                        zoomMult = z3;
+                        break;
+                    case 4:
+                        zoomMult = z4;
+                        break;
+                    case 5:
+                        zoomMult = z5;
+                        break;
+                    case 6:
+                        zoomMult = z6;
+                        break;
+                }
                 Point2D pt = mapViewer.convertGeoPositionToPoint(new GeoPosition(
                         Double.parseDouble(mpp.latLbl.getText()),
                         Double.parseDouble(mpp.longLbl.getText())));
-                int val = Integer.parseInt(mpp.radSpinner.getValue().toString());
-                Painter<JXMapViewer> ovalOverlay = new Painter<JXMapViewer>() 
-                { 
-                    public void paint(Graphics2D g, JXMapViewer map, int w, int h) 
-                    { 
-                        g.setPaint(disColor);
-                        g.fillOval(
-                                (int) (pt.getX() - (MapDimension.ovalW * val)/2), 
-                                (int) (pt.getY()) - (MapDimension.ovalH * val)/2, 
-                                MapDimension.ovalW * val, 
-                                MapDimension.ovalH * val);
-                        mpp.radSpinner.setEnabled(true);
-                    } 
+                double val = Double.parseDouble(mpp.radSpin.getValue().toString());
+                Painter<JXMapViewer> ovalOverlay = new Painter<JXMapViewer>()
+                {
+                    public void paint(Graphics2D g, JXMapViewer map, int w, int h)
+                    {
+                        myShape(g,
+                                pt.getX() - (MapDimension.ovalW * val)/2 * zoomMult,
+                                pt.getY() - (MapDimension.ovalH * val)/2 * zoomMult,
+                                (MapDimension.ovalW * val) * zoomMult,
+                                (MapDimension.ovalH * val) * zoomMult);
+                    }
                 };
                 painters.clear();
                 painters.add(ovalOverlay);
                 painters.add(origOverLay);
                 CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
                 mapViewer.setOverlayPainter(painter);
+                mpp.radLbl.setText(""+Double.parseDouble(mpp.radSpin.getValue().toString()));
             }
         });
         
@@ -141,30 +235,9 @@ public class MapController
         mapViewer.addMouseMotionListener(new MouseAdapter()
         {
             @Override
-             public void mouseDragged(MouseEvent e)
-             {
-                Point2D pt = mapViewer.convertGeoPositionToPoint(new GeoPosition(
-                        Double.parseDouble(mpp.latLbl.getText()),
-                        Double.parseDouble(mpp.longLbl.getText())));
-                int val = Integer.parseInt(mpp.radSpinner.getValue().toString());
-                Painter<JXMapViewer> ovalOverlay = new Painter<JXMapViewer>() 
-                { 
-                    public void paint(Graphics2D g, JXMapViewer map, int w, int h) 
-                    { 
-                        g.setPaint(disColor);
-                        g.fillOval(
-                                (int) (pt.getX() - (MapDimension.ovalW * val)/2), 
-                                (int) (pt.getY()) - (MapDimension.ovalH * val)/2, 
-                                MapDimension.ovalW * val, 
-                                MapDimension.ovalH * val);
-                        mpp.radSpinner.setEnabled(true);
-                    } 
-                };
-                painters.clear();
-                painters.add(ovalOverlay);
-                painters.add(origOverLay);
-                CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
-                mapViewer.setOverlayPainter(painter);
+            public void mouseDragged(MouseEvent e)
+            {
+                showOval();
              }
         });
         
@@ -173,109 +246,19 @@ public class MapController
             @Override
              public void mouseWheelMoved(MouseWheelEvent e)
              {
-                Point2D pt = mapViewer.convertGeoPositionToPoint(new GeoPosition(
-                        Double.parseDouble(mpp.latLbl.getText()),
-                        Double.parseDouble(mpp.longLbl.getText())));
-                int val = Integer.parseInt(mpp.radSpinner.getValue().toString());
-                Painter<JXMapViewer> ovalOverlay = new Painter<JXMapViewer>() 
-                { 
-                    public void paint(Graphics2D g, JXMapViewer map, int w, int h) 
-                    { 
-                        g.setPaint(disColor);
-                        g.fillOval(
-                                (int) (pt.getX() - (MapDimension.ovalW * val)/2), 
-                                (int) (pt.getY()) - (MapDimension.ovalH * val)/2, 
-                                MapDimension.ovalW * val, 
-                                MapDimension.ovalH * val);
-                        mpp.radSpinner.setEnabled(true);
-                    } 
-                };
-                painters.clear();
-                painters.add(ovalOverlay);
-                painters.add(origOverLay);
-                CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
-                mapViewer.setOverlayPainter(painter);
+                showOval();
              }
         });
-//        
-//        //MouseWheel
-//        mapViewer.addMouseWheelListener(new MouseWheelListener()
-//        {
-//            @Override
-//            public void mouseWheelMoved(MouseWheelEvent e)
-//            {
-//                
-//                int currentZoom = mapViewer.getZoom();
-//                System.out.println(index);
-//                if(currentZoom < zoomValue)
-//                {
-//                    index = index == 6 ? 6 : ++index;
-//                }
-//                else
-//                {
-//                    index = index == 0 ? 0 : --index;
-//                }
-//                zoomValue = currentZoom == 1 ? 2 : currentZoom;
-//                System.out.println(index);
-//                
-//                
-//                Point2D pt = mapViewer.convertGeoPositionToPoint(new GeoPosition(
-//                        Double.parseDouble(mpp.latLbl.getText()),
-//                        Double.parseDouble(mpp.longLbl.getText())));
-//                int val = Integer.parseInt(mpp.radSpinner.getValue().toString());
-//                Painter<JXMapViewer> ovalOverlay = new Painter<JXMapViewer>() 
-//                { 
-//                    public void paint(Graphics2D g, JXMapViewer map, int w, int h) 
-//                    { 
-//                        g.setPaint(disColor);
-//                        g.fillOval(
-//                                (int) (pt.getX() - (MapDimension.ovalW * val)/2), 
-//                                (int) (pt.getY()) - (MapDimension.ovalH * val)/2, 
-//                                MapDimension.ovalW * val * zoomMult[index], 
-//                                MapDimension.ovalH * val * zoomMult[index]);
-//                        mpp.radSpinner.setEnabled(true);
-//                    } 
-//                };
-//                painters.clear();
-//                painters.add(ovalOverlay);
-//                painters.add(origOverLay);
-//                CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
-//                mapViewer.setOverlayPainter(painter);
-//            }
-//        });
-//        
+        
         //saveLoc Btn Pressed
         mpp.saveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int val = Integer.parseInt(mpp.radSpinner.getValue().toString());
-                Painter<JXMapViewer> ovalOverlay = new Painter<JXMapViewer>() 
-                { 
-                    public void paint(Graphics2D g, JXMapViewer map, int w, int h) 
-                    { 
-                        //color will be changed to full red
-                        //removes transparency
-                        g.setPaint(Color.RED);
-                        g.fillOval(
-                                sx - (MapDimension.ovalW * val)/2 , 
-                                sy - (MapDimension.ovalH * val)/2, 
-                                MapDimension.ovalW * val, 
-                                MapDimension.ovalH * val);
-                        mpp.radSpinner.setEnabled(true);
-                    } 
-                };
-                painters.clear();
-                painters.add(origOverLay);
-                painters.add(ovalOverlay);
-                CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
-                mapViewer.setOverlayPainter(painter);
-                
+                showOval();
                 double lat = Double.parseDouble(mpp.latLbl.getText());
                 double lng = Double.parseDouble(mpp.longLbl.getText());
                 Point2D pt = mapViewer.convertGeoPositionToPoint(new GeoPosition(lat,lng));
                 GeoPosition gp = mapViewer.convertPointToGeoPosition(pt);
-                System.out.println("PT:" + pt);
-                System.out.println("GP:" + gp);
             }
         });
         
@@ -290,22 +273,56 @@ public class MapController
         mpp.mapDialog.pack();
         mpp.mapDialog.setVisible(true);
     }
-    void setMarker(JXMapViewer mapViewer, GeoPosition gp)
+    void myShape(Graphics2D g, double xCoord, double yCoord, double w, double h)
     {
-        mpp.saveBtn.setVisible(false);
-        mpp.longLbl.setText("" + gp.getLongitude());
-        mpp.latLbl.setText("" + gp.getLatitude());
+        /* Enable anti-aliasing and pure stroke */
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
         
-        Set<MyWaypoint> wp = new HashSet<MyWaypoint>(Arrays.asList(
-        new MyWaypoint("B", Color.ORANGE, gp)));
-        WaypointPainter<MyWaypoint> wpr = new WaypointPainter<MyWaypoint>();
-        wpr.setWaypoints(wp);
-        wpr.setRenderer(new FancyWaypointRenderer());
-        mapViewer.setOverlayPainter(wpr);
+        /* Construct a shape and draw it */
+        Ellipse2D.Double shape = new Ellipse2D.Double(xCoord, yCoord, w, h);
+        g.setPaint(disColor);
+        g.fill(shape);
+    }
+    void saveLoc()
+    {
+        dp.latSpin.setValue(Double.parseDouble(mpp.latLbl.getText()));
+        dp.longSpin.setValue(Double.parseDouble(mpp.longLbl.getText()));
+        dp.radSpin.setValue(Double.parseDouble(mpp.radLbl.getText()));
         
-        mapViewer.recenterToAddressLocation();
+        dp.latSpin1.setValue(Double.parseDouble(mpp.latLbl.getText()));
+        dp.longSpin1.setValue(Double.parseDouble(mpp.longLbl.getText()));
+        dp.radSpin1.setValue(Double.parseDouble(mpp.radLbl.getText()));
+        mpp.mapDialog.dispose();
+    }
+    void setMarker()
+    {
+        //Mouse Dragged
+        mapViewer.addMouseMotionListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseDragged(MouseEvent e)
+            {
+                showOval();
+            }
+        });
+        
+        mapViewer.addMouseWheelListener(new MouseWheelListener()
+        {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e)
+            {
+                showOval();
+            }
+        });
         
         //JDialog mapDialog = new JDialog();
+        mpp.radSpin.setVisible(false);
+        mpp.jLabel2.setVisible(false);
+        mpp.saveBtn.setVisible(false);
+        this.mpp.latLbl.setText("" + this.lt);
+        this.mpp.longLbl.setText("" + this.lg);
+        this.mpp.radLbl.setText("" + this.rad);
         mpp.mapDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         mpp.mapDialog.setModal(true);
         mpp.mapDialog.setPreferredSize(new Dimension(MapDimension.W, MapDimension.H));
@@ -314,11 +331,8 @@ public class MapController
         mpp.mapDialog.setLocationRelativeTo(null);
         mpp.mapDialog.setTitle("Map Dialog");
         mpp.mapDialog.pack();
-        mpp.mapDialog.setVisible(true);
-    }
-    void saveLoc()
-    {
-        
+        showOval();
+        mpp.mapDialog.setVisible(true);         
     }
     class Action implements ActionListener
     {
@@ -331,6 +345,4 @@ public class MapController
             }
         }
     }
-
-    
 }

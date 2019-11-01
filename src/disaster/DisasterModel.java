@@ -54,7 +54,7 @@ public class DisasterModel
     }
     
     public static void saveDisaster(String type, String name,
-            String date, double lg, double lt, double rad, String remarks)
+            String date, double lt, double lg, double rad, String remarks)
     {
         Connection conn = null;
         try {
@@ -64,8 +64,8 @@ public class DisasterModel
             stmt.setString(1, type);
             stmt.setString(2, name);
             stmt.setString(3, date);
-            stmt.setDouble(4, lg);
-            stmt.setDouble(5, lt);
+            stmt.setDouble(4, lt);
+            stmt.setDouble(5, lg);
             stmt.setDouble(6, rad);
             stmt.setString(7, remarks);
             stmt.execute();
@@ -85,23 +85,22 @@ public class DisasterModel
         }
     }
     
-    public static void updateDisaster(int id, int bene_id, String crop, 
-            String area, String variety, String classification, 
-            String exp, String remarks)
+    public static void updateDisaster(int id, String type, String name, 
+            String date, double lt, double lg, double rad, String remarks)
     {
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "Update disaster set fk_bene_id_crop = ? , crop = ? , "
-                    + "area = ? , variety = ? , classification = ?, exp = ?, "
-                    + "remarks = ? where crop_id = '"+id+"'";
+            String sql = "Update disaster set disaster.type = ? , disaster.name = ? , "
+                    + "disaster.date = ? , disaster.lat = ? , disaster.long = ?, disaster.radius = ?, "
+                    + "disaster.remarks = ? where disaster.dis_id = '"+id+"'";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, bene_id);
-            stmt.setString(2, crop);
-            stmt.setString(3, area);
-            stmt.setString(4, variety);
-            stmt.setString(5, classification);
-            stmt.setString(6, exp);
+            stmt.setString(1, type);
+            stmt.setString(2, name);
+            stmt.setString(3, date);
+            stmt.setDouble(4, lt);
+            stmt.setDouble(5, lg);
+            stmt.setDouble(6, rad);
             stmt.setString(7, remarks);
             stmt.execute();
         }

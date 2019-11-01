@@ -44,8 +44,8 @@ public class DisasterPanel extends javax.swing.JPanel {
         typeCBB = new javax.swing.JComboBox<>();
         getLocBtn = new javax.swing.JButton();
         jLabel63 = new javax.swing.JLabel();
-        longSpin = new javax.swing.JSpinner();
         latSpin = new javax.swing.JSpinner();
+        longSpin = new javax.swing.JSpinner();
         radSpin = new javax.swing.JSpinner();
         editDialog = new javax.swing.JDialog();
         jPanel10 = new javax.swing.JPanel();
@@ -66,8 +66,8 @@ public class DisasterPanel extends javax.swing.JPanel {
         typeCBB1 = new javax.swing.JComboBox<>();
         getLocBtn1 = new javax.swing.JButton();
         jLabel68 = new javax.swing.JLabel();
-        longSpin1 = new javax.swing.JSpinner();
         latSpin1 = new javax.swing.JSpinner();
+        longSpin1 = new javax.swing.JSpinner();
         radSpin1 = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         idLbl = new javax.swing.JLabel();
@@ -76,6 +76,7 @@ public class DisasterPanel extends javax.swing.JPanel {
         editMenuItem = new javax.swing.JMenuItem();
         addMenuItem = new javax.swing.JMenuItem();
         deleteMenuItem = new javax.swing.JMenuItem();
+        viewInMapMenuItem = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         searchTF = new javax.swing.JTextField();
         addBtn = new javax.swing.JButton();
@@ -115,11 +116,11 @@ public class DisasterPanel extends javax.swing.JPanel {
 
         jLabel57.setForeground(new java.awt.Color(255, 255, 255));
         jLabel57.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel57.setText("Longitude:");
+        jLabel57.setText("Latitude:");
 
         jLabel58.setForeground(new java.awt.Color(255, 255, 255));
         jLabel58.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel58.setText("Latitude:");
+        jLabel58.setText("Longitude:");
 
         dateDC.setDateFormatString("yyyy-MM-dd");
 
@@ -143,9 +144,9 @@ public class DisasterPanel extends javax.swing.JPanel {
         jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel63.setText("Radius:");
 
-        longSpin.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
-
         latSpin.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
+
+        longSpin.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
 
         radSpin.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
 
@@ -186,8 +187,8 @@ public class DisasterPanel extends javax.swing.JPanel {
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(getLocBtn)
                                     .addComponent(dateDC, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                                    .addComponent(longSpin)
                                     .addComponent(latSpin)
+                                    .addComponent(longSpin)
                                     .addComponent(radSpin))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
@@ -213,11 +214,11 @@ public class DisasterPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(longSpin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(latSpin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(latSpin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(longSpin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radSpin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
@@ -236,8 +237,8 @@ public class DisasterPanel extends javax.swing.JPanel {
         );
 
         dateDC.setDate(new Date());
-        new MySpinner(longSpin);
         new MySpinner(latSpin);
+        new MySpinner(longSpin);
         new MySpinner(radSpin);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -297,11 +298,11 @@ public class DisasterPanel extends javax.swing.JPanel {
 
         jLabel65.setForeground(new java.awt.Color(255, 255, 255));
         jLabel65.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel65.setText("Longitude:");
+        jLabel65.setText("Latitude:");
 
         jLabel66.setForeground(new java.awt.Color(255, 255, 255));
         jLabel66.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel66.setText("Latitude:");
+        jLabel66.setText("Longitude:");
 
         dateDC1.setDateFormatString("yyyy-MM-dd");
 
@@ -325,9 +326,9 @@ public class DisasterPanel extends javax.swing.JPanel {
         jLabel68.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel68.setText("Radius:");
 
-        longSpin1.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
-
         latSpin1.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
+
+        longSpin1.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
 
         radSpin1.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
 
@@ -376,8 +377,8 @@ public class DisasterPanel extends javax.swing.JPanel {
                                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(getLocBtn1)
                                     .addComponent(dateDC1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                                    .addComponent(longSpin1)
                                     .addComponent(latSpin1)
+                                    .addComponent(longSpin1)
                                     .addComponent(radSpin1))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(idLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -409,11 +410,11 @@ public class DisasterPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel65, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(longSpin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(latSpin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(latSpin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(longSpin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radSpin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel11Layout.createSequentialGroup()
@@ -432,8 +433,8 @@ public class DisasterPanel extends javax.swing.JPanel {
         );
 
         dateDC.setDate(new Date());
-        new MySpinner(longSpin1);
         new MySpinner(latSpin1);
+        new MySpinner(longSpin1);
         new MySpinner(radSpin1);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -475,6 +476,9 @@ public class DisasterPanel extends javax.swing.JPanel {
 
         deleteMenuItem.setText("Delete");
         popUpMenu.add(deleteMenuItem);
+
+        viewInMapMenuItem.setText("View in map");
+        popUpMenu.add(viewInMapMenuItem);
 
         jPanel1.setBackground(new java.awt.Color(69, 73, 84));
 
@@ -580,8 +584,10 @@ public class DisasterPanel extends javax.swing.JPanel {
         addMenuItem.addActionListener(a);
         deleteMenuItem.addActionListener(a);
         getLocBtn.addActionListener(a);
+        getLocBtn1.addActionListener(a);
+        okBtn1.addActionListener(a);
+        viewInMapMenuItem.addActionListener(a);
 
-        
         //PopUpMenu Listener
         popUpMenu.addPopupMenuListener(p);
         
@@ -649,6 +655,7 @@ public class DisasterPanel extends javax.swing.JPanel {
     public javax.swing.JTable table;
     public javax.swing.JComboBox<String> typeCBB;
     public javax.swing.JComboBox<String> typeCBB1;
+    public javax.swing.JMenuItem viewInMapMenuItem;
     public javax.swing.JMenuItem viewMenuItem;
     // End of variables declaration//GEN-END:variables
 

@@ -46,8 +46,8 @@ public class DisasterController
         disp.typeCBB.setSelectedIndex(0);
         disp.nameTF.setText("");
         disp.dateDC.setDate(new Date());
-        disp.longSpin.setValue(0);
         disp.latSpin.setValue(0);
+        disp.longSpin.setValue(0);
         disp.radSpin.setValue(0);
         disp.remarksTA.setText("");
     }
@@ -100,8 +100,8 @@ public class DisasterController
                 Logger.getLogger(DisasterController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            disp.longSpin1.setValue(Double.parseDouble(disp.table.getValueAt(dataRow,4).toString()));
-            disp.latSpin1.setValue(Double.parseDouble(disp.table.getValueAt(dataRow,5).toString()));
+            disp.latSpin1.setValue(Double.parseDouble(disp.table.getValueAt(dataRow,4).toString()));
+            disp.longSpin1.setValue(Double.parseDouble(disp.table.getValueAt(dataRow,5).toString()));
             disp.radSpin1.setValue(Double.parseDouble(disp.table.getValueAt(dataRow,6).toString()));
             disp.remarksTA1.setText(disp.table.getValueAt(dataRow,7).toString());
             disp.editDialog.setTitle("Edit Disaster");
@@ -121,8 +121,8 @@ public class DisasterController
                 Alter.getString(disp.typeCBB),
                 disp.nameTF.getText(),
                 Alter.gatDate(disp.dateDC),
-                Alter.getDouble(disp.longSpin),
                 Alter.getDouble(disp.latSpin),
+                Alter.getDouble(disp.longSpin),
                 Alter.getDouble(disp.radSpin),
                 disp.remarksTA.getText());
         disp.addDialog.dispose();
@@ -130,7 +130,13 @@ public class DisasterController
     }
     void updateDisaster()
     {
-        
+        DisasterModel.updateDisaster(Integer.parseInt(disp.idLbl.getText()), 
+                Alter.getString(disp.typeCBB1), disp.nameTF1.getText(),
+                Alter.gatDate(disp.dateDC1), Alter.getDouble(disp.latSpin1),
+                Alter.getDouble(disp.longSpin1), Alter.getDouble(disp.radSpin1),
+                disp.remarksTA1.getText());
+        disp.editDialog.dispose();
+        displayAllDisasters();
     }
     void viewDisaster()
     {
@@ -153,7 +159,22 @@ public class DisasterController
             JOptionPane.showMessageDialog(disp, "Please select a disaster to edit.");
         }
     }
-
+    void viewInMap()
+    {
+        int dataRow = disp.table.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            double lt = (Double.parseDouble(disp.table.getValueAt(dataRow,4).toString()));
+            double lg = (Double.parseDouble(disp.table.getValueAt(dataRow,5).toString()));
+            double rad = (Double.parseDouble(disp.table.getValueAt(dataRow,6).toString()));
+            MapPanel mpp = new MapPanel();
+            new MapController(mpp, disp, lt, lg, rad);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(disp, "Please select a disaster to view in map.");
+        }
+    }
     class Action implements ActionListener
     {
         @Override
@@ -201,6 +222,18 @@ public class DisasterController
             if(e.getSource() == disp.getLocBtn)
             {
                 openMapToGetLoc();
+            }
+            if(e.getSource() == disp.getLocBtn1)
+            {
+                openMapToGetLoc();
+            }
+            if(e.getSource() == disp.okBtn1)
+            {
+                updateDisaster();
+            }
+            if(e.getSource() == disp.viewInMapMenuItem)
+            {
+                viewInMap();
             }
         }
     }

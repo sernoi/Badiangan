@@ -13,7 +13,7 @@ public class DB {
         Connection con = null;
         try 
         {
-            String userName = "troj";  //user of the database
+            String userName = "root";  //user of the database
             String password = "1234";  //password of the database
             String url = "jdbc:mysql://localhost/badiangan";  //the database that will be used
             //String url = "jdbc:mysql://192.168.1.250/badiangan";
