@@ -28,7 +28,7 @@ import util.maputil.MapGenerate;
 
 public class MapController
 {
-    Color disColor = new Color(255,0,0,100);
+    Color disColor = new Color(255,0,0,150);
     DisasterPanel dp;
     int index = 0;
     JXMapViewer mapViewer;

@@ -1,13 +1,16 @@
 package map;
 
+import java.awt.AWTException;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -19,14 +22,19 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import main.MainFrame;
+import map.evacuate.EvacuationController;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.painter.CompoundPainter;
 import org.jxmapviewer.painter.Painter;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.WaypointPainter;
-import util.BeneCBBHandler;
 import util.DisasterCBBHandler;
 import util.maputil.FancyWaypointRenderer;
 import util.maputil.FancyWaypointRenderer1;
@@ -40,11 +48,14 @@ public class MapController
     MapPanel mpp;
     JXMapViewer mapViewer;
     
-    Color disColor = new Color(255,0,0,100);
+    Color disColor = new Color(255,0,0,150);
     int index = 0;
     Painter<JXMapViewer> origOverLay;
     List<Painter<JXMapViewer>> painters;
     CompoundPainter<JXMapViewer> painter;
+    
+    ArrayList<Integer> availableSites = new ArrayList<Integer>();
+    ArrayList<Integer> affectedBene = new ArrayList<Integer>();
     
     double sx = 0;
     double sy = 0;
@@ -55,12 +66,14 @@ public class MapController
     int zoomMult = 1;
     int zoomValue = 7;
     
+    int delay = 10;
+    
     public MapController(MapPanel mpp, MainFrame mf) 
     {
         this.mpp = mpp;
         //invokes the generateMap method from the MapGenerate Class
         mapViewer = MapGenerate.generateMap();
-        mpp.add(mapViewer);
+        mpp.mapJPanel.add(mapViewer);
 
         origOverLay = (Painter<JXMapViewer>) mapViewer.getOverlayPainter();
         painters = new ArrayList<Painter<JXMapViewer>>();
@@ -111,7 +124,7 @@ public class MapController
             String latLong = geoList.get(x);
             double latDbl = Double.parseDouble(latLong.substring(0,latLong.indexOf(",")));
             double longDbl = Double.parseDouble(latLong.substring(latLong.indexOf(",") + 1));
-            waypoints.add(new MyWaypoint("B" + beneList.get(x), Color.WHITE, 
+            waypoints.add(new MyWaypoint("B" + beneList.get(x), Color.white, 
                     new GeoPosition(latDbl, longDbl)));
         }
         // Create a waypoint painter that takes all the waypoints
@@ -161,9 +174,6 @@ public class MapController
         waypointPainter.setRenderer(new FancyWaypointRenderer2());
         return waypointPainter;
     }
-    
-    //TODO add scrolling and panning
-    
     void showDisaster(double lt, double lg, double rad)
     {
         int currentZoom = mapViewer.getZoom();
@@ -205,8 +215,8 @@ public class MapController
             }
         };
         painters.clear();
-        painters.add(ovalOverlay);
         painters.add(origOverLay);
+        painters.add(ovalOverlay);
         CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
         mapViewer.setOverlayPainter(painter);
     }
@@ -221,7 +231,6 @@ public class MapController
         g.setPaint(disColor);
         g.fill(shape);
     }
-    
     class Action implements ActionListener
     {
         @Override
@@ -243,15 +252,17 @@ public class MapController
                 showDisaster(Double.parseDouble(list.get(4)), 
                         Double.parseDouble(list.get(5)),
                         Double.parseDouble(list.get(6)));
+                mpp.evacBtn.setEnabled(true);
                 
                 mapViewer.addMouseMotionListener(new MouseAdapter()
                 {
                     @Override
                     public void mouseDragged(MouseEvent e)
                     {
-                        showDisaster(Double.parseDouble(list.get(4)), 
-                        Double.parseDouble(list.get(5)),
-                        Double.parseDouble(list.get(6)));
+                        showDisaster(
+                                Double.parseDouble(list.get(4)), 
+                                Double.parseDouble(list.get(5)),
+                                Double.parseDouble(list.get(6)));
                      }
                 });
 
@@ -260,12 +271,130 @@ public class MapController
                     @Override
                      public void mouseWheelMoved(MouseWheelEvent e)
                      {
-                        showDisaster(Double.parseDouble(list.get(4)), 
-                        Double.parseDouble(list.get(5)),
-                        Double.parseDouble(list.get(6)));
+                        showDisaster(
+                                Double.parseDouble(list.get(4)), 
+                                Double.parseDouble(list.get(5)),
+                                Double.parseDouble(list.get(6)));
                      }
                 });
             }
+            if(e.getSource() == mpp.evacBtn)
+            {
+                disColor = new Color(255,0,0,255);
+                mpp.evacBtn.setEnabled(false);
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                executor.submit(() -> {
+                    scanOverLay();
+                });
+            }
         }
+    }
+    
+    void scanOverLay()
+    {
+        affectedBene.clear();
+        availableSites.clear();
+        mpp.remove(mpp.controlPanel);
+        mpp.revalidate();
+        mpp.repaint();
+        //origOverLay = (Painter<JXMapViewer>) mapViewer.getOverlayPainter();
+        ArrayList<Integer> beneList = MapModel.getAllBene();
+        ArrayList<String> geoBeneList = MapModel.getAllBeneGeo();
+        ArrayList<Integer> evacList = MapModel.getAllEvac();
+        ArrayList<String> geoEvacList = MapModel.getAllEvacGeo();
+        mapViewer.setZoom(6);
+        
+        for(int x = 0 ; x < beneList.size() ; x++)
+        {
+            String latLong = geoBeneList.get(x);
+            double latDbl = Double.parseDouble(latLong.substring(0,latLong.indexOf(",")));
+            double longDbl = Double.parseDouble(latLong.substring(latLong.indexOf(",") + 1));
+            mapViewer.setCenterPosition(new GeoPosition(latDbl, longDbl));
+            showDisaster(Double.parseDouble(mpp.ltLbl.getText()),
+                    Double.parseDouble(mpp.lgLbl.getText()),
+                    Double.parseDouble(mpp.radLbl.getText()));
+            if(isAffected())
+            {
+                affectedBene.add(beneList.get(x));
+            }
+        }
+        
+        for(int x = 0 ; x < evacList.size() ; x++)
+        {
+            String latLong = geoEvacList.get(x);
+            double latDbl = Double.parseDouble(latLong.substring(0,latLong.indexOf(",")));
+            double longDbl = Double.parseDouble(latLong.substring(latLong.indexOf(",") + 1));
+            mapViewer.setCenterPosition(new GeoPosition(latDbl, longDbl));
+            showDisaster(Double.parseDouble(mpp.ltLbl.getText()),
+                    Double.parseDouble(mpp.lgLbl.getText()),
+                    Double.parseDouble(mpp.radLbl.getText()));
+            if(!isAffected())
+            {
+                availableSites.add(evacList.get(x));
+            }
+        }
+        disColor = new Color(0,0,0,0);
+        mpp.evacBtn.setEnabled(true);
+        mpp.add(mpp.controlPanel, BorderLayout.EAST);
+        mpp.revalidate();
+        mpp.repaint();
+        
+        JOptionPane.showMessageDialog(null, "Scan Finished");
+        disColor = new Color(255,0,0,150);
+        mapViewer.setCenterPosition(new GeoPosition(10.999783, 122.526848));
+        showDisaster(Double.parseDouble(mpp.ltLbl.getText()),
+                    Double.parseDouble(mpp.lgLbl.getText()),
+                    Double.parseDouble(mpp.radLbl.getText()));
+        
+        new EvacuationController(affectedBene, availableSites);
+    }
+  
+    boolean isAffected()
+    {
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MapController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Robot robot = null;
+        try{
+            robot = new Robot();
+        }
+        catch(AWTException e){
+
+            System.out.println("Could not create color picker robot");
+        }
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenX =(int) screenSize.getWidth() / 2;
+        int screenY =(int) screenSize.getHeight() / 2;
+        //Color pixelColor1 = robot.getPixelColor(screenX - 1,screenY + 18);
+        //Color pixelColor2 = robot.getPixelColor(screenX ,screenY + 18);
+        Color pixelColor3 = robot.getPixelColor(screenX ,screenY + 18);
+        
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MapController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //         ((pixelColor1.getRed() == 254 && pixelColor1.getBlue() == 253) ||
+        //   (pixelColor2.getRed() == 254 && pixelColor2.getBlue() == 253)) && 
+        if(pixelColor3.getRed() == 255 && pixelColor3.getBlue() == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public ArrayList<Integer> getAvailableSites() {
+        return availableSites;
+    }
+
+    public ArrayList<Integer> getAffectedBene() {
+        return affectedBene;
     }
 }

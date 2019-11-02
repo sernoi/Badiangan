@@ -45,9 +45,8 @@ public class MapPanel extends javax.swing.JPanel{
     private void initComponents() {
 
         rbg = new javax.swing.ButtonGroup();
-        evacDialog = new javax.swing.JDialog();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        mapJPanel = new javax.swing.JPanel();
+        controlPanel = new javax.swing.JPanel();
         disasterCBB = new javax.swing.JComboBox<>();
         evacBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -71,40 +70,16 @@ public class MapPanel extends javax.swing.JPanel{
         lgLbl = new javax.swing.JLabel();
         radLbl = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 686, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 441, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout evacDialogLayout = new javax.swing.GroupLayout(evacDialog.getContentPane());
-        evacDialog.getContentPane().setLayout(evacDialogLayout);
-        evacDialogLayout.setHorizontalGroup(
-            evacDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(evacDialogLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        evacDialogLayout.setVerticalGroup(
-            evacDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(evacDialogLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(new java.awt.Color(69, 73, 84));
-        jPanel1.setPreferredSize(new java.awt.Dimension(400, 100));
+        mapJPanel.setLayout(new java.awt.BorderLayout());
+        add(mapJPanel, java.awt.BorderLayout.CENTER);
+
+        controlPanel.setBackground(new java.awt.Color(69, 73, 84));
+        controlPanel.setPreferredSize(new java.awt.Dimension(400, 100));
 
         evacBtn.setText("Evacuate");
+        evacBtn.setEnabled(false);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Search Disaster");
@@ -179,7 +154,7 @@ public class MapPanel extends javax.swing.JPanel{
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -238,33 +213,33 @@ public class MapPanel extends javax.swing.JPanel{
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
+        controlPanel.setLayout(controlPanelLayout);
+        controlPanelLayout.setHorizontalGroup(
+            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(controlPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(controlPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(302, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(disasterCBB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(controlPanelLayout.createSequentialGroup()
                 .addGap(166, 166, 166)
                 .addComponent(viewBtn)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(controlPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(controlPanelLayout.createSequentialGroup()
                 .addGap(155, 155, 155)
                 .addComponent(evacBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        controlPanelLayout.setVerticalGroup(
+            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(controlPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -278,15 +253,15 @@ public class MapPanel extends javax.swing.JPanel{
                 .addContainerGap(123, Short.MAX_VALUE))
         );
 
-        add(jPanel1, java.awt.BorderLayout.LINE_END);
+        add(controlPanel, java.awt.BorderLayout.LINE_END);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JPanel controlPanel;
     public javax.swing.JLabel dateLbl;
     public javax.swing.JComboBox<String> disasterCBB;
     public javax.swing.JButton evacBtn;
-    private javax.swing.JDialog evacDialog;
     public javax.swing.JLabel idLbl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -297,12 +272,11 @@ public class MapPanel extends javax.swing.JPanel{
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel lgLbl;
     public javax.swing.JLabel ltLbl;
+    public javax.swing.JPanel mapJPanel;
     public javax.swing.JLabel nameLbl;
     public javax.swing.JLabel radLbl;
     public javax.swing.ButtonGroup rbg;

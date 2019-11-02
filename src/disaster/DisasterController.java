@@ -145,12 +145,12 @@ public class DisasterController
         {
             JOptionPane.showMessageDialog(disp,
                     "ID: " + (disp.table.getValueAt(dataRow,0).toString()) + "\n"
-                            + "Beneficiary: " + (disp.table.getValueAt(dataRow,1).toString()) + "\n"
-                                    + "Disaster: " + (disp.table.getValueAt(dataRow,2).toString()) + "\n"
-                                            + "Area: " + (disp.table.getValueAt(dataRow,3).toString()) + "\n"
-                                                    + "Variety: " + (disp.table.getValueAt(dataRow,4).toString()) + "\n"
-                                                            + "Classification: " + (disp.table.getValueAt(dataRow,5).toString()) + "\n"
-                                                                    + "Exp Harvest Date: " + (disp.table.getValueAt(dataRow,6).toString()) + "\n"
+                            + "Type: " + (disp.table.getValueAt(dataRow,1).toString()) + "\n"
+                                    + "Name: " + (disp.table.getValueAt(dataRow,2).toString()) + "\n"
+                                            + "Date: " + (disp.table.getValueAt(dataRow,3).toString()) + "\n"
+                                                    + "Latitude: " + (disp.table.getValueAt(dataRow,4).toString()) + "\n"
+                                                            + "Longitude: " + (disp.table.getValueAt(dataRow,5).toString()) + "\n"
+                                                                    + "Radius: " + (disp.table.getValueAt(dataRow,6).toString()) + "\n"
                                                                             + "Remarks: " + (disp.table.getValueAt(dataRow,7).toString()),
                     "Disaster Info", JOptionPane.INFORMATION_MESSAGE);
         }
