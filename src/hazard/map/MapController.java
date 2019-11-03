@@ -108,17 +108,17 @@ public class MapController
         List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
         
         Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>(Arrays.asList(
-        new MyWaypoint("B", Color.ORANGE, gp)));
+        new MyWaypoint("H", Color.ORANGE, gp)));
 
         // Create a waypoint painter that takes all the waypoints
         WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
         waypointPainter.setWaypoints(waypoints);
-        waypointPainter.setRenderer(new FancyWaypointRenderer());
+        waypointPainter.setRenderer(new FancyWaypointRenderer2());
 
         // Create a compound painter that uses both the route-painter and the waypoint-painter
         painters.clear();
         painters.add(origOverLay);
-       // painters.add(waypointPainter);
+        painters.add(waypointPainter);
 
         CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
         mapViewer.setOverlayPainter(painter);
