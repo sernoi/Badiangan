@@ -75,10 +75,11 @@ public class EvacuationController
             
             for(int x = 0 ; x < list.size() ; x = x + 3)
             {
+                total = total + 1;
                 this.evacp.infoTA.append("Beneficiay, " + list.get(x) + ", ");
                 this.evacp.infoTA.append("with " + list.get(x + 1) + " family members ");
                 this.evacp.infoTA.append("evacuated to " + list.get(x + 2) + ".\n");
-                total += Alter.toInt(list.get(x + 1) + 1);
+                total = total + Alter.toInt(list.get(x + 1));
             }
             this.evacp.infoTA.append("Total number of evacuees: " + total);
             //TODO check if correct ang hatag ya nga list

@@ -420,7 +420,6 @@ public class MapController
             this.mpp.infoTA.append("Beneficiay, " + list.get(x) + ", ");
             this.mpp.infoTA.append("with " + list.get(x + 1) + " family members ");
             this.mpp.infoTA.append("evacuated to " + list.get(x + 2) + ".\n");
-            System.out.println(total);
             total = total + Alter.toInt(list.get(x + 1));
         }
         this.mpp.infoTA.append("Total number of evacuees: " + total);
