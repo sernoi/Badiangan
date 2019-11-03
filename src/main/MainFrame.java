@@ -565,6 +565,7 @@ public class MainFrame extends javax.swing.JFrame {
                 manageMenu.setVisible(false);
                 regMenuItem.setVisible(false);
                 farMenuItem.setVisible(false);
+                
                 break; 
             //MDRRMO
             case 3:
@@ -618,6 +619,7 @@ public class MainFrame extends javax.swing.JFrame {
         disp.deleteMenuItem.setVisible(false);
         ep.deleteBtn.setVisible(false);
         ep.deleteMenuItem.setVisible(false);
+        
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

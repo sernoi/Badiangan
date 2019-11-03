@@ -31,11 +31,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import main.MainFrame;
 import evacuation.EvacuationController;
+import evacuation.EvacuationModel;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.painter.CompoundPainter;
 import org.jxmapviewer.painter.Painter;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.WaypointPainter;
+import util.Alter;
 import util.DisasterCBBHandler;
 import util.maputil.FancyWaypointRenderer;
 import util.maputil.FancyWaypointRenderer1;
@@ -353,6 +355,7 @@ public class MapController
                     Double.parseDouble(mpp.radLbl.getText()));
         
         new EvacuationController(affectedBene, availableSites, mpp);
+        displayEvacInfo();
     }
   
     boolean isAffected()
@@ -403,4 +406,31 @@ public class MapController
     public ArrayList<Integer> getAffectedBene() {
         return affectedBene;
     }
+    
+    void displayEvacInfo()
+    {
+        int total = 0;
+        this.mpp.infoTA.setText("");
+        int dis_id = Alter.toInt(mpp.idLbl.getText());
+        ArrayList<String> list = EvacuationModel.getEvacuationInfo(dis_id);
+
+        for(int x = 0 ; x < list.size() ; x = x + 3)
+        {
+            total = total + 1;
+            this.mpp.infoTA.append("Beneficiay, " + list.get(x) + ", ");
+            this.mpp.infoTA.append("with " + list.get(x + 1) + " family members ");
+            this.mpp.infoTA.append("evacuated to " + list.get(x + 2) + ".\n");
+            System.out.println(total);
+            total = total + Alter.toInt(list.get(x + 1));
+        }
+        this.mpp.infoTA.append("Total number of evacuees: " + total);
+        //System.out.println(list);
+        //TODO check if correct ang hatag ya nga list
+        //mpp.viewDialog.setTitle("Evacuation Info");
+        mpp.viewDialog.setModal(true);
+        mpp.viewDialog.pack();
+        mpp.viewDialog.setLocationRelativeTo(null);
+        mpp.viewDialog.setVisible(true);
+    }
+    
 }

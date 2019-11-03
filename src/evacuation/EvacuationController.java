@@ -65,18 +65,28 @@ public class EvacuationController
     
     void displayEvacInfo()
     {
+        int total = 0;
+        this.evacp.infoTA.setText("");
         int dataRow = evacp.table.getSelectedRow();
         if(dataRow >= 0)
         {
             ArrayList<String> list = EvacuationModel.getEvacuationInfo(
                     Alter.toInt(evacp.table.getValueAt(dataRow,0).toString()));
             
-            for(int x = 0 ; x < list.size() / 2 ; x++)
+            for(int x = 0 ; x < list.size() ; x = x + 3)
             {
-                this.evacp.infoTA.append("Beneficiay");
+                this.evacp.infoTA.append("Beneficiay, " + list.get(x) + ", ");
+                this.evacp.infoTA.append("with " + list.get(x + 1) + " family members ");
+                this.evacp.infoTA.append("evacuated to " + list.get(x + 2) + ".\n");
+                total += Alter.toInt(list.get(x + 1) + 1);
             }
-            System.out.println(list);
+            this.evacp.infoTA.append("Total number of evacuees: " + total);
             //TODO check if correct ang hatag ya nga list
+           // evacp.viewDialog.setTitle("Evacuation Info");
+            evacp.viewDialog.setModal(true);
+            evacp.viewDialog.pack();
+            evacp.viewDialog.setLocationRelativeTo(null);
+            evacp.viewDialog.setVisible(true);
         }
         else
         {

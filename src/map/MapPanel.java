@@ -44,6 +44,11 @@ public class MapPanel extends javax.swing.JPanel{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        viewDialog = new javax.swing.JDialog();
+        jPanel10 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        infoTA = new javax.swing.JTextArea();
         rbg = new javax.swing.ButtonGroup();
         mapJPanel = new javax.swing.JPanel();
         controlPanel = new javax.swing.JPanel();
@@ -69,6 +74,64 @@ public class MapPanel extends javax.swing.JPanel{
         ltLbl = new javax.swing.JLabel();
         lgLbl = new javax.swing.JLabel();
         radLbl = new javax.swing.JLabel();
+
+        viewDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        viewDialog.setResizable(false);
+
+        jPanel10.setBackground(new java.awt.Color(69, 73, 84));
+
+        jPanel11.setBackground(new java.awt.Color(69, 73, 84));
+        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Evacuation Info", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+
+        infoTA.setEditable(false);
+        infoTA.setColumns(20);
+        infoTA.setRows(5);
+        jScrollPane9.setViewportView(infoTA);
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout viewDialogLayout = new javax.swing.GroupLayout(viewDialog.getContentPane());
+        viewDialog.getContentPane().setLayout(viewDialogLayout);
+        viewDialogLayout.setHorizontalGroup(
+            viewDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        viewDialogLayout.setVerticalGroup(
+            viewDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         setLayout(new java.awt.BorderLayout());
 
@@ -263,6 +326,7 @@ public class MapPanel extends javax.swing.JPanel{
     public javax.swing.JComboBox<String> disasterCBB;
     public javax.swing.JButton evacBtn;
     public javax.swing.JLabel idLbl;
+    public javax.swing.JTextArea infoTA;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -272,8 +336,11 @@ public class MapPanel extends javax.swing.JPanel{
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane9;
     public javax.swing.JLabel lgLbl;
     public javax.swing.JLabel ltLbl;
     public javax.swing.JPanel mapJPanel;
@@ -283,5 +350,6 @@ public class MapPanel extends javax.swing.JPanel{
     public javax.swing.JTextArea remarksTA;
     public javax.swing.JLabel typeLbl;
     public javax.swing.JButton viewBtn;
+    public javax.swing.JDialog viewDialog;
     // End of variables declaration//GEN-END:variables
 }

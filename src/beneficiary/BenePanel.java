@@ -194,13 +194,13 @@ public class BenePanel extends javax.swing.JPanel {
         varietyAddCropTF = new javax.swing.JTextField();
         okAddCropBtn = new javax.swing.JButton();
         cancelAddCropBtn = new javax.swing.JButton();
-        classificationAddCropTF = new javax.swing.JTextField();
         jLabel57 = new javax.swing.JLabel();
         jLabel58 = new javax.swing.JLabel();
         expHarvestAddCropDC = new com.toedter.calendar.JDateChooser();
         jLabel35 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         remarksAddCropTA = new javax.swing.JTextArea();
+        classificationCBB = new javax.swing.JComboBox<>();
         editCropDialog = new javax.swing.JDialog();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -212,7 +212,6 @@ public class BenePanel extends javax.swing.JPanel {
         varietyEditCropTF = new javax.swing.JTextField();
         okEditCropBtn = new javax.swing.JButton();
         cancelEditCropBtn = new javax.swing.JButton();
-        classificationEditCropTF = new javax.swing.JTextField();
         jLabel64 = new javax.swing.JLabel();
         jLabel65 = new javax.swing.JLabel();
         expHarvestEditCropDC = new com.toedter.calendar.JDateChooser();
@@ -221,6 +220,7 @@ public class BenePanel extends javax.swing.JPanel {
         remarksEditCropTA = new javax.swing.JTextArea();
         numberEditCropLbl = new javax.swing.JLabel();
         jLabel67 = new javax.swing.JLabel();
+        classificationCBB1 = new javax.swing.JComboBox<>();
         addLSDialog = new javax.swing.JDialog();
         jPanel12 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
@@ -1691,6 +1691,8 @@ public class BenePanel extends javax.swing.JPanel {
         remarksAddCropTA.setRows(5);
         jScrollPane7.setViewportView(remarksAddCropTA);
 
+        classificationCBB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Irregated", "Rainfed" }));
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -1723,10 +1725,10 @@ public class BenePanel extends javax.swing.JPanel {
                             .addComponent(cropAddCropTF)
                             .addComponent(areaAddCropTF, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                             .addComponent(varietyAddCropTF, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                            .addComponent(classificationAddCropTF, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(expHarvestAddCropDC, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 96, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(classificationCBB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -1747,7 +1749,7 @@ public class BenePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(classificationAddCropTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(classificationCBB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1755,7 +1757,7 @@ public class BenePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel35)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okAddCropBtn)
@@ -1844,6 +1846,8 @@ public class BenePanel extends javax.swing.JPanel {
         jLabel67.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel67.setText("Number:");
 
+        classificationCBB1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Irregated", "Rainfed" }));
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -1877,11 +1881,11 @@ public class BenePanel extends javax.swing.JPanel {
                             .addComponent(cropEditCropTF)
                             .addComponent(areaEditCropTF)
                             .addComponent(varietyEditCropTF)
-                            .addComponent(classificationEditCropTF)
+                            .addComponent(numberEditCropLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel11Layout.createSequentialGroup()
                                 .addComponent(expHarvestEditCropDC, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 96, Short.MAX_VALUE))
-                            .addComponent(numberEditCropLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(classificationCBB1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -1906,7 +1910,7 @@ public class BenePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel64, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(classificationEditCropTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(classificationCBB1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel65, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1914,7 +1918,7 @@ public class BenePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel36)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okEditCropBtn)
@@ -2527,9 +2531,9 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JButton cancelEditLSBtn;
     public javax.swing.JButton cancelEditMemberBtn;
     public javax.swing.JComboBox<String> caseCBB;
-    public javax.swing.JTextField classificationAddCropTF;
     public javax.swing.JTextField classificationAddLSTF;
-    public javax.swing.JTextField classificationEditCropTF;
+    public javax.swing.JComboBox<String> classificationCBB;
+    public javax.swing.JComboBox<String> classificationCBB1;
     public javax.swing.JTextField classificationEditLSTF;
     public javax.swing.JComboBox<String> codeCB;
     public javax.swing.JComboBox<String> codeCB1;

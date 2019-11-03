@@ -102,7 +102,7 @@ public class BeneController
         bp.cropAddCropTF.setText("");
         bp.areaAddCropTF.setText("");
         bp.varietyAddCropTF.setText("");
-        bp.classificationAddCropTF.setText("");
+        bp.classificationCBB.setSelectedIndex(0);
         bp.expHarvestAddCropDC.setDate(new Date());
         bp.remarksAddCropTA.setText("");
     }
@@ -151,7 +151,7 @@ public class BeneController
         bp.cropEditCropTF.setText("");
         bp.areaEditCropTF.setText("");
         bp.varietyEditCropTF.setText("");
-        bp.classificationEditCropTF.setText("");
+        Alter.getString(bp.classificationCBB);
         bp.expHarvestEditCropDC.setDate(new Date());
         bp.remarksEditCropTA.setText("");
     }
@@ -341,7 +341,7 @@ public class BeneController
             bp.cropEditCropTF.setText(bp.cropTable.getValueAt(dataRow,1).toString());
             bp.areaEditCropTF.setText(bp.cropTable.getValueAt(dataRow,2).toString());
             bp.varietyEditCropTF.setText(bp.cropTable.getValueAt(dataRow,3).toString());
-            bp.classificationEditCropTF.setText(bp.cropTable.getValueAt(dataRow,4).toString());
+            bp.classificationCBB.setSelectedItem(bp.cropTable.getValueAt(dataRow,4).toString());
             bp.remarksEditCropTA.setText(bp.cropTable.getValueAt(dataRow,6).toString());
             bp.editCropDialog.setTitle("Edit Crop/Tree");
             bp.editCropDialog.setModal(true);
@@ -473,7 +473,7 @@ public class BeneController
         model.addRow(new Object[]{
             bp.cropTable.getRowCount() + 1, bp.cropAddCropTF.getText(),
             bp.areaAddCropTF.getText(), bp.varietyAddCropTF.getText(),
-            bp.classificationAddCropTF.getText(),
+            Alter.getString(bp.classificationCBB),
             ((JTextField)bp.expHarvestAddCropDC.getDateEditor().getUiComponent()).getText(),
             bp.remarksAddCropTA.getText()});
         clearAddCropFields();
@@ -511,7 +511,7 @@ public class BeneController
         model.insertRow(Integer.parseInt(bp.numberEditCropLbl.getText()) - 1, new Object[]{
             bp.numberEditCropLbl.getText(), bp.cropEditCropTF.getText(),
             bp.areaEditCropTF.getText(), bp.varietyEditCropTF.getText(),
-            bp.classificationEditCropTF.getText(),
+            Alter.getString(bp.classificationCBB),
             ((JTextField)bp.expHarvestAddCropDC.getDateEditor().getUiComponent()).getText(),
             bp.remarksEditCropTA.getText()});
         clearEditCropFields();

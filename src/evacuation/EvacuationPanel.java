@@ -50,6 +50,7 @@ public class EvacuationPanel extends javax.swing.JPanel {
         jPanel11.setBackground(new java.awt.Color(69, 73, 84));
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Evacuation Info", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
+        infoTA.setEditable(false);
         infoTA.setColumns(20);
         infoTA.setRows(5);
         jScrollPane9.setViewportView(infoTA);
@@ -60,7 +61,7 @@ public class EvacuationPanel extends javax.swing.JPanel {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
