@@ -74,6 +74,8 @@ public class MapPanel extends javax.swing.JPanel{
         ltLbl = new javax.swing.JLabel();
         lgLbl = new javax.swing.JLabel();
         radLbl = new javax.swing.JLabel();
+        zoomCBB = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
 
         viewDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         viewDialog.setResizable(false);
@@ -276,6 +278,11 @@ public class MapPanel extends javax.swing.JPanel{
                 .addContainerGap())
         );
 
+        zoomCBB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6" }));
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Zoom Level");
+
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
@@ -296,7 +303,11 @@ public class MapPanel extends javax.swing.JPanel{
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addGap(155, 155, 155)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zoomCBB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(evacBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -312,7 +323,10 @@ public class MapPanel extends javax.swing.JPanel{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(evacBtn)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(evacBtn)
+                    .addComponent(zoomCBB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
                 .addContainerGap(123, Short.MAX_VALUE))
         );
 
@@ -328,6 +342,7 @@ public class MapPanel extends javax.swing.JPanel{
     public javax.swing.JLabel idLbl;
     public javax.swing.JTextArea infoTA;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -351,5 +366,6 @@ public class MapPanel extends javax.swing.JPanel{
     public javax.swing.JLabel typeLbl;
     public javax.swing.JButton viewBtn;
     public javax.swing.JDialog viewDialog;
+    public javax.swing.JComboBox<String> zoomCBB;
     // End of variables declaration//GEN-END:variables
 }

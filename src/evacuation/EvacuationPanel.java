@@ -42,7 +42,6 @@ public class EvacuationPanel extends javax.swing.JPanel {
         jLabel80 = new javax.swing.JLabel();
 
         viewDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        viewDialog.setTitle("Add Crop/Tree");
         viewDialog.setResizable(false);
 
         jPanel10.setBackground(new java.awt.Color(69, 73, 84));

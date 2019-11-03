@@ -72,7 +72,7 @@ public class MapController
     
     //sets the delay and zoom of scan
     int delay = 10;
-    int scanZoom = 6;
+    int scanZoom = 1;
     
     public MapController(MapPanel mpp, MainFrame mf) 
     {
@@ -300,6 +300,7 @@ public class MapController
     
     void scanOverLay()
     {
+        scanZoom = Alter.getInt(mpp.zoomCBB);
         affectedBene.clear();
         availableSites.clear();
         mpp.remove(mpp.controlPanel);
