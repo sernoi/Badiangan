@@ -5,7 +5,6 @@
  */
 package hazard.map;
 
-import evac.map.*;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 

@@ -1,6 +1,5 @@
-package evac;
+package evacsite;
 
-import evac.*;
 import db.DB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

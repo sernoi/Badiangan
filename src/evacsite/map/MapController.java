@@ -1,5 +1,5 @@
-package evac.map;
-import evac.EvacPanel;
+package evacsite.map;
+import evacsite.EvacPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

@@ -12,8 +12,9 @@ import crop.harvest.HarvestController;
 import crop.harvest.HarvestPanel;
 import disaster.DisasterController;
 import disaster.DisasterPanel;
-import evac.EvacController;
-import evac.EvacPanel;
+import evacsite.EvacController;
+import evacsite.EvacPanel;
+import evacuation.EvacuationController;
 import far.FarController;
 import far.FarPanel;
 import fmember.FMemberController;
@@ -29,6 +30,7 @@ import livestock.disposal.DisposalPanel;
 import login.LoginController;
 import map.MapController;
 import map.MapPanel;
+import evacuation.EvacuationPanel;
 import registration.RegController;
 import registration.RegPanel;
 
@@ -48,6 +50,7 @@ public class MainFrame extends javax.swing.JFrame {
     MapPanel mp = new MapPanel();
     BrgyPanel brgyp = new BrgyPanel();
     HazardPanel hazp = new HazardPanel();
+    EvacuationPanel evacp = new EvacuationPanel();
     
     public MainFrame() 
     {
@@ -100,6 +103,7 @@ public class MainFrame extends javax.swing.JFrame {
         farMenuItem = new javax.swing.JMenuItem();
         harvestMenuItem = new javax.swing.JMenuItem();
         disposalMenuItem = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Badiangan");
@@ -350,6 +354,15 @@ public class MainFrame extends javax.swing.JFrame {
         });
         reportMenu.add(disposalMenuItem);
 
+        jMenuItem2.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem2.setText("Evacuation");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        reportMenu.add(jMenuItem2);
+
         MenuBar.add(reportMenu);
 
         setJMenuBar(MenuBar);
@@ -494,6 +507,14 @@ public class MainFrame extends javax.swing.JFrame {
         cl.show(mainPanel, "HazardPanel"); 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        evacp = new EvacuationPanel();
+        new EvacuationController(evacp);
+        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+        mainPanel.add(evacp,"EvacuationPanel");
+        cl.show(mainPanel, "EvacuationPanel"); 
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     public int getToken(String dept)
     {
         if(dept.equals("MSWDO"))
@@ -625,6 +646,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     public javax.swing.JMenuItem logoutMenuItem;
     public javax.swing.JMenuItem lsMenuItem;
     public javax.swing.JPanel mainPanel;

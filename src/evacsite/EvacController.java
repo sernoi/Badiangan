@@ -1,6 +1,6 @@
-package evac;
-import evac.map.MapController;
-import evac.map.MapPanel;
+package evacsite;
+import evacsite.map.MapController;
+import evacsite.map.MapPanel;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

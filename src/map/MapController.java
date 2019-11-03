@@ -26,10 +26,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import main.MainFrame;
-import map.evacuate.EvacuationController;
+import evacuation.EvacuationController;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.painter.CompoundPainter;
 import org.jxmapviewer.painter.Painter;
@@ -46,6 +47,7 @@ import util.maputil.MyWaypoint;
 public class MapController
 {
     MapPanel mpp;
+    MainFrame mf;
     JXMapViewer mapViewer;
     
     Color disColor = new Color(255,0,0,150);
@@ -66,11 +68,14 @@ public class MapController
     int zoomMult = 1;
     int zoomValue = 7;
     
+    //sets the delay and zoom of scan
     int delay = 10;
+    int scanZoom = 6;
     
     public MapController(MapPanel mpp, MainFrame mf) 
     {
         this.mpp = mpp;
+        this.mf = mf;
         //invokes the generateMap method from the MapGenerate Class
         mapViewer = MapGenerate.generateMap();
         mpp.mapJPanel.add(mapViewer);
@@ -280,6 +285,7 @@ public class MapController
             }
             if(e.getSource() == mpp.evacBtn)
             {
+                mf.setExtendedState(JFrame.MAXIMIZED_BOTH); 
                 disColor = new Color(255,0,0,255);
                 mpp.evacBtn.setEnabled(false);
                 ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -302,7 +308,7 @@ public class MapController
         ArrayList<String> geoBeneList = MapModel.getAllBeneGeo();
         ArrayList<Integer> evacList = MapModel.getAllEvac();
         ArrayList<String> geoEvacList = MapModel.getAllEvacGeo();
-        mapViewer.setZoom(6);
+        mapViewer.setZoom(scanZoom);
         
         for(int x = 0 ; x < beneList.size() ; x++)
         {
@@ -346,7 +352,7 @@ public class MapController
                     Double.parseDouble(mpp.lgLbl.getText()),
                     Double.parseDouble(mpp.radLbl.getText()));
         
-        new EvacuationController(affectedBene, availableSites);
+        new EvacuationController(affectedBene, availableSites, mpp);
     }
   
     boolean isAffected()

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package evac.map;
+package evacsite.map;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
