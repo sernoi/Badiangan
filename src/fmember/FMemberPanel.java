@@ -131,7 +131,7 @@ public class FMemberPanel extends javax.swing.JPanel {
 
         jLabel40.setForeground(new java.awt.Color(255, 255, 255));
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel40.setText("Relationship to HOD:");
+        jLabel40.setText("Relationship to HOF:");
 
         jLabel41.setForeground(new java.awt.Color(255, 255, 255));
         jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -204,8 +204,8 @@ public class FMemberPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fnameAddMemberTF)
-                            .addComponent(mnameAddMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                            .addComponent(lnameAddMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                            .addComponent(mnameAddMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                            .addComponent(lnameAddMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                             .addComponent(occAddMemberTF)
                             .addComponent(heaAddMemberCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(relAddMemberCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -330,7 +330,7 @@ public class FMemberPanel extends javax.swing.JPanel {
 
         jLabel49.setForeground(new java.awt.Color(255, 255, 255));
         jLabel49.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel49.setText("Relationship to HOD:");
+        jLabel49.setText("Relationship to HOF:");
 
         jLabel50.setForeground(new java.awt.Color(255, 255, 255));
         jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -411,8 +411,8 @@ public class FMemberPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fnameEditMemberTF)
-                            .addComponent(mnameEditMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                            .addComponent(lnameEditMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                            .addComponent(mnameEditMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                            .addComponent(lnameEditMemberTF, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                             .addComponent(occEditMemberTF)
                             .addComponent(heaEditMemberCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(relEditMemberCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

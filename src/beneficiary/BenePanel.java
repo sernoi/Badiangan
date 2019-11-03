@@ -129,6 +129,7 @@ public class BenePanel extends javax.swing.JPanel {
         beneIdLbl1 = new javax.swing.JLabel();
         jLabel94 = new javax.swing.JLabel();
         netIncomeSpin1 = new javax.swing.JSpinner();
+        farmerCB1 = new javax.swing.JCheckBox();
         updateBeneBtn = new javax.swing.JButton();
         cancelBeneBtn1 = new javax.swing.JButton();
         addMemberDialog = new javax.swing.JDialog();
@@ -188,7 +189,6 @@ public class BenePanel extends javax.swing.JPanel {
         jPanel7 = new javax.swing.JPanel();
         jLabel48 = new javax.swing.JLabel();
         cropAddCropTF = new javax.swing.JTextField();
-        areaAddCropTF = new javax.swing.JTextField();
         jLabel49 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
         varietyAddCropTF = new javax.swing.JTextField();
@@ -201,6 +201,8 @@ public class BenePanel extends javax.swing.JPanel {
         jScrollPane7 = new javax.swing.JScrollPane();
         remarksAddCropTA = new javax.swing.JTextArea();
         classificationCBB = new javax.swing.JComboBox<>();
+        areaSpin = new javax.swing.JSpinner();
+        jLabel8 = new javax.swing.JLabel();
         editCropDialog = new javax.swing.JDialog();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -1019,6 +1021,9 @@ public class BenePanel extends javax.swing.JPanel {
 
         netIncomeSpin1.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
 
+        farmerCB1.setForeground(new java.awt.Color(255, 255, 255));
+        farmerCB1.setText("Farmer");
+
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
@@ -1083,9 +1088,13 @@ public class BenePanel extends javax.swing.JPanel {
                         .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(healthCondCB1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
-                                .addComponent(netIncomeSpin1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(occTF1, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(netIncomeSpin1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
+                                        .addComponent(occTF1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(farmerCB1)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel17Layout.createSequentialGroup()
                         .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel88, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1180,7 +1189,8 @@ public class BenePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel92, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(occTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(occTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(farmerCB1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel85, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1693,6 +1703,11 @@ public class BenePanel extends javax.swing.JPanel {
 
         classificationCBB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Irregated", "Rainfed" }));
 
+        areaSpin.setModel(new javax.swing.SpinnerNumberModel(0.0d, null, null, 1.0d));
+
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("sq. meter");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -1723,12 +1738,16 @@ public class BenePanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cropAddCropTF)
-                            .addComponent(areaAddCropTF, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                             .addComponent(varietyAddCropTF, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                            .addComponent(classificationCBB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(expHarvestAddCropDC, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(classificationCBB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(expHarvestAddCropDC, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel7Layout.createSequentialGroup()
+                                        .addComponent(areaSpin, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel8)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -1739,9 +1758,10 @@ public class BenePanel extends javax.swing.JPanel {
                     .addComponent(cropAddCropTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(areaAddCropTF)
-                    .addComponent(jLabel49, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(areaSpin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(varietyAddCropTF)
@@ -1757,7 +1777,7 @@ public class BenePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel35)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okAddCropBtn)
@@ -2515,8 +2535,8 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JSpinner ageEditMemberSpin;
     public javax.swing.JLabel ageLbl;
     public javax.swing.JLabel ageLbl1;
-    public javax.swing.JTextField areaAddCropTF;
     public javax.swing.JTextField areaEditCropTF;
+    public javax.swing.JSpinner areaSpin;
     public javax.swing.JLabel beneIdLbl1;
     public javax.swing.JPopupMenu benePopMenu;
     public javax.swing.JTable beneTable;
@@ -2568,6 +2588,7 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JTextField fNameTF;
     public javax.swing.JTextField fNameTF1;
     public javax.swing.JCheckBox farmerCB;
+    public javax.swing.JCheckBox farmerCB1;
     public javax.swing.JRadioButton femaleAddMemberRB;
     public javax.swing.JRadioButton femaleEditMemberRB;
     public javax.swing.JTextField fnameAddMemberTF;
@@ -2672,6 +2693,7 @@ public class BenePanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel79;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
     public javax.swing.JLabel jLabel82;
     public javax.swing.JLabel jLabel83;
@@ -2695,7 +2717,7 @@ public class BenePanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

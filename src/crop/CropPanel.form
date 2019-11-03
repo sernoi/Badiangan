@@ -105,12 +105,18 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="beneCB" alignment="1" max="32767" attributes="0"/>
                                       <Component id="cropTF" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="areaTF" alignment="0" pref="290" max="32767" attributes="0"/>
                                       <Component id="varietyTF" alignment="0" pref="290" max="32767" attributes="0"/>
                                       <Component id="classificationTF" alignment="0" pref="290" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="expDC" min="-2" pref="194" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="96" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="expDC" min="-2" pref="194" max="-2" attributes="0"/>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="areaSpin" min="-2" pref="140" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -132,9 +138,10 @@
                               <Component id="jLabel48" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="areaTF" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel49" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel49" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="areaSpin" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -154,7 +161,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane7" pref="134" max="32767" attributes="0"/>
+                          <Component id="jScrollPane7" pref="132" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="saveBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -176,11 +183,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cropTF">
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JTextField" name="areaTF">
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
@@ -309,6 +311,24 @@
                     <Property name="text" type="java.lang.String" value="Beneficiary:"/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JSpinner" name="areaSpin">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                      <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="1.0" type="number"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel3">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="sq. meter"/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -422,14 +442,20 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="beneCB1" alignment="1" max="32767" attributes="0"/>
                                       <Component id="cropTF1" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="areaTF1" alignment="0" pref="290" max="32767" attributes="0"/>
                                       <Component id="varietyTF1" alignment="0" pref="290" max="32767" attributes="0"/>
                                       <Component id="classificationTF1" alignment="0" pref="290" max="32767" attributes="0"/>
+                                      <Component id="idLbl" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
-                                          <Component id="expDC1" min="-2" pref="194" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="expDC1" min="-2" pref="194" max="-2" attributes="0"/>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="areaSpin1" min="-2" pref="140" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="idLbl" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -456,9 +482,10 @@
                               <Component id="jLabel52" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="areaTF1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel53" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel53" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="areaSpin1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -478,7 +505,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane8" max="32767" attributes="0"/>
+                          <Component id="jScrollPane8" pref="81" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="updateBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -500,11 +527,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cropTF1">
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JTextField" name="areaTF1">
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
@@ -652,6 +674,24 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
+                </Component>
+                <Component class="javax.swing.JSpinner" name="areaSpin1">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                      <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="1.0" type="number"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel4">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="sq. meter"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

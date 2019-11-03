@@ -55,15 +55,12 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() 
     {
         initComponents();
-        
 
         mp = new MapPanel();
         new MapController(mp, this);
-//        CardLayout cl = (CardLayout) (mainPanel.getLayout());
-//        mainPanel.add(mp,"MapPanel");
-//        cl.show(mainPanel, "MapPanel");  
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/title.png")));
 
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/title.png")));
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -387,6 +384,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void adminMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminMenuItemActionPerformed
         ap = new AdminPanel();
+        setConfig();
         new AdminController(ap);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(ap,"AdminPanel");
@@ -395,6 +393,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void beneMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_beneMenuItemActionPerformed
         bp = new BenePanel();
+        setConfig();
         new BeneController(bp,this);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(bp,"BenePanel");
@@ -407,6 +406,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void mapMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mapMenuItemActionPerformed
         mp = new MapPanel();
+        setConfig();
         new MapController(mp, this);
 //        CardLayout cl = (CardLayout) (mainPanel.getLayout());
 //        mainPanel.add(mp,"MapPanel");
@@ -415,6 +415,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void regMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regMenuItemActionPerformed
         rp = new RegPanel();
+        setConfig();
         new RegController(rp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(rp,"RegPanel");
@@ -423,6 +424,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void fmMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fmMenuItemActionPerformed
         fmp = new FMemberPanel();
+        setConfig();
         new FMemberController(fmp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(fmp,"FMemberPanel");
@@ -431,6 +433,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void cropsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cropsMenuItemActionPerformed
         cp = new CropPanel();
+        setConfig();
         new CropController(cp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(cp,"CropPanel");
@@ -439,6 +442,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void lsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lsMenuItemActionPerformed
         lsp = new LSPanel();
+        setConfig();
         new LSController(lsp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(lsp,"LSPanel");
@@ -447,6 +451,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void harvestMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_harvestMenuItemActionPerformed
         hp = new HarvestPanel();
+        setConfig();
         new HarvestController(hp,mainPanel);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(hp,"HarvestPanel");
@@ -455,6 +460,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void disposalMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disposalMenuItemActionPerformed
         dp = new DisposalPanel();
+        setConfig();
         new DisposalController(dp,mainPanel);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(dp,"HarvestPanel");
@@ -463,6 +469,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void farMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_farMenuItemActionPerformed
         fp = new FarPanel();
+        setConfig();
         new FarController(fp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(fp,"FarPanel");
@@ -471,6 +478,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void disasterMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disasterMenuItemActionPerformed
         disp = new DisasterPanel();
+        setConfig();
         new DisasterController(disp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(disp,"DisasterPanel");
@@ -485,6 +493,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void evacSitesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_evacSitesMenuItemActionPerformed
         ep = new EvacPanel();
+        setConfig();
         new EvacController(ep);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(ep,"EvacPanel");
@@ -493,6 +502,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void brgyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brgyMenuItemActionPerformed
         brgyp = new BrgyPanel();
+        setConfig();
         new BrgyController(brgyp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(brgyp,"BrgyPanel");
@@ -501,6 +511,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         hazp = new HazardPanel();
+        setConfig();
         new HazardController(hazp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(hazp,"HazardPanel");
@@ -509,6 +520,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         evacp = new EvacuationPanel();
+        setConfig();
         new EvacuationController(evacp);
         CardLayout cl = (CardLayout) (mainPanel.getLayout());
         mainPanel.add(evacp,"EvacuationPanel");
@@ -556,6 +568,7 @@ public class MainFrame extends javax.swing.JFrame {
                 adminMenuItem.setVisible(false);
                 harvestMenuItem.setVisible(false);
                 disposalMenuItem.setVisible(false);
+                manageMenu.setVisible(false);
                 break; 
             //MAO
             case 2:
@@ -566,6 +579,19 @@ public class MainFrame extends javax.swing.JFrame {
                 regMenuItem.setVisible(false);
                 farMenuItem.setVisible(false);
                 
+                //remove fmember table
+                bp.membersTable.setVisible(false);
+                
+                //farmer occupation
+                bp.farmerCB.setSelected(true);
+                bp.farmerCB.setEnabled(false);
+                bp.occTF.setText("Farmer");
+                bp.occTF.setEnabled(false);
+                bp.occTF1.setText("Farmer");
+                bp.occTF1.setEnabled(false);
+                //crop and ls table
+                bp.cropTable.setFillsViewportHeight(true);
+                bp.livestockTable.setFillsViewportHeight(true);
                 break; 
             //MDRRMO
             case 3:
@@ -619,7 +645,10 @@ public class MainFrame extends javax.swing.JFrame {
         disp.deleteMenuItem.setVisible(false);
         ep.deleteBtn.setVisible(false);
         ep.deleteMenuItem.setVisible(false);
-        
+        brgyp.deleteBtn.setVisible(false);
+        brgyp.deleteMenuItem.setVisible(false);
+        hazp.deleteBtn.setVisible(false);
+        hazp.deleteMenuItem.setVisible(false);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

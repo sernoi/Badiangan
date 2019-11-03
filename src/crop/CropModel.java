@@ -60,7 +60,7 @@ public class CropModel
         return rs;
     }
     
-    public static void saveCrop(int beneId, String crop, String area,
+    public static void saveCrop(int beneId, String crop, double area,
             String variety, String classification, String date, String remarks)
     {
         Connection conn = null;
@@ -70,7 +70,7 @@ public class CropModel
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, beneId);
             stmt.setString(2, crop);
-            stmt.setString(3, area);
+            stmt.setDouble(3, area);
             stmt.setString(4, variety);
             stmt.setString(5, classification);
             stmt.setString(6, date);
@@ -93,7 +93,7 @@ public class CropModel
     }
     
     public static void updateCrop(int id, int bene_id, String crop, 
-            String area, String variety, String classification, 
+            double area, String variety, String classification, 
             String exp, String remarks)
     {
         Connection conn = null;
@@ -105,7 +105,7 @@ public class CropModel
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, bene_id);
             stmt.setString(2, crop);
-            stmt.setString(3, area);
+            stmt.setDouble(3, area);
             stmt.setString(4, variety);
             stmt.setString(5, classification);
             stmt.setString(6, exp);

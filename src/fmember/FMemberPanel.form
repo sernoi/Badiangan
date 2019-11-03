@@ -90,8 +90,8 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="fnameAddMemberTF" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="mnameAddMemberTF" alignment="0" pref="321" max="32767" attributes="0"/>
-                                      <Component id="lnameAddMemberTF" alignment="0" pref="321" max="32767" attributes="0"/>
+                                      <Component id="mnameAddMemberTF" alignment="0" pref="323" max="32767" attributes="0"/>
+                                      <Component id="lnameAddMemberTF" alignment="0" pref="323" max="32767" attributes="0"/>
                                       <Component id="occAddMemberTF" alignment="0" max="32767" attributes="0"/>
                                       <Component id="heaAddMemberCB" alignment="0" max="32767" attributes="0"/>
                                       <Component id="relAddMemberCB" alignment="0" max="32767" attributes="0"/>
@@ -270,7 +270,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="4"/>
-                    <Property name="text" type="java.lang.String" value="Relationship to HOD:"/>
+                    <Property name="text" type="java.lang.String" value="Relationship to HOF:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel41">
@@ -543,8 +543,8 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="fnameEditMemberTF" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="mnameEditMemberTF" alignment="0" pref="321" max="32767" attributes="0"/>
-                                      <Component id="lnameEditMemberTF" alignment="0" pref="321" max="32767" attributes="0"/>
+                                      <Component id="mnameEditMemberTF" alignment="0" pref="323" max="32767" attributes="0"/>
+                                      <Component id="lnameEditMemberTF" alignment="0" pref="323" max="32767" attributes="0"/>
                                       <Component id="occEditMemberTF" alignment="0" max="32767" attributes="0"/>
                                       <Component id="heaEditMemberCB" alignment="0" max="32767" attributes="0"/>
                                       <Component id="relEditMemberCB" alignment="0" max="32767" attributes="0"/>
@@ -729,7 +729,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="4"/>
-                    <Property name="text" type="java.lang.String" value="Relationship to HOD:"/>
+                    <Property name="text" type="java.lang.String" value="Relationship to HOF:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel50">

@@ -66,6 +66,23 @@ public class BeneController
                 //farmer Class
                 new FarmerCHBClass()
         );
+        
+        bp.farmerCB1.addItemListener(new ItemListener()
+        {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(bp.farmerCB1.isSelected())
+                {
+                    bp.occTF1.setEnabled(false);
+                    bp.occTF1.setText("Farmer");
+                }
+                else
+                {
+                    bp.occTF1.setEnabled(true);
+                    bp.occTF1.setText("");
+                }
+            }
+        });
 
         initRBG();
         initJDateChooser();
@@ -100,7 +117,7 @@ public class BeneController
     void clearAddCropFields()
     {
         bp.cropAddCropTF.setText("");
-        bp.areaAddCropTF.setText("");
+        bp.areaSpin.setValue(0);
         bp.varietyAddCropTF.setText("");
         bp.classificationCBB.setSelectedIndex(0);
         bp.expHarvestAddCropDC.setDate(new Date());
@@ -472,7 +489,7 @@ public class BeneController
         DefaultTableModel model = (DefaultTableModel) bp.cropTable.getModel();
         model.addRow(new Object[]{
             bp.cropTable.getRowCount() + 1, bp.cropAddCropTF.getText(),
-            bp.areaAddCropTF.getText(), bp.varietyAddCropTF.getText(),
+            Alter.getDouble(bp.areaSpin), bp.varietyAddCropTF.getText(),
             Alter.getString(bp.classificationCBB),
             ((JTextField)bp.expHarvestAddCropDC.getDateEditor().getUiComponent()).getText(),
             bp.remarksAddCropTA.getText()});
@@ -594,9 +611,14 @@ public class BeneController
     {
         try
         {
-            if(bp.fNameTF.getText().trim().isEmpty() || bp.lNameTF.getText().trim().isEmpty())
+            if(
+                bp.fNameTF.getText().trim().isEmpty() || bp.lNameTF.getText().trim().isEmpty() ||
+                bp.mNameTF.getText().trim().isEmpty() || Alter.gatDate(bp.dobDC).trim().isEmpty() ||
+                bp.ethnicityTF.getText().trim().isEmpty() || bp.occTF.getText().trim().isEmpty() ||
+                bp.contactNumTF.getText().trim().isEmpty()
+              )
             {
-                JOptionPane.showMessageDialog(null, "First Name and Last Name cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Fields cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else
             {
@@ -660,7 +682,7 @@ public class BeneController
                 CropModel.saveCrop(
                         Integer.parseInt(title.substring(title.indexOf(":") + 1)),
                         bp.cropTable.getValueAt(x,1).toString(),
-                        bp.cropTable.getValueAt(x,2).toString(),
+                        Double.parseDouble(bp.cropTable.getValueAt(x,2).toString()),
                         bp.cropTable.getValueAt(x,3).toString(),
                         bp.cropTable.getValueAt(x,4).toString(),
                         bp.cropTable.getValueAt(x,5).toString(),
@@ -738,34 +760,46 @@ public class BeneController
     }
     void updateBene()
     {
-        String brgyStr = bp.brgyCB1.getSelectedItem().toString();
-        String locStr = bp.longLatLbl1.getText();
-        
-        BeneModel.updateBene(
-                Integer.parseInt(bp.beneIdLbl1.getText()), //beneID
-                bp.fNameTF1.getText(), //fname
-                bp.mNameTF1.getText(), //mname
-                bp.lNameTF1.getText(), //lname
-                bp.sexMaleRB1.isSelected() ? "Male" : "Female", //sex
-                ((JTextField)bp.dobDC1.getDateEditor().getUiComponent()).getText(), //dob
-                brgyStr,
-                //Integer.parseInt(brgyStr.substring(0,brgyStr.indexOf(" "))), //brgy
-                bp.codeCB1.getSelectedItem().toString(), //code
-                bp.fourpsYesRB1.isSelected() ? "Yes" : "No", //fourps
-                bp.indigentYesRB1.isSelected() ? "Yes" : "No", //indigent
-                bp.heaCB1.getSelectedItem().toString(), //hea
-                bp.ethnicityTF1.getText(), //ehtnicity
-                Double.parseDouble(bp.netIncomeSpin1.getValue().toString()), //income
-                bp.occTF1.getText(), //occ
-                bp.healthCondCB1.getSelectedItem().toString(), //healthCond
-                bp.houseStatCB1.getSelectedItem().toString(), //houseStat
-                bp.houseCondCB1.getSelectedItem().toString(), //houseCond
-                bp.contactNumTF1.getText(),
-                Double.parseDouble(locStr.substring(0,locStr.indexOf(","))), //loc_long
-                Double.parseDouble(locStr.substring(locStr.indexOf(",") + 1, locStr.length()))); //loc_lat
-        
-        bp.editBeneDialog.dispose();
-        displayAllBene();
+        if(
+            bp.fNameTF1.getText().trim().isEmpty() || bp.lNameTF1.getText().trim().isEmpty() ||
+            bp.mNameTF1.getText().trim().isEmpty() || Alter.gatDate(bp.dobDC1).trim().isEmpty() ||
+            bp.ethnicityTF1.getText().trim().isEmpty() || bp.occTF1.getText().trim().isEmpty() ||
+            bp.contactNumTF1.getText().trim().isEmpty()
+           )
+        {
+            JOptionPane.showMessageDialog(null, "Fields cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            String brgyStr = bp.brgyCB1.getSelectedItem().toString();
+            String locStr = bp.longLatLbl1.getText();
+
+            BeneModel.updateBene(
+                    Integer.parseInt(bp.beneIdLbl1.getText()), //beneID
+                    bp.fNameTF1.getText(), //fname
+                    bp.mNameTF1.getText(), //mname
+                    bp.lNameTF1.getText(), //lname
+                    bp.sexMaleRB1.isSelected() ? "Male" : "Female", //sex
+                    ((JTextField)bp.dobDC1.getDateEditor().getUiComponent()).getText(), //dob
+                    brgyStr,
+                    //Integer.parseInt(brgyStr.substring(0,brgyStr.indexOf(" "))), //brgy
+                    bp.codeCB1.getSelectedItem().toString(), //code
+                    bp.fourpsYesRB1.isSelected() ? "Yes" : "No", //fourps
+                    bp.indigentYesRB1.isSelected() ? "Yes" : "No", //indigent
+                    bp.heaCB1.getSelectedItem().toString(), //hea
+                    bp.ethnicityTF1.getText(), //ehtnicity
+                    Double.parseDouble(bp.netIncomeSpin1.getValue().toString()), //income
+                    bp.occTF1.getText(), //occ
+                    bp.healthCondCB1.getSelectedItem().toString(), //healthCond
+                    bp.houseStatCB1.getSelectedItem().toString(), //houseStat
+                    bp.houseCondCB1.getSelectedItem().toString(), //houseCond
+                    bp.contactNumTF1.getText(),
+                    Double.parseDouble(locStr.substring(0,locStr.indexOf(","))), //loc_long
+                    Double.parseDouble(locStr.substring(locStr.indexOf(",") + 1, locStr.length()))); //loc_lat
+
+            bp.editBeneDialog.dispose();
+            displayAllBene();
+        }
     }
     void viewBene()
     {
@@ -1147,7 +1181,8 @@ public class BeneController
     class FarmerCHBClass implements ItemListener
     {
         @Override
-        public void itemStateChanged(ItemEvent e) {
+        public void itemStateChanged(ItemEvent e) 
+        {
             if(bp.farmerCB.isSelected())
             {
                 bp.occTF.setEnabled(false);

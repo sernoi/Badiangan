@@ -49,7 +49,7 @@ public class CropController
         JTextField text = (JTextField) cp.beneCB.getEditor().getEditorComponent();
         text.setText("");
         cp.cropTF.setText("");
-        cp.areaTF.setText("");
+        cp.areaSpin.setValue(0);
         cp.varietyTF.setText("");
         cp.classificationTF.setText("");
         cp.remarksTA.setText("");
@@ -57,7 +57,7 @@ public class CropController
         JTextField text1 = (JTextField) cp.beneCB1.getEditor().getEditorComponent();
         text1.setText("");
         cp.cropTF1.setText("");
-        cp.areaTF1.setText("");
+        cp.areaSpin1.setValue(0);
         cp.varietyTF1.setText("");
         cp.classificationTF1.setText("");
         cp.remarksTA1.setText("");
@@ -101,7 +101,7 @@ public class CropController
         {
             cp.idLbl.setText(cp.table.getValueAt(dataRow,0).toString());
             cp.cropTF1.setText(cp.table.getValueAt(dataRow,2).toString());
-            cp.areaTF1.setText(cp.table.getValueAt(dataRow,3).toString());
+            cp.areaSpin1.setValue(Double.parseDouble(cp.table.getValueAt(dataRow,3).toString()));
             cp.varietyTF1.setText(cp.table.getValueAt(dataRow,4).toString());
             cp.classificationTF1.setText(cp.table.getValueAt(dataRow,5).toString());
             
@@ -158,7 +158,7 @@ public class CropController
         CropModel.saveCrop(
                 Integer.parseInt(str.substring(str.indexOf(":") + 1,str.indexOf(")"))),
                 cp.cropTF.getText(),
-                cp.areaTF.getText(),
+                Alter.getDouble(cp.areaSpin),
                 cp.varietyTF.getText(),
                 cp.classificationTF.getText(),
                 ((JTextField)cp.expDC.getDateEditor().getUiComponent()).getText(),
@@ -189,7 +189,7 @@ public class CropController
                 Integer.parseInt(cp.idLbl.getText()),
                 Integer.parseInt(str.substring(str.indexOf(":") + 1,str.indexOf(")"))),
                 cp.cropTF1.getText(),
-                cp.areaTF1.getText(),
+                Alter.getDouble(cp.areaSpin1),
                 cp.varietyTF1.getText(),
                 cp.classificationTF1.getText(),
                 ((JTextField)cp.expDC1.getDateEditor().getUiComponent()).getText(),

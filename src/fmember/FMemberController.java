@@ -302,7 +302,7 @@ public class FMemberController
                                         "First Name: " + (fmp.fmTable.getValueAt(dataRow,2).toString()) + "\n" +
                                                 "Middle Name: " + (fmp.fmTable.getValueAt(dataRow,3).toString()) + "\n" +
                                                         "Last Name: " + (fmp.fmTable.getValueAt(dataRow,4).toString()) + "\n" +
-                                                                "Rel to HOD: " + (fmp.fmTable.getValueAt(dataRow,5).toString()) + "\n" +
+                                                                "Rel to HOF: " + (fmp.fmTable.getValueAt(dataRow,5).toString()) + "\n" +
                                                                         "Age: " + (fmp.fmTable.getValueAt(dataRow,6).toString()) + "\n" +
                                                                                 "Sex: " + (fmp.fmTable.getValueAt(dataRow,7).toString()) + "\n" +  
                                                                                         "Highest Ed Att: " + (fmp.fmTable.getValueAt(dataRow,8).toString()) + "\n" +
