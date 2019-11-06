@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -38,9 +38,11 @@ public class MapGenerate
         final JXMapViewer mapViewer = new JXMapViewer();
         GeoPosition badiangan = new GeoPosition(10.999783, 122.526848);
         //TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:F:/Theses/Badiangan/Project/Badiangan/tiles/tiles.zip!");
-        //TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:/tiles/tiles.zip!");
-        TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:tiles/tiles.zip!");
-        //TileFactoryInfo info = new OSMTileFactoryInfo();
+        //TileFactoryInfo info = new OSMTileFactoryInfo("", "file:/tiles"); //inside wowowowow
+        TileFactoryInfo info = new OSMTileFactoryInfo("","jar:file:tiles/tiles.zip!"); //outside
+        //TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:tiles.zip!");
+        //TileFactoryInfo info = new OSMTileFactoryInfo(); //online
+        //TileFactoryInfo info = new OSMTileFactoryInfo("","file:D:/tiles"); //inside
         TileFactory tileFactory = new DefaultTileFactory(info);
         
         // Setup JXMapViewer
