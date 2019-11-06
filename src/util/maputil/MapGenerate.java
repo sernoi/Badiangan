@@ -25,6 +25,7 @@ import org.jxmapviewer.viewer.DefaultTileFactory;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.TileFactory;
 import org.jxmapviewer.viewer.TileFactoryInfo;
+import settings.Settings;
 
 /**
  *
@@ -39,10 +40,11 @@ public class MapGenerate
         GeoPosition badiangan = new GeoPosition(10.999783, 122.526848);
         //TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:F:/Theses/Badiangan/Project/Badiangan/tiles/tiles.zip!");
         //TileFactoryInfo info = new OSMTileFactoryInfo("", "file:/tiles"); //inside wowowowow
-        TileFactoryInfo info = new OSMTileFactoryInfo("","jar:file:tiles/tiles.zip!"); //outside
+        //TileFactoryInfo info = new OSMTileFactoryInfo("","jar:file:tiles/tiles.zip!"); //outside
         //TileFactoryInfo info = new OSMTileFactoryInfo("ZIP archive", "jar:file:tiles.zip!");
         //TileFactoryInfo info = new OSMTileFactoryInfo(); //online
         //TileFactoryInfo info = new OSMTileFactoryInfo("","file:D:/tiles"); //inside
+        TileFactoryInfo info = Settings.info;
         TileFactory tileFactory = new DefaultTileFactory(info);
         
         // Setup JXMapViewer

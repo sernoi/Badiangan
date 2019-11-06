@@ -6,13 +6,14 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import settings.Settings;
 public class FileAccess 
 {
     public FileAccess()
     {
         try
         {
-            InputStream in = new URL("http://192.168.1.250:8080/badiangan/report.pdf").openStream();
+            InputStream in = new URL(Settings.in).openStream();
             Files.copy(in, Paths.get("D:\\thesis\\filedl\\report.pdf"), StandardCopyOption.REPLACE_EXISTING);
 
             if ((new File("D:\\thesis\\filedl\\report.pdf")).exists()) 
