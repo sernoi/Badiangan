@@ -21,9 +21,9 @@ public class Settings
     public static String url = "jdbc:mysql://192.168.1.250/badiangan";
     
     //offline map
-    public static TileFactoryInfo info = new OSMTileFactoryInfo("","jar:file:tiles/tiles.zip!");
+    //public static TileFactoryInfo info = new OSMTileFactoryInfo("","jar:file:tiles/tiles.zip!");
     //online map
-    //public static TileFactoryInfo info = new OSMTileFactoryInfo();
+    public static TileFactoryInfo info = new OSMTileFactoryInfo();
     
     //string url inputstreamo of report
     public static String in = "http://192.168.1.250:8080/badiangan/report.pdf";
