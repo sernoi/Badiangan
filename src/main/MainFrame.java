@@ -33,6 +33,7 @@ import map.MapPanel;
 import evacuation.EvacuationPanel;
 import registration.RegController;
 import registration.RegPanel;
+import util.FileAccess;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -361,7 +362,13 @@ public class MainFrame extends javax.swing.JFrame {
         });
         reportMenu.add(jMenuItem2);
 
+        jMenuItem3.setForeground(new java.awt.Color(0, 0, 0));
         jMenuItem3.setText("MHRO");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         reportMenu.add(jMenuItem3);
 
         MenuBar.add(reportMenu);
@@ -530,6 +537,10 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.add(evacp,"EvacuationPanel");
         cl.show(mainPanel, "EvacuationPanel"); 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        new FileAccess();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     public int getToken(String dept)
     {
