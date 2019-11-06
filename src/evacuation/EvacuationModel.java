@@ -80,7 +80,8 @@ public class EvacuationModel
         try {
             conn = DB.getConnection();
             String sql = "Select "
-                    + "fk_dis_id_evac_event as 'ID', "
+                    + "evac_event_id as 'ID', "
+                    + "fk_dis_id_evac_event as 'Disaster ID', "
                     + "(select name from disaster where dis_id = fk_dis_id_evac_event) as 'Disaster', "
                     + "(select CONCAT_WS(' ', beneficiary.fname, beneficiary.mname, beneficiary.lname) "
                     + "from beneficiary where bene_id = fk_bene_id_evac_event) as 'Beneficiary', "
@@ -186,7 +187,7 @@ public class EvacuationModel
                     + "from beneficiary where bene_id = fk_bene_id_evac_event) as 'Beneficiary', "
                     + "(select count(*) from fmember where fk_bene_id_member = fk_bene_id_evac_event ) as 'count', "
                     + "(select name from evac where evac_id = fk_evac_id_evac_event) as 'Site Name' "
-                    + "from evac_event";
+                    + "from evac_event where fk_dis_id_evac_event = "+dis_id+"";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while(rs.next())

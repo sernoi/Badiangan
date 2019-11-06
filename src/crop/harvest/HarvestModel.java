@@ -44,14 +44,18 @@ public class HarvestModel
         ResultSet rs = null;
         Connection conn = null;
         try {
-            conn = DB.getConnection();
-            String sql = "SELECT crop_season.cs_id as 'ID', "
-                    + "crop_season.fk_crop_id_cs as 'Crop ID', crop_season.form as 'Container', "
+            conn = DB.getConnection();            
+            String sql = "SELECT crop_season.cs_id as 'ID', " 
+                    + "(SELECT CONCAT_WS(' ', beneficiary.fname, beneficiary.mname, beneficiary.lname)) as 'Beneficiary', "
+                    + "crop_season.fk_crop_id_cs as 'Crop ID', "
+                    + "crop_season.form as 'Container', " 
                     + "crop_season.num as 'Quantity', "
                     + "crop_season.profit as 'Profit', "
-                    + "crop_season.date as 'Harvest Date', "
-                    + "crop_season.remarks as 'Remarks' "
-                    + "from crop_season";
+                    + "crop_season.date as 'Harvest Date', " 
+                    + "crop_season.remarks as 'Remarks' " 
+                    + "from beneficiary, crop, crop_season where "
+                    + "crop.fk_bene_id_crop = beneficiary.bene_id and "
+                    + "crop.crop_id = crop_season.fk_crop_id_cs";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
         } catch (SQLException ex) {

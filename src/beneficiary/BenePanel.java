@@ -19,6 +19,12 @@ public class BenePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        walkinDialog = new javax.swing.JDialog();
+        caseWalkinCBB = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel81 = new javax.swing.JLabel();
+        idLbl = new javax.swing.JLabel();
+        okWalkinBtn = new javax.swing.JButton();
         addBeneDialog = new javax.swing.JDialog();
         addBenePanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -267,6 +273,7 @@ public class BenePanel extends javax.swing.JPanel {
         addBeneMenuItem = new javax.swing.JMenuItem();
         deleteBeneMenuItem = new javax.swing.JMenuItem();
         viewMapMenuItem = new javax.swing.JMenuItem();
+        walkinMenuItem = new javax.swing.JMenuItem();
         membersPopMenu = new javax.swing.JPopupMenu();
         viewMemberMenuItem = new javax.swing.JMenuItem();
         editMemberMenuItem = new javax.swing.JMenuItem();
@@ -301,6 +308,57 @@ public class BenePanel extends javax.swing.JPanel {
         deleteBeneBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel80 = new javax.swing.JLabel();
+
+        walkinDialog.setBackground(new java.awt.Color(69, 73, 84));
+
+        caseWalkinCBB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Not Applicable", "Animal Bite", "Children and Women Abuse", "Family Planning", "Financial Assistance", "Legal Assistance" }));
+
+        jLabel18.setText("ID:");
+
+        jLabel81.setText("Case:");
+
+        idLbl.setText("0");
+
+        okWalkinBtn.setText("OK");
+
+        javax.swing.GroupLayout walkinDialogLayout = new javax.swing.GroupLayout(walkinDialog.getContentPane());
+        walkinDialog.getContentPane().setLayout(walkinDialogLayout);
+        walkinDialogLayout.setHorizontalGroup(
+            walkinDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(walkinDialogLayout.createSequentialGroup()
+                .addGroup(walkinDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(walkinDialogLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(walkinDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, walkinDialogLayout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(walkinDialogLayout.createSequentialGroup()
+                                .addComponent(jLabel81)
+                                .addGap(4, 4, 4)))
+                        .addGroup(walkinDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(caseWalkinCBB, 0, 289, Short.MAX_VALUE)
+                            .addComponent(idLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(walkinDialogLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(okWalkinBtn)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        walkinDialogLayout.setVerticalGroup(
+            walkinDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(walkinDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(walkinDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(idLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(walkinDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel81)
+                    .addComponent(caseWalkinCBB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(okWalkinBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         addBeneDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addBeneDialog.setTitle("Add Beneficiary");
@@ -2307,6 +2365,9 @@ public class BenePanel extends javax.swing.JPanel {
         viewMapMenuItem.setText("View in Map");
         benePopMenu.add(viewMapMenuItem);
 
+        walkinMenuItem.setText("Walk-in");
+        benePopMenu.add(walkinMenuItem);
+
         viewMemberMenuItem.setText("View Member");
         membersPopMenu.add(viewMemberMenuItem);
 
@@ -2475,6 +2536,8 @@ public class BenePanel extends javax.swing.JPanel {
         deleteBeneBtn.addActionListener(a);
         locBtn.addActionListener(a);
         locBtn1.addActionListener(a);
+        walkinMenuItem.addActionListener(a);
+        okWalkinBtn.addActionListener(a);
         
         
         //Members Listeners
@@ -2551,6 +2614,7 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JButton cancelEditLSBtn;
     public javax.swing.JButton cancelEditMemberBtn;
     public javax.swing.JComboBox<String> caseCBB;
+    public javax.swing.JComboBox<String> caseWalkinCBB;
     public javax.swing.JTextField classificationAddLSTF;
     public javax.swing.JComboBox<String> classificationCBB;
     public javax.swing.JComboBox<String> classificationCBB1;
@@ -2611,6 +2675,7 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JComboBox<String> houseCondCB1;
     public javax.swing.JComboBox<String> houseStatCB;
     public javax.swing.JComboBox<String> houseStatCB1;
+    public javax.swing.JLabel idLbl;
     public javax.swing.JRadioButton indigentNoRB;
     public javax.swing.JRadioButton indigentNoRB1;
     public javax.swing.ButtonGroup indigentRBG;
@@ -2626,6 +2691,7 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel16;
     public javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     public javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel20;
@@ -2695,6 +2761,7 @@ public class BenePanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
+    private javax.swing.JLabel jLabel81;
     public javax.swing.JLabel jLabel82;
     public javax.swing.JLabel jLabel83;
     public javax.swing.JLabel jLabel84;
@@ -2770,6 +2837,7 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JButton okEditCropBtn;
     public javax.swing.JButton okEditLSBtn;
     public javax.swing.JButton okEditMemberBtn;
+    public javax.swing.JButton okWalkinBtn;
     public javax.swing.JComboBox<String> relAddMemberCB;
     public javax.swing.JComboBox<String> relEditMemberCB;
     public javax.swing.JTextArea remarksAddCropTA;
@@ -2796,6 +2864,8 @@ public class BenePanel extends javax.swing.JPanel {
     public javax.swing.JMenuItem viewLSMenuItem;
     public javax.swing.JMenuItem viewMapMenuItem;
     public javax.swing.JMenuItem viewMemberMenuItem;
+    public javax.swing.JDialog walkinDialog;
+    public javax.swing.JMenuItem walkinMenuItem;
     public javax.swing.JRadioButton walkinNoRB;
     public javax.swing.ButtonGroup walkinRBG;
     public javax.swing.ButtonGroup walkinRBG1;

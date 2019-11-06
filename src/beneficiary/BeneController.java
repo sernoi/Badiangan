@@ -295,9 +295,18 @@ public class BeneController
     }
     void displayAllBene()
     {
-        ResultSet rs = BeneModel.getAllBene();
-        bp.beneTable.setModel(DbUtils.resultSetToTableModel(rs));
-        new SearchModel(bp, bp.beneTable, bp.searchTF, rs);
+        if(mf.deptLbl.getText().equals("MAO"))
+        {
+            ResultSet rs = BeneModel.getAllFarmers();
+            bp.beneTable.setModel(DbUtils.resultSetToTableModel(rs));
+            new SearchModel(bp, bp.beneTable, bp.searchTF, rs);
+        }
+        else
+        {
+            ResultSet rs = BeneModel.getAllBene();
+            bp.beneTable.setModel(DbUtils.resultSetToTableModel(rs));
+            new SearchModel(bp, bp.beneTable, bp.searchTF, rs);
+        }
     }
     void editBene()
     {
@@ -806,6 +815,11 @@ public class BeneController
         int dataRow = bp.beneTable.getSelectedRow();
         if(dataRow >= 0)
         {
+            String dob = bp.beneTable.getValueAt(dataRow,5).toString();
+            DateTime birthDate = new DateTime(dob);
+            DateTime now = new DateTime();
+            Period period = new Period(birthDate, now);
+            int years = period.getYears();
             JOptionPane.showMessageDialog(bp,
                     "#: " + (bp.beneTable.getValueAt(dataRow,0).toString()) + "\n" +
                             "First Name: " + (bp.beneTable.getValueAt(dataRow,1).toString()) + "\n" +
@@ -813,6 +827,7 @@ public class BeneController
                                             "Last Name: " + (bp.beneTable.getValueAt(dataRow,3).toString()) + "\n" +
                                                     "Sex: " + (bp.beneTable.getValueAt(dataRow,4).toString()) + "\n" +
                                                             "Birth Date: " + (bp.beneTable.getValueAt(dataRow,5).toString()) + "\n" +
+                                                                    "Age: " + years + "\n" +
                                                                     "Brgy: " + (bp.beneTable.getValueAt(dataRow,6).toString()) + "\n" +
                                                                             "Code: " + (bp.beneTable.getValueAt(dataRow,7).toString()) + "\n" +
                                                                                     "4Ps: " + (bp.beneTable.getValueAt(dataRow,8).toString()) + "\n" +
@@ -905,6 +920,40 @@ public class BeneController
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }
+    void openWalkinDialog()
+    {
+        int dataRow = bp.beneTable.getSelectedRow();
+        if(dataRow >= 0)
+        {
+            bp.idLbl.setText(bp.beneTable.getValueAt(dataRow,0).toString());
+            bp.walkinDialog.setTitle("Beneficiary Walkin");
+            bp.walkinDialog.setModal(true);
+            bp.walkinDialog.pack();
+            bp.walkinDialog.setLocationRelativeTo(null);
+            bp.walkinDialog.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(bp.addBeneDialog,
+                    "Please select a beneficiary to walkin.", "No Item Selected",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    void saveWalkinToDB()
+    {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateobj = new Date();
+
+        RegModel.saveReg(
+                Integer.parseInt(mf.adminIDTF.getText()),
+                Integer.parseInt(bp.idLbl.getText()),
+                "Yes",
+                Alter.getString(bp.caseWalkinCBB),
+                df.format(dateobj));
+        bp.walkinDialog.dispose();
+    }
+    
     class Action implements ActionListener
     {
         @Override
@@ -968,6 +1017,14 @@ public class BeneController
             if(e.getSource() == bp.locBtn1)
             {
                 openMapToGetLoc();
+            }
+            if(e.getSource() == bp.walkinMenuItem)
+            {
+                openWalkinDialog();
+            }
+            if(e.getSource() == bp.okWalkinBtn)
+            {
+                saveWalkinToDB();
             }
 
             
@@ -1078,6 +1135,7 @@ public class BeneController
             {
                 bp.editLSDialog.dispose();
             }
+
         }
     }
     class BenePopUpMenu extends MouseAdapter implements  PopupMenuListener

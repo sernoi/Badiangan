@@ -260,6 +260,7 @@ public class MapController
                         Double.parseDouble(list.get(5)),
                         Double.parseDouble(list.get(6)));
                 mpp.evacBtn.setEnabled(true);
+                mpp.viewEvacBtn.setEnabled(true);
                 
                 mapViewer.addMouseMotionListener(new MouseAdapter()
                 {
@@ -294,6 +295,17 @@ public class MapController
                 executor.submit(() -> {
                     scanOverLay();
                 });
+            }
+            if(e.getSource() == mpp.viewEvacBtn)
+            {
+                if(EvacuationModel.isDisasterExist(Integer.parseInt(mpp.idLbl.getText())))
+                {
+                    displayEvacInfo();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "No evacuation info yet!\nDo evacuation first");
+                }
             }
         }
     }
@@ -418,7 +430,7 @@ public class MapController
         for(int x = 0 ; x < list.size() ; x = x + 3)
         {
             total = total + 1;
-            this.mpp.infoTA.append("Beneficiay, " + list.get(x) + ", ");
+            this.mpp.infoTA.append("Beneficiary, " + list.get(x) + ", ");
             this.mpp.infoTA.append("with " + list.get(x + 1) + " family members ");
             this.mpp.infoTA.append("evacuated to " + list.get(x + 2) + ".\n");
             total = total + Alter.toInt(list.get(x + 1));

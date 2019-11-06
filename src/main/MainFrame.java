@@ -57,10 +57,10 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
 
         mp = new MapPanel();
+        setConfig();
         new MapController(mp, this);
 
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/title.png")));
-        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -91,10 +91,10 @@ public class MainFrame extends javax.swing.JFrame {
         disasterMenu = new javax.swing.JMenu();
         evacSitesMenuItem = new javax.swing.JMenuItem();
         disasterMenuItem = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         manageMenu = new javax.swing.JMenu();
         adminMenuItem = new javax.swing.JMenuItem();
         brgyMenuItem = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         reportMenu = new javax.swing.JMenu();
         regMenuItem = new javax.swing.JMenuItem();
         farMenuItem = new javax.swing.JMenuItem();
@@ -278,6 +278,15 @@ public class MainFrame extends javax.swing.JFrame {
         });
         disasterMenu.add(disasterMenuItem);
 
+        jMenuItem1.setForeground(new java.awt.Color(0, 0, 0));
+        jMenuItem1.setText("Hazard");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        disasterMenu.add(jMenuItem1);
+
         MenuBar.add(disasterMenu);
 
         manageMenu.setForeground(new java.awt.Color(0, 0, 0));
@@ -300,15 +309,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         manageMenu.add(brgyMenuItem);
-
-        jMenuItem1.setForeground(new java.awt.Color(0, 0, 0));
-        jMenuItem1.setText("Hazard");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        manageMenu.add(jMenuItem1);
 
         MenuBar.add(manageMenu);
 
@@ -599,6 +599,11 @@ public class MainFrame extends javax.swing.JFrame {
                 beneMenu.setVisible(false);
                 manageMenu.setVisible(false);
                 reportMenu.setVisible(false);
+                
+                //evac btn and zoom enabled
+                mp.zoomLbl.setVisible(true);
+                mp.zoomCBB.setVisible(true);
+                mp.evacBtn.setVisible(true);
                 break;
             //MPDO
             case 4:
@@ -607,7 +612,7 @@ public class MainFrame extends javax.swing.JFrame {
                 manageMenu.setVisible(false);
                 disasterMenu.setVisible(false);
                 break; 
-            //MPDO
+            //Viewer
             case 5:
                 removeAllDeleteBtn();
                 beneMenu.setVisible(false);
@@ -649,6 +654,10 @@ public class MainFrame extends javax.swing.JFrame {
         brgyp.deleteMenuItem.setVisible(false);
         hazp.deleteBtn.setVisible(false);
         hazp.deleteMenuItem.setVisible(false);
+        
+        mp.zoomLbl.setVisible(false);
+        mp.zoomCBB.setVisible(false);
+        mp.evacBtn.setVisible(false);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

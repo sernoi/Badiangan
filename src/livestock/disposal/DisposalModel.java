@@ -45,12 +45,15 @@ public class DisposalModel
         Connection conn = null;
         try {
             conn = DB.getConnection();
-            String sql = "SELECT ls_season_id as 'ID', "
-                    + "fk_ls_id_ls_season as 'Livestock ID', "
-                    + "profit as 'Profit', "
-                    + "date as 'Date', "
-                    + "remarks as 'Remarks' from "
-                    + "ls_season";
+            String sql = "SELECT ls_season.ls_season_id as 'ID', "
+            + "(SELECT CONCAT_WS(' ', beneficiary.fname, beneficiary.mname, beneficiary.lname)) as 'Beneficiary', "
+            + "ls_season.fk_ls_id_ls_season as 'Livestock ID', "
+            + "ls_season.profit as 'Profit', "
+            + "ls_season.date as 'Disposal Date', "
+            + "ls_season.remarks as 'Remarks' "
+            + "from beneficiary, livestock, ls_season where "
+            + "livestock.fk_bene_id_livestock = beneficiary.bene_id and "
+            + "livestock.ls_id = ls_season.fk_ls_id_ls_season";
             Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
         } catch (SQLException ex) {

@@ -33,6 +33,7 @@ public class MapPanel extends javax.swing.JPanel{
         //Action Listeners
         evacBtn.addActionListener(a);
         viewBtn.addActionListener(a);
+        viewEvacBtn.addActionListener(a);
 
         //Listener for Combobox in addFMDialog
         disasterCBB.setEditable(true);
@@ -75,7 +76,8 @@ public class MapPanel extends javax.swing.JPanel{
         lgLbl = new javax.swing.JLabel();
         radLbl = new javax.swing.JLabel();
         zoomCBB = new javax.swing.JComboBox<>();
-        jLabel10 = new javax.swing.JLabel();
+        zoomLbl = new javax.swing.JLabel();
+        viewEvacBtn = new javax.swing.JButton();
 
         viewDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         viewDialog.setResizable(false);
@@ -280,8 +282,11 @@ public class MapPanel extends javax.swing.JPanel{
 
         zoomCBB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6" }));
 
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Zoom Level");
+        zoomLbl.setForeground(new java.awt.Color(255, 255, 255));
+        zoomLbl.setText("Zoom Level");
+
+        viewEvacBtn.setText("View Evacuation");
+        viewEvacBtn.setEnabled(false);
 
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
@@ -304,11 +309,13 @@ public class MapPanel extends javax.swing.JPanel{
                 .addContainerGap())
             .addGroup(controlPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel10)
+                .addComponent(zoomLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(zoomCBB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(evacBtn)
+                .addGap(18, 18, 18)
+                .addComponent(viewEvacBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         controlPanelLayout.setVerticalGroup(
@@ -326,7 +333,8 @@ public class MapPanel extends javax.swing.JPanel{
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(evacBtn)
                     .addComponent(zoomCBB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                    .addComponent(zoomLbl)
+                    .addComponent(viewEvacBtn))
                 .addContainerGap(123, Short.MAX_VALUE))
         );
 
@@ -342,7 +350,6 @@ public class MapPanel extends javax.swing.JPanel{
     public javax.swing.JLabel idLbl;
     public javax.swing.JTextArea infoTA;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -366,6 +373,8 @@ public class MapPanel extends javax.swing.JPanel{
     public javax.swing.JLabel typeLbl;
     public javax.swing.JButton viewBtn;
     public javax.swing.JDialog viewDialog;
+    public javax.swing.JButton viewEvacBtn;
     public javax.swing.JComboBox<String> zoomCBB;
+    public javax.swing.JLabel zoomLbl;
     // End of variables declaration//GEN-END:variables
 }

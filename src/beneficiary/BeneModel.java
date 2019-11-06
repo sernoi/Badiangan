@@ -61,6 +61,31 @@ public class BeneModel
         }
         return rs;
     }
+    public static ResultSet getAllFarmers()
+    {
+        ResultSet rs = null;
+        Connection conn = null;
+        try {
+            conn = DB.getConnection();
+            String sql = "SELECT bene_id as 'ID',"
+                    + "fname as 'First Name', mname as 'Middle Name', "
+                    + "lname as 'Last Name', sex as 'Sex', dob as 'Date of Birth', "
+                    + "(select name from brgy where brgy_id = fk_brgy_id_beneficiary) as 'Brgy', "
+                    + "code as 'Code', fourps as '4Ps', ip as 'Indigent', hea as 'Highest Educ Att', "
+                    + "ethnicity as 'Ethnicity', net_income as 'Net Income', occ as 'Occupation', "
+                    + "health_condition as 'Health Condition', house_status as 'House Status',"
+                    + "house_condition as 'House Condition', contact_num as 'Contact #',"
+                    + "loc_lat as 'Latitude', loc_long as 'Longitude' "
+                    + "from beneficiary where occ = 'Farmer'";
+            Statement stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(BeneModel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+            return null;
+        }
+        return rs;
+    }
     /**
      * Gets the latest bene_id from the beneficiary table to be
      * saved in the registration table

@@ -24,8 +24,8 @@ public class EvacuationController
 {
     EvacuationPanel evacp;
     MapPanel mpp;
-    ArrayList<Integer> availableSites = new ArrayList<Integer>();
-    ArrayList<Integer> affectedBene = new ArrayList<Integer>();
+    ArrayList<Integer> availableSites;
+    ArrayList<Integer> affectedBene;
     public EvacuationController(ArrayList<Integer> affectedBene, ArrayList<Integer> availableSites, MapPanel mpp)
     {
         this.affectedBene = affectedBene;
@@ -40,10 +40,17 @@ public class EvacuationController
             EvacuationModel.deleteExistingEvac(Alter.toInt(this.mpp.idLbl.getText()));
         }
         
-        for(int x = 0 ; x < affectedBene.size() ; x++)
+        if(affectedBene.size() <= 0)
         {
-            EvacuationModel.saveEvacuation(EvacuationModel.getNearestSite(affectedBene.get(x), availableSites), 
-                    Alter.toInt(this.mpp.idLbl.getText()), affectedBene.get(x));
+            JOptionPane.showMessageDialog(null, "No evacuation needed since\n no beneficiary is affected");
+        }
+        else
+        {
+            for(int x = 0 ; x < affectedBene.size() ; x++)
+            {
+                EvacuationModel.saveEvacuation(EvacuationModel.getNearestSite(affectedBene.get(x), availableSites), 
+                        Alter.toInt(this.mpp.idLbl.getText()), affectedBene.get(x));
+            }
         }
     }
     
@@ -71,12 +78,12 @@ public class EvacuationController
         if(dataRow >= 0)
         {
             ArrayList<String> list = EvacuationModel.getEvacuationInfo(
-                    Alter.toInt(evacp.table.getValueAt(dataRow,0).toString()));
+                    Alter.toInt(evacp.table.getValueAt(dataRow,1).toString()));
             
             for(int x = 0 ; x < list.size() ; x = x + 3)
             {
                 total = total + 1;
-                this.evacp.infoTA.append("Beneficiay, " + list.get(x) + ", ");
+                this.evacp.infoTA.append("Beneficiary, " + list.get(x) + ", ");
                 this.evacp.infoTA.append("with " + list.get(x + 1) + " family members ");
                 this.evacp.infoTA.append("evacuated to " + list.get(x + 2) + ".\n");
                 total = total + Alter.toInt(list.get(x + 1));
